@@ -3,26 +3,13 @@ from django.contrib.auth.models import User
 
 class Cliente(User):
 	#idCliente = model.IntegerField(primary_key=True)
-	diu = models.IntegerField()
+	dui = models.IntegerField()
 	telefono = models.IntegerField()
 	direccion = models.CharField(max_length=100)
 	tipo = models.CharField(max_length=1)
 	class Meta:
 		verbose_name='Cliente'
 		verbose_name_plural='Clientes'
-	def __str__(self):
-		return '%s' %(self.first_name)
-
-class Empleado(User):
-	#idEmpleado = model.IntegerField() 
-	dui = models.IntegerField()
-	nit = models.IntegerField()
-	isss = models.IntegerField()
-	nup = models.IntegerField()
-	codigo = models.CharField(max_length=6)
-	class Meta:
-		verbose_name='Empleado'
-		verbose_name_plural='Empleados'
 	def __str__(self):
 		return '%s' %(self.first_name)
 
@@ -42,6 +29,20 @@ class Puesto(models.Model):
 		verbose_name_plural='Puestos'
 	def __str__(self):
 		return '%s' %(self.nombre)
+
+class Empleado(User):
+	#idEmpleado = model.IntegerField()
+	puesto = models.ForeignKey(Puesto, on_delete=models.CASCADE) 
+	dui = models.IntegerField()
+	nit = models.IntegerField()
+	isss = models.IntegerField()
+	nup = models.IntegerField()
+	codigo = models.CharField(max_length=6)
+	class Meta:
+		verbose_name='Empleado'
+		verbose_name_plural='Empleados'
+	def __str__(self):
+		return '%s' %(self.first_name)
 
 class Contrato(models.Model):
 	#idContrato = model.IntegerField()
