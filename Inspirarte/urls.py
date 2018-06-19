@@ -17,7 +17,10 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 urlpatterns = [
-	# url(r'^usuario/', include('apps.usuario.urls', namespace="usuario")),
+	url(r'^usuario/', include('apps.usuario.urls')),
 	# url(r'^proveedor/', include('apps.proveedor.urls', namespace="proveedor")),
-    url(r'^admin/', admin.site.urls),
+    url(r'^admin/', admin.site.urls),    
+    #Index temporal
+    url(r'^', include('apps.usuario.urls'))
+    
 ]
