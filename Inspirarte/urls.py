@@ -15,12 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from . import views
 
 urlpatterns = [
 	url(r'^usuario/', include('apps.usuario.urls')),
 	# url(r'^proveedor/', include('apps.proveedor.urls', namespace="proveedor")),
     url(r'^admin/', admin.site.urls),    
     #Index temporal
-    url(r'^', include('apps.usuario.urls'))
+    url(r'^', views.index)
     
 ]
