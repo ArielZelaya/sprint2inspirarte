@@ -5,7 +5,7 @@ class Cliente(User):
 	#idCliente = model.IntegerField(primary_key=True)
 	dui = models.IntegerField()
 	telefono = models.IntegerField()
-	direccion = models.CharField(max_length=100)
+	direccion = models.CharField(max_length=500)
 	tipo = models.CharField(max_length=1)
 	class Meta:
 		verbose_name='Cliente'
@@ -14,15 +14,17 @@ class Cliente(User):
 		return '%s' %(self.first_name)
 
 class Departamento(models.Model):
-	"""docstring for Departamento"""
-	nombre = models.CharField(max_length=20)
-	def __init__(self, arg):
-		super(Departamento, self).__init__()
-		self.arg = arg
+	nombre = models.CharField(max_length=50)
+	descripcion = models.CharField(max_length=500)
+	class Meta:
+		verbose_name='Departamento'
+		verbose_name_plural='Departamentos'
+	def __str__(self):
+		return '%s' %(self.nombre)
 		
 class Puesto(models.Model):
 	departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE)
-	nombre = models.CharField(max_length=30)
+	nombre = models.CharField(max_length=50)
 	funcion = models.CharField(max_length=500)
 	class Meta:
 		verbose_name='Puesto'
@@ -38,6 +40,8 @@ class Empleado(User):
 	isss = models.IntegerField()
 	nup = models.IntegerField()
 	codigo = models.CharField(max_length=6)
+	domicilio = models.CharField(max_length=500)
+	telefono = telefono = models.IntegerField()
 	class Meta:
 		verbose_name='Empleado'
 		verbose_name_plural='Empleados'
@@ -47,13 +51,13 @@ class Empleado(User):
 class Contrato(models.Model):
 	#idContrato = model.IntegerField()
 	empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
-	tipo = models.CharField(max_length=30)
+	tipo = models.CharField(max_length=50)
 	fechaCelebracion = models.DateField()
-	duracion = models.CharField(max_length=15)
+	duracion = models.CharField(max_length=50)
 	fechaInicio = models.DateField()
 	fechaFinal = models.DateField()
-	horaEntrada = models.DateTimeField()
-	horaSalida = models.DateTimeField()
+	horaEntrada = models.CharField(max_length=10)
+	horaSalida = models.CharField(max_length=10)
 	salario = models.FloatField()
 	vigente = models.BooleanField()
 	class Meta:

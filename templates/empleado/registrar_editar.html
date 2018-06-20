@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% if editar %}
+	<head>
+		<meta charset="UTF-8">
+		<title>Ediatr</title>
+	</head>
+<body>
+	<h1>Editar Empleado</h1>
+	<form action="" method="post">
+		{% csrf_token %}
+
+		{% now "jS F Y H:i" %} <br><br>
+		
+		<h2>DATOS GENERALES</h2>
+		Nombres: <br>
+		<input name="first_name" required="" id="first_name" maxlength="30" type="text" value="{{empleado.first_name}}"> <br><br>
+
+		Apellidos: <br>
+		<input name="last_name" required="" id="last_name" maxlength="30" type="text" value="{{empleado.last_name}}"> <br><br>
+
+		Dui: <br>
+		<input name="dui" required="" id="dui" maxlength="30" type="text" value="{{empleado.dui}}"> <br><br>
+
+		Isss: <br>
+		<input name="isss" required="" id="isss" maxlength="30" type="text" value="{{empleado.isss}}"> <br><br>
+
+		Nup: <br>
+		<input name="nup" required="" id="nup" maxlength="30" type="text" value="{{empleado.nup}}"> <br><br>
+
+		Nit: <br>
+		<input name="nit" required="" id="nit" maxlength="30" type="text" value="{{empleado.nit}}"> <br><br>
+
+		Codigo: <br>
+		<input name="codigo" required="" id="codigo" maxlength="30" type="text" value="{{empleado.codigo}}"> <br><br>
+
+		Email: <br>
+		<input name="email" required="" id="email" maxlength="30" type="text" value="{{empleado.email}}"> <br><br>
+
+		Domicilio: <br>
+		<input name="domicilio" required="" id="domicilio" maxlength="500" type="text" value="{{empleado.domicilio}}"> <br><br>
+
+		Telefono: <br>
+		<input name="telefono" required="" id="telefono" maxlength="30" type="text" value="{{empleado.telefono}}"> <br><br>
+
+		Puesto: <br>
+		<select name="puesto" id="puesto" value="{{empleado.puesto}}">
+			{% for p in puestos %}
+			<option value="{{p.id}}">{{p.nombre}}</option>
+			{% endfor %}
+		</select> <br><br>
+		
+		<h2>DATOS LABORALES</h2>
+
+		Tipo: <br>
+		<input name="tipo" required="" id="tipo" maxlength="30" type="text" value="{{contrato.tipo}}"> <br><br>
+
+		Fecha de Celebracion: <br>
+		<input name="fechaCelebracion" required="" id="fechaCelebracion" maxlength="30" type="text" value="{{contrato.fechaCelebracion}}" disabled> <br><br>
+
+		Duracion: <br>
+		<input name="duracion" required="" id="duracion" maxlength="30" type="text" value="{{contrato.duracion}}"> <br><br>
+
+		Fecha de inicio: <br>
+		<input name="fechaInicio" required="" id="fechaInicio" maxlength="30" type="text" value="{{contrato.fechaInicio}}" disabled> <br><br>
+
+		Fecha final: <br>
+		<input name="fechaFinal" required="" id="fechaFinal" maxlength="30" type="text" value="{{contrato.fechaFinal}}"> <br><br>
+
+		Hora de entrada: <br>
+		<input name="horaEntrada" required="" id="horaEntrada" maxlength="30" type="text" value="{{contrato.horaEntrada}}"> <br><br>
+
+		Hora de salida: <br>
+		<input name="horaSalida" required="" id="horaSalida" maxlength="500" type="text" value="{{contrato.horaSalida}}"> <br><br>
+
+		Salario: <br>
+		<input name="salario" required="" id="salario" maxlength="30" type="text" value="{{contrato.salario}}"> <br><br>
+		
+		<a href="">Cancelar Contrato</a><br><br>
+
+		<h2>DATOS DE USUARIO</h2>
+		{% if empleado.is_active %}
+			Habilitar: <input name="active" id="active" type="checkbox" checked> <br><br>
+		{% else %}
+			Habilitar: <input name="active" id="active" type="checkbox"> <br><br>
+		{% endif %}
+
+		Nombre de Usuario: <br>
+		<input name="username" id="username" maxlength="30" type="text" value="{{empleado.username}}" disabled> <br><br>
+
+		Asignar nueva contrasenia: <br>
+		<input name="password" id="password" type="text"> <br><br>
+
+		<button type="submit">Guardar cambios</button>
+		<a href="{{request.META.HTTP_REFERER}}">Cancelar y volver</a>
+	</form>	
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% else %}
+	<head>
+		<meta charset="UTF-8">
+		<title>Registar</title>
+	</head>
+<body>
+	<h1>Registrar empleado</h1>
+	<form action="" method="post">
+		{% csrf_token %}
+
+		{% now "jS F Y H:i" %} <br><br>
+		
+		<h2>DATOS GENERALES</h2>
+		Nombres: <br>
+		<input name="first_name" required="" id="first_name" maxlength="30" type="text"> <br><br>
+
+		Apellidos: <br>
+		<input name="last_name" required="" id="last_name" maxlength="30" type="text"> <br><br>
+
+		Dui: <br>
+		<input name="dui" required="" id="dui" maxlength="30" type="text"> <br><br>
+
+		Isss: <br>
+		<input name="isss" required="" id="isss" maxlength="30" type="text"> <br><br>
+
+		Nup: <br>
+		<input name="nup" required="" id="nup" maxlength="30" type="text"> <br><br>
+
+		Nit: <br>
+		<input name="nit" required="" id="nit" maxlength="30" type="text"> <br><br>
+
+		Codigo: <br>
+		<input name="codigo" required="" id="codigo" maxlength="30" type="text"> <br><br>
+
+		Email: <br>
+		<input name="email" required="" id="email" maxlength="30" type="text"> <br><br>
+
+		Domicilio: <br>
+		<input name="domicilio" required="" id="domicilio" maxlength="500" type="text"> <br><br>
+
+		Telefono: <br>
+		<input name="telefono" required="" id="telefono" maxlength="30" type="text"> <br><br>
+
+		Puesto: <br>
+		<select name="puesto" id="puesto">
+			{% for p in puestos %}
+			<option value="{{p.id}}">{{p.nombre}}</option>
+			{% endfor %}
+		</select> <br><br>
+		
+		<h2>DATOS LABORALES</h2>
+
+		Tipo: <br>
+		<input name="tipo" required="" id="tipo" maxlength="30" type="text"> <br><br>
+
+		Fecha de Celebracion: <br>
+		<input name="fechaCelebracion" required="" id="fechaCelebracion" maxlength="30" type="text"> <br><br>
+
+		Duracion: <br>
+		<input name="duracion" required="" id="duracion" maxlength="30" type="text"> <br><br>
+
+		Fecha de inicio: <br>
+		<input name="fechaInicio" required="" id="fechaInicio" maxlength="30" type="text"> <br><br>
+
+		Fecha final: <br>
+		<input name="fechaFinal" required="" id="fechaFinal" maxlength="30" type="text"> <br><br>
+
+		Hora de entrada: <br>
+		<input name="horaEntrada" required="" id="horaEntrada" maxlength="30" type="text"> <br><br>
+
+		Hora de salida: <br>
+		<input name="horaSalida" required="" id="horaSalida" maxlength="500" type="text"> <br><br>
+
+		Salario: <br>
+		<input name="salario" required="" id="salario" maxlength="30" type="text"> <br><br>
+
+		<h2>DATOS DE USUARIO</h2>
+		Habilitar: <input name="active" id="active" type="checkbox" value="True"> <br><br>
+
+		Nombre de Usuario: <br>
+		<input name="username" id="username" maxlength="30" type="text" disabled> <br><br>
+
+		Asignar contrasenia: <br>
+		<input name="password" id="password" type="text"> <br><br>
+
+		<button type="submit">Guardar</button>
+		<a href="{{request.META.HTTP_REFERER}}">Cancelar y volver</a>
+	</form>
+</body>
+{% endif %}
+
+</html>

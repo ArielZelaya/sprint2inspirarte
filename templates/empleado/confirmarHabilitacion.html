@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Confirmar</title>
+</head>
+<body>
+	<form action="" method="POST">
+		{% csrf_token %}
+		{% if estado %}
+			<p> Realmente quiere habilitar como usuario al empleado {{empleado.username}}? </p>
+			<p> Tenga en consideración lo siguiente: </p>
+			<button type="submit">Si, Habilitar</button>
+		{% else %}
+			<p> Realmente quiere deshabilitar como usuario al empleado {{empleado.username}}? </p>
+			<p> Tenga en consideración lo siguiente: </p>
+			<button type="submit">Si, Desabilitar</button>
+		{% endif %}
+	
+		<a href="{{request.META.HTTP_REFERER}}">No, Cancelar</a>
+		
+	</form>	
+</body>
+</html>

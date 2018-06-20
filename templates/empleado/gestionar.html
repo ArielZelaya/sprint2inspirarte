@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Gestión de empleados</title>
+</head>
+<body>
+
+	<h1> GESTION DE EMPLEADOS</h1>
+	<table>
+		<tr>
+			<th>Codigo</th>
+			<th>Nombres</th>
+			<th>Puesto</th>
+			<th>Departamento</th>
+			<th>Detalles</th>
+			<th>Habilitar</th>
+			<th>Editar</th>
+		</tr>
+		{% for e in empleados %}
+			{% for c in contratos %}
+				{% if c.empleado_id == e.id and c.vigente == True %}
+					<tr>
+						<td>{{e.codigo}}</td>
+						<td>{{e.first_name}} {{e.last_name}}</td>
+						<td>{{e.puesto}}</td>
+						<td>{{e.puesto.departamento}}</td>
+						<td><a href="">Detalles</a></td>
+
+						{% if e.is_active %}
+							<td><a href="{% url 'usuario:act_emp' e.id %}">Deshabilitar</a></td>
+						{% else %}
+							<td><a href="{% url 'usuario:act_emp' e.id %}">Habilitar</a></td>
+						{% endif %}
+						
+						<td><a href="{% url 'usuario:edt_emp' e.id %}">Editar</a></td>
+					</tr>
+				{% endif %}
+			{% endfor %}
+		{% endfor %}
+	</table>
+	<a href="{% url 'usuario:reg_emp' %}">Registrar Empleado</a>
+	<a href="">Contratos no vigentes</a>
+
+</body>
+</html>
