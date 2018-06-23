@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Cancelar contrato</title>
+</head>
+<body>
+	<form action="" method="POST">
+		{% csrf_token %}
+		<h2>Realmente decea cancelar en contrato vigente de forma albitraria, del empleado: {{ empleado.first_name }} {{ empleado.last_name }}</h2>
+		<p>Tenga en consideracion que solo puede cancelar un contrato en estas circunstancias:</p>
+
+		<button type="submit">Si, Cancelar Contrato</button>
+		<a href="{{request.META.HTTP_REFERER}}">Mantener la vigencia</a>	
+	</form>	
+	
+</body>
+</html>

@@ -58,6 +58,7 @@ class Contrato(models.Model):
 	fechaFinal = models.DateField()
 	horaEntrada = models.CharField(max_length=10)
 	horaSalida = models.CharField(max_length=10)
+	diasLaborales = models.CharField(max_length=135)
 	salario = models.FloatField()
 	vigente = models.BooleanField()
 	class Meta:

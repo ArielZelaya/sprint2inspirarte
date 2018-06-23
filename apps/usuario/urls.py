@@ -13,4 +13,7 @@ urlpatterns =[
 	url(r'^confirmarHabilitacion/(?P<id_user>\d+)/$', habilitarUsuario, name='act_emp'),
 	url(r'^registrarEmpleado$', registrarEmpleado, name="reg_emp"),
 	url(r'^editarEmpleado/(?P<id_user>\d+)/$', editarEmpleado, name='edt_emp'),
+	url(r'^cancelarContrato/(?P<id_user>\d+)/$', cancelarContrato, name='can_cto'),
+	url(r'^crearContrato/(?P<id_user>\d+)/$', crearContrato, name='cre_cto'),
+	url(r'^contratosNoVigentes$', noVigentes, name='nvi_cto'),
 ]

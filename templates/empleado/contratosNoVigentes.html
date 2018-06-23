@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>No vigentes</title>
+</head>
+<body>
+	<h1>CONTRATOS NO VIGENTES</h1>
+	<table>
+		<tr>
+			<th>Codigo</th>
+			<th>Nombres</th>
+			<th>Puesto</th>
+			<th>Departamento</th>
+			<th>Finalizacion de contrato</th>
+			<th>Renovo contrato</th>
+			<th>Detalles</th>
+		</tr>
+		{% for e in empleados %}
+			{% for c in contratos %}
+				{% if c.empleado_id == e.id and c.vigente == False %}
+					<tr>
+						<td>{{e.codigo}}</td>
+						<td>{{e.first_name}} {{e.last_name}}</td>
+						<td>{{e.puesto}}</td>
+						<td>{{e.puesto.departamento}}</td>
+						<td>{{c.fechaFinal}}</td>
+						{% for c2 in contratos %}
+							{% if c2.empleado_id == e.id and c2.vigente == True %}
+								<td>Sí</td>
+							{% elif c2.empleado_id == e.id and c2.vigente == False %}
+								<td>No</td>
+							{% endif %}
+						{% endfor %}
+						<td><a href="">Detalles</a></td>
+					</tr>
+				{% endif %}
+			{% endfor %}
+		{% endfor %}
+	</table>
+	<a href="{{request.META.HTTP_REFERER}}">Volver atras</a>
+</body>
+</html>

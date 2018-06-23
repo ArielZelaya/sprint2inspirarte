@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Crear Contrato</title>
+</head>
+<body>
+	<h2>Nuevo contrato: {{empleado.fisrt_name}} {{empleado.last_name}}</h2>
+	<form action="" method="post">
+		{% csrf_token %}
+
+		{% now "jS F Y H:i" %} <br><br>
+
+		Tipo:<br>
+		<select name="tipo" id="tipo">
+			<option value="Completo">Completo</option>
+			<option value="Parcial">Parcial</option>
+			<option value="Eventual">Eventual</option>
+			<option value="Temporal">Temporal</option>
+		</select><br><br>
+
+		Fecha de Celebracion:<br>
+		<input name="fechaCelebracion" id="fechaCelebracion" type="text" value="{% now "jS F Y H:i" %}" disabled> <br><br>
+		
+		Fecha de Inicio:<br>
+		<input name="fechaInicio" id="fechaInicio" type="date"> <br><br>
+
+		Fecha Final:<br>
+		<input name="fechaFinal" id="fechaFinal" type="date"> <br><br>
+
+		Hora de Entrada:<br>
+		<input name="horaEntrada" id="horaEntrada" type="time"> <br><br>
+
+		Hora de Salida:<br>
+		<input name="horaSalida" id="horaSalida" type="time"> <br><br>
+
+		<p>NOTA: Si existe algun dia en el que el horaio laboral sea diferente al normal, definalo a continuacion, de lo contrario no igrese horas de entrada no salida</p>
+		<table>
+			<tr><th>Accion/Dia</th>
+				<th>Lunes</th>
+				<th>Martes</th>
+				<th>Miercoles</th>
+				<th>Jueves</th>
+				<th>Viernes</th>
+				<th>Sabado</th>
+				<th>Domingo</th>
+			</tr>
+			<tr>
+				<td>Seleccione:</td>
+				<td><input name="lunes" id="lunes" maxlength="30" type="checkbox" value="lunes"></td>
+				<td><input name="martes" id="martes" maxlength="30" type="checkbox" value="martes"></td>
+				<td><input name="miercoles" id="miercoles" maxlength="30" type="checkbox" value="miercoles"></td>
+				<td><input name="jueves" id="jueves" maxlength="30" type="checkbox" value="jueves"></td>
+				<td><input name="viernes" id="viernes" maxlength="30" type="checkbox" value="viernes"></td>
+				<td><input name="sabado" id="sabado" maxlength="30" type="checkbox" value="sabado"></td>
+				<td><input name="domingo" id="domingo" maxlength="30" type="checkbox" value="domingo"></td>
+			</tr>
+			<tr>
+				<td>Hora de entrada</td>
+				<td><input name="helu" id="helu" type="time" ></td>
+				<td><input name="hema" id="hema" type="time" ></td>
+				<td><input name="hemi" id="hemi" type="time" ></td>
+				<td><input name="heju" id="heju" type="time" ></td>
+				<td><input name="hevi" id="hevi" type="time" ></td>
+				<td><input name="hesa" id="hesa" type="time" ></td>
+				<td><input name="hedo" id="hedo" type="time" ></td>
+			</tr>
+			<tr>
+				<td>Hora de salida</td>
+				<td><input name="hslu" id="hslu" type="time" ></td>
+				<td><input name="hsma" id="hsma" type="time" ></td>
+				<td><input name="hsmi" id="hsmi" type="time" ></td>
+				<td><input name="hsju" id="hsju" type="time" ></td>
+				<td><input name="hsvi" id="hsvi" type="time" ></td>
+				<td><input name="hssa" id="hssa" type="time" ></td>
+				<td><input name="hsdo" id="hsdo" type="time" ></td>
+			</tr>
+		</table><p>Sugerencia (del programador): que se pueda definir el horario solo si selecciono el dia y deplegar, o en un modal, un boton que diga hora atipico</p>
+
+		Salario:<br>
+		<input name="salario" id="salario" type="number"> <br><br>
+
+		<button type="submit">Guardar</button>
+		<p>Tenga presente que este nuevo contrato dejala invalido el contrato anterior, en este momento aun vigente, (implementar mensaje emergente con este texto)</p>
+		<a href="{{request.META.HTTP_REFERER}}">Cancelar y volver</a>
+	</form>
+</body>
+</html>
