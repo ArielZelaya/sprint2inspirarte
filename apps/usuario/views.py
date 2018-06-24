@@ -3,9 +3,12 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from datetime import time, date
 from .models import *
+from .forms import *
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import AuthenticationForm
 # Create your views here.
 
-def usuario(request):
+def index(request):
      return render(request,'usuario/index.html')
 
 
@@ -273,3 +276,79 @@ def noVigentes(request):
 	empleados = Empleado.objects.all()
 	contratos = Contrato.objects.all()
 	return render(request, 'empleado/contratosNoVigentes.html', {'empleados':empleados, 'contratos':contratos})
+
+
+#Parte de los usuarios
+def iniciarSesion(request):
+	form=AuthenticationForm(request.POST)
+	if request.method == 'POST':
+		username = request.POST.get('username')
+		password = request.POST.get('password')
+		user=User.objects.get(username=username)
+		user.check_password(password)
+		# user = authenticate(username=username, password=password)
+		if user is not None:
+			login(request,user)
+			return redirect('usuario/')
+		else :
+			valor = "Ingrese usuario valido o contrasena correcta"
+			print(user)
+			context= { "form":form,'valor':valor }
+			return render(request,'usuario/login.html',context)
+	if request.user.is_active:
+		return redirect('/')
+	valor = ""
+	context= { "form":form,'valor':valor }
+	return render(request,'usuario/login.html',context)
+	
+def cerrarSesion(request):
+    logout(request)
+    return redirect('usuario:idex')
+
+
+def crearCliente(request):
+	valor=""
+	if request.method=='POST':
+		form=clienteForm(request.POST)
+		if form.is_valid():
+			form.save()
+			return render(request, 'usuario/index.html')
+		else:
+			valor="Error al guardadr"
+	form=clienteForm()
+	context={"form":form,'valor':valor}
+	return render(request,'usuario/crearCliente.html',context)
+	# if request.method=='POST':
+		#guardara
+	# else :
+
+
+def editarCliente(request,id_user):
+	valor=""
+	cliente=Cliente.objects.get(id=id_user)		
+	if request.method=='POST':
+		form=clienteForm(request.POST,instance=cliente)
+		if form.is_valid():
+			form.save()
+			return redirect('usuario:index')
+			# return HttpResponse(request, 'usuario/index.html')
+	else:
+		form=clienteForm(instance=cliente)
+		context={"form":form,'valor':valor}
+		return render(request,'usuario/crearCliente.html',context)
+
+def gestionCliente(request):
+	usuarios=Cliente.objects.all()
+	context={'usuarios':usuarios}
+	return render(request,'usuario/gestionar.html', context)
+
+
+def tipoCliente(request,id_user):
+	cliente=Cliente.objects.get(id=id_user)
+	if request.method=='POST':
+		tipoC=request.POST['t_cliente']
+		cliente.tipo=tipoC
+		cliente.save()
+		return redirect('usuario:gestion_cliente')
+	else:
+		return render(request, 'usuario/tipoCliente.html')

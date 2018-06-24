@@ -1,0 +1,27 @@
+<h1> GESTION DE USUARIOS</h1>
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>Nombre</th>
+			<th>Apellido</th>
+			<th>Nombre de usuario</th>
+			<th>Correo electronico</th>
+			<th>Num. telefonico</th>
+			<th>Tipo</th>
+			<th>Accion</th>
+		</tr>
+		{% for user in usuarios %}
+					<tr>
+						<td>{{user.id}}</td>
+						<td>{{user.first_name}} </td>
+						<td>{{user.last_name}}</td>
+						<td>{{user.username}}</td>
+						<td>{{user.email}}</td>
+						<td>{{user.telefono}}</td>
+						<td>{{user.tipo}}</td>
+						<td><a href="{% url 'usuario:tipo_cliente' user.id %}">Cambiar tipo</a></td>
+						<td><a href="{% url 'usuario:editar_cliente' user.id %}">Editar</a></td>
+					</tr>
+		{% endfor %}
+	</table>
+	<a href="{% url 'usuario:crear_cliente' %}">Registrar Cliente</a>
