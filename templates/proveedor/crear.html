@@ -1,0 +1,18 @@
+
+<div align="center">
+<form method="POST" action="">{% csrf_token %}
+	<h1>Crear proveedor</h1>
+	 {{form.as_p}}
+	 Tipo de Proveedor:
+ 	<select name="t_proveedor">
+
+	<option>Materia prima</option>
+
+	<option>Servicios</option>
+
+	</select>
+	<br><br><br>
+	<input type='submit' value='Guardar' />
+</form>
+<div class="is2">{{valor}}</div><br><br><br>
+</div>

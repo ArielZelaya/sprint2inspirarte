@@ -1,0 +1,6 @@
+	<form action="" method="POST">
+		{% csrf_token %}
+			<p> Realmente quiere eliminar el contacto {{c.nombre}}? </p>
+			<button type="submit">Si, eliminar</button>
+		
+	</form>

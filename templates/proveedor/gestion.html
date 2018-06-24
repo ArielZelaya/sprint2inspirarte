@@ -1,0 +1,52 @@
+<div align="center">
+<h1> GESTION DE PROVEEDORES</h1>
+	<table>
+			<tr>
+		<th>Codigo</th>
+		<th>Nombre</th>
+		<th>Direccion</th>
+		<th>Correo electronico</th>
+		<th>Telefono</th>
+		<th>Tipo</th>
+		<th></th>
+		<th>Accion</th>
+
+	</tr>
+	{% for p in proveedores %}
+
+		<tr>
+			<td>{{p.id}}</td>
+			<td>{{p.nombre}}</td>
+			<td>{{p.direccion}}</td>
+			<td>{{p.email}}</td>
+			<td>{{p.telefono}}</td>
+			{% if p.tipo == t%}
+				<td>M</td>
+			{% else %}
+				<td>S</td>
+			{% endif %}
+			<td><a href="{% url 'proveedor:crear_contacto' p.id %}">Agregar contacto</a></td>
+			<td><a href="{% url 'proveedor:edit_proveedor' p.id %}">Editar</a></td>
+			<td><a href="{% url 'proveedor:elim_proveedor' p.id %}">Eliminar</a></td>
+		</tr>
+			{% for c in contactos %}
+				{% if c.proveedor_id == p.id %}							
+							<tr>
+								<td></td>
+								<td><H4>Contacto</H4></td>
+								<td>{{c.id}}</td>
+								<td>
+									<ul>
+									<li>Nombre: {{c.nombre}}</li>
+									<li>Telefono: {{c.telefono}}</li>
+								</ul> 
+								</td>
+								<td><a href="{% url 'proveedor:edit_contacto' p.id %}">Editar</a></td>
+								<td><a href="{% url 'proveedor:elim_contacto' p.id %}">Eliminar</a></td>
+
+							</tr>
+				{% endif %}
+			{% endfor %}
+		{% endfor %}
+	</table>
+</div>	

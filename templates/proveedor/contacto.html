@@ -1,0 +1,9 @@
+<div align="center">
+<form method="POST" action="">{% csrf_token %}
+	<h1>Crear contacto para la empresa</h1>
+	 {{form.as_p}}
+	<br><br><br>
+	<input type='submit' value='Guardar' />
+</form>
+<div class="is2">{{valor}}</div><br><br><br>
+</div>
