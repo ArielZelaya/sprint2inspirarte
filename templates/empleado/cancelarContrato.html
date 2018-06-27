@@ -1,18 +1,46 @@
+{% extends 'base/base.html'%}
+
+{% block title %} Empleados{% endblock %}
+
+{% block name %} Gestion de empleados {% endblock %}
+{% block contenido %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Cancelar contrato</title>
-</head>
-<body>
-	<form action="" method="POST">
-		{% csrf_token %}
-		<h2>Realmente decea cancelar en contrato vigente de forma albitraria, del empleado: {{ empleado.first_name }} {{ empleado.last_name }}</h2>
-		<p>Tenga en consideracion que solo puede cancelar un contrato en estas circunstancias:</p>
 
-		<button type="submit">Si, Cancelar Contrato</button>
-		<a href="{{request.META.HTTP_REFERER}}">Mantener la vigencia</a>	
-	</form>	
+<style>
+	a{
+		float: right;
+		display: block;
+	}
+</style>
+	<div id ="mycard">
+
+		<div class="demo-card-wide mdl-card mdl-shadow--2dp">
+		  <div class="mdl-card__title">
+			<h2 class="mdl-card__title-text">CONFIRMAR</h2>
+		  </div>
+
+
+		  <div class="mdl-card__supporting-text">
+			
+			<form action="" method="POST">
+				{% csrf_token %}
+				<h2>Realmente decea cancelar en contrato vigente de forma albitraria, del empleado: {{ empleado.first_name }} {{ empleado.last_name }}</h2>
+				<p>Tenga en consideracion que solo puede cancelar un contrato en estas circunstancias:</p>
+		
+				<button type="submit">Si, Cancelar Contrato</button>
+				<a href="{{request.META.HTTP_REFERER}}">Mantener la vigencia</a>	
+			</form>
+		   </div>
+		   
+		   
+		   
+		   
+		 </div>
+<body>
 	
 </body>
 </html>
+{% endblock %}
+
+

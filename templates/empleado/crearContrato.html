@@ -1,3 +1,9 @@
+{% extends 'base/base.html'%}
+
+{% block title %} Empleados{% endblock %}
+
+{% block name %}  Gestion de empleados{% endblock%}
+{% block contenido %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,11 +11,11 @@
 	<title>Crear Contrato</title>
 </head>
 <body>
-	<h2>Nuevo contrato: {{empleado.fisrt_name}} {{empleado.last_name}}</h2>
+		<span class="mdl-layout-title">Nuevo contrato: {{empleado.fisrt_name}} {{empleado.last_name}} </span>
+	
 	<form action="" method="post">
 		{% csrf_token %}
 
-		{% now "jS F Y H:i" %} <br><br>
 
 		Tipo:<br>
 		<select name="tipo" id="tipo">
@@ -35,7 +41,7 @@
 		<input name="horaSalida" id="horaSalida" type="time"> <br><br>
 
 		<p>NOTA: Si existe algun dia en el que el horaio laboral sea diferente al normal, definalo a continuacion, de lo contrario no igrese horas de entrada no salida</p>
-		<table>
+		<table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
 			<tr><th>Accion/Dia</th>
 				<th>Lunes</th>
 				<th>Martes</th>
@@ -86,3 +92,4 @@
 	</form>
 </body>
 </html>
+{% endblock%}
