@@ -19,7 +19,7 @@ from . import views
 
 urlpatterns = [
 	url(r'^usuario/', include('apps.usuario.urls')),
-	# url(r'^proveedor/', include('apps.proveedor.urls', namespace="proveedor")),
+	url(r'^proveedor/', include('apps.proveedor.urls')),
     url(r'^admin/', admin.site.urls),    
     #Index temporal
     url(r'^', views.index)
