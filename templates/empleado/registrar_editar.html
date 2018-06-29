@@ -7,65 +7,48 @@
 <!DOCTYPE html>
 <html>
 		{% if editar %}
-		<span class="mdl-layout-title">Edite los datos del empleado </span>
-		<head>
-				
-				<meta charset="utf-8"/>
-				<meta name="viewport" content="width=device-width, user-scalable=no">
-				<meta name="theme-color" content="#ffffff">
-			
 				<style>
-					form {
-						padding: 20px;
+					div#body{
+						margin: auto;
+						margin-top: 10px;
+						width: 1130px;
+						height: 1800;
+						
+					
+					
 					}
-					.left-side {
-						margin-right: 100px;
-						display: inline-block;
+					div#izquierda{
+						width: 350px;
+						height:  940px;
+						float: left;
+						margin-left: 10px;
+						
 					}
-					.left-side div {
-						display: block;
+					div#centro{
+						width: 400px;
+						height:  940px;
+						float: left;
+						
 					}
-					.left-side fieldset {
-						margin: 20px 0;
-					}
-					.left-side fieldset > label {
-						padding-right: 20px;
-					}
-					.right-side {
-						vertical-align: top;
-						display: inline-block;
-					}
-					.right-side2 {
-						vertical-align: top;
-						display: inline-block;
-						padding-left: 50px;
-					}
-					.toolbar-section {
-						width: 100%;
-						margin-top: 50px;
-					}
-					.info-section {
-						margin: 15px 0;
-					}
-					.info-section > * {
-						display: inline-block;
-						vertical-align: top;
-					}
-					.info-section table {
-						margin-right: 200px;
-					}
-					.info-section ul li {
-						padding: 0;
+					div#derecha{
+						width: 350px;
+						height:  940px;
+						float: left;
+						
+						
 					}
 				</style>
-			</head>
-			<body>
-				
+			<div class="demo-card-square  mdl-shadow--2dp" id="body">
+					<div class="mdl-card__supporting-text">
+							Ingrese los campos correspondientes del formulario para editar al cliente.
+						</div>
 				<form method="POST">
 						{% csrf_token %}
-				<div>
-					<div class="left-side">
-							Nombres: <br>
+						<div id="izquierda">
+								<div class="mdl-card__title">
+										<h2 class="mdl-card__title-text">Informacion personal</h2>
+									  </div>
+									  Nombres: <br>
 							<div class="mdl-textfield mdl-js-textfield">
 									<input class="mdl-textfield__input" name="first_name" type="text" id="first_name" value="{{empleado.first_name}}">
 									<label class="mdl-textfield__label" for="first_name">{{empleado.first_name}}</label>
@@ -75,46 +58,42 @@
 									<input class="mdl-textfield__input" name="last_name" type="text" id="last_name" value="{{empleado.last_name}}">
 									<label class="mdl-textfield__label" for="last_name">{{empleado.last_name}}</label>
 								  </div>
-							Dui: <br>
+								  <br>Dui: <br>
 							<div class="mdl-textfield mdl-js-textfield">
 									<input class="mdl-textfield__input" name="dui" type="text" id="dui" value="{{empleado.dui}}" pattern="-?[0-9]*(\.[0-9]+)?">
 									<label class="mdl-textfield__label" for="dui">{{empleado.dui}}</label>
 									<span class="mdl-textfield__error">DUI incorrecto!</span>
 								  </div>
-							Isss: <br>
+								  <br>Isss: <br>
 							<div class="mdl-textfield mdl-js-textfield">
 									<input class="mdl-textfield__input" name="isss" type="text" id="isss" value="{{empleado.isss}}" pattern="-?[0-9]*(\.[0-9]+)?">
 									<label class="mdl-textfield__label" for="isss">{{empleado.dui}}</label>
 									<span class="mdl-textfield__error">ISSS incorrecto!</span>
 								  </div>
-							Nup: <br>
+								  <br>Nup: <br>
 							<div class="mdl-textfield mdl-js-textfield">
 									<input class="mdl-textfield__input" name="nup" type="text" id="nup" value="{{empleado.nup}}" pattern="-?[0-9]*(\.[0-9]+)?">
 									<label class="mdl-textfield__label" for="nup">{{empleado.nup}}</label>
 									<span class="mdl-textfield__error">NUP incorrecto!</span>
 								  </div>
-							Nit: <br>
+								  <br>Nit:
 							<div class="mdl-textfield mdl-js-textfield">
 									<input class="mdl-textfield__input" name="nit" type="text" id="nit" value="{{empleado.nit}}" pattern="-?[0-9]*(\.[0-9]+)?">
 									<label class="mdl-textfield__label" for="nit">{{empleado.nit}}</label>
 									<span class="mdl-textfield__error">NIT incorrecto!</span>
 								  </div>
-							Codigo: <br>
+							Codigo: 
 							<div class="mdl-textfield mdl-js-textfield">
-									<input class="mdl-textfield__input" name="codigo" type="text" id="codigo" value="{{empleado.codigo}}" pattern="-?[0-9]*(\.[0-9]+)?">
+									<input class="mdl-textfield__input" name="codigo" type="text" id="codigo" value="{{empleado.codigo}}" pattern="-?[0-9]*(\.[0-9]+)?" disabled>
 									<label class="mdl-textfield__label" for="nit">{{empleado.codigo}}</label>
 									<span class="mdl-textfield__error">CODIGO incorrecto!</span>
 								  </div>
-								  Email: <br>
+								  <br>Email:<br> 
 							<div class="mdl-textfield mdl-js-textfield">
-									<input class="mdl-textfield__input" name="email" type="text" id="email" value="{{empleado.email}}">
+									<input class="mdl-textfield__input" name="email" type="email" id="email" value="{{empleado.email}}">
 									<label class="mdl-textfield__label" for="email">{{empleado.email}}</label>
 								  </div>
-							
-							
-					</div> 
-					<div class="right-side">
-							Domicilio: <br>
+								  Domicilio: 
 							<div class="mdl-textfield mdl-js-textfield">
 									<input class="mdl-textfield__input" name="domicilio" type="text" id="domicilio" value="{{empleado.domicilio}}">
 									<label class="mdl-textfield__label" for="domicilio">{{empleado.domicilio}}</label>
@@ -126,7 +105,12 @@
 									<label class="mdl-textfield__label" for="nup">{{empleado.telefono}}</label>
 									<span class="mdl-textfield__error">Telefono incorrecto!</span>
 								  </div><br>
-							Puesto: <br>
+					</div>
+					<div id="centro">
+							<div class="mdl-card__title">
+									<h2 class="mdl-card__title-text">Informacion laboral</h2>
+								  </div>
+								  Puesto: <br>
 							<select name="puesto" id="puesto" value="{{empleado.puesto}}">
 								{% for p in puestos %}
 								<option value="{{p.id}}">{{p.nombre}}</option>
@@ -152,9 +136,7 @@
 									<input class="mdl-textfield__input" name="fechaFinal" type="text" id="fechaFinal" value="{{contrato.fechaFinal}}"disabled>
 									<label class="mdl-textfield__label" for="fechaFinal">{{contrato.fechaFinal}}</label>
 								  </div><br>
-					</div>
-					<div class="right-side2">
-							Hora de entrada: <br>
+								  Hora de entrada: <br>
 							<div class="mdl-textfield mdl-js-textfield">
 									<input class="mdl-textfield__input" name="horaEntrada" type="text" id="horaEntrada" value="{{contrato.horaEntrada}}"disabled>
 									<label class="mdl-textfield__label" for="horaEntrada">{{contrato.horaEntrada}}</label>
@@ -169,13 +151,19 @@
 									<input class="mdl-textfield__input" name="salario" type="text" id="salario" value="{{contrato.salario}}"disabled>
 									<label class="mdl-textfield__label" for="salario">{{contrato.salario}}</label>
 								  </div><br>
-							<a href="{% url 'usuario:can_cto' empleado.id %}">Cancelar Contrato</a><br><br>
+								  <a href="{% url 'usuario:can_cto' empleado.id %}">Cancelar Contrato</a><br><br>
 		<a href="{% url 'usuario:cre_cto' empleado.id %}">Crear un nuevo Contrato</a><p>(Esto invalidara el contrato actual)</p>
+					</div>
+					<div id="derecha">
+							<div class="mdl-card__title">
+									<h2 class="mdl-card__title-text">Informacion de usuario</h2>
+								  </div>
+								  
 							{% if empleado.is_active %}
 							
 							<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="active">
 									<input name="active" type="checkbox" id="active" class="mdl-checkbox__input" checked>
-									<span class="mdl-checkbox__label">Habilitar</span>
+									<span class="mdl-checkbox__label">Habilitar usuario de sistema</span>
 								  </label>
 							{% else %}
 							<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="active">
@@ -202,13 +190,13 @@
 								  </button>
 								  <br><br>
 							<a href="{{request.META.HTTP_REFERER}}">Cancelar y volver</a>
-						</div>	
+						</div>
 				</form>
+			</div>
 			
-			</body>	
 		{% else %}
 
-		<span class="mdl-layout-title">Edite los datos del empleado </span>
+		<span class="mdl-layout-title">Ingrese los datos del empleado </span>
 		<head>
 				
 				<meta charset="utf-8"/>
@@ -258,14 +246,23 @@
 					.info-section ul li {
 						padding: 0;
 					}
+					.example1 {
+    border: 1px solid;
+    padding: 10px;
+    box-shadow: 5px 10px;
+}
+
 				</style>
 			</head>
 			<body>
 				
 				<form method="POST">
 						{% csrf_token %}
-				<div>
+				<div class="example1">
 					<div class="left-side">
+							<div class="mdl-card__title">
+									<h2 class="mdl-card__title-text">Informacion personal</h2>
+								  </div>
 							Nombres: <br>
 							<div class="mdl-textfield mdl-js-textfield">
 									<input class="mdl-textfield__input" name="first_name" type="text" id="first_name" value="{{empleado.first_name}}">
@@ -313,11 +310,7 @@
 									<input class="mdl-textfield__input" name="email" type="text" id="email" value="{{empleado.email}}">
 									<label class="mdl-textfield__label" for="email">{{empleado.email}}</label>
 								  </div>
-							
-							
-					</div> 
-					<div class="right-side">
-							Domicilio: <br>
+								  Domicilio: <br>
 							<div class="mdl-textfield mdl-js-textfield">
 									<input class="mdl-textfield__input" name="domicilio" type="text" id="domicilio" value="{{empleado.domicilio}}">
 									<label class="mdl-textfield__label" for="domicilio">{{empleado.domicilio}}</label>
@@ -329,42 +322,49 @@
 									<label class="mdl-textfield__label" for="nup">{{empleado.telefono}}</label>
 									<span class="mdl-textfield__error">Telefono incorrecto!</span>
 								  </div><br>
-							Puesto: <br>
+								
+							
+							
+					</div> 
+					<div class="right-side">
+							<div class="mdl-card__title">
+									<h2 class="mdl-card__title-text">Informacion laboral</h2>
+								  </div>
+							Puesto: <br><br>
 							<select name="puesto" id="puesto" value="{{empleado.puesto}}">
 								{% for p in puestos %}
 								<option value="{{p.id}}">{{p.nombre}}</option>
 								{% endfor %}
-							</select> <br>
+							</select> <br><br>
 							Tipo: <br>
 							<div class="mdl-textfield mdl-js-textfield">
-									<input class="mdl-textfield__input" name="tipo" type="text" id="tipo" value="{{empleado.tipo}}">
+									<br>	
+								<input class="mdl-textfield__input" name="tipo" type="text" id="tipo" value="{{empleado.tipo}}">
 									<label class="mdl-textfield__label" for="tipo">{{empleado.tipo}}</label>
 								  </div><br>
 							Fecha de Celebracion: <br>
 							<div class="mdl-textfield mdl-js-textfield">
-									<input class="mdl-textfield__input"  type="text" id="fechaCelebracion" value="{{contrato.fechaCelebracion}}">
+									<input class="mdl-textfield__input"  type="date" id="fechaCelebracion" value="{% now "jS F Y H:i" %}">
 									<label class="mdl-textfield__label">{{contrato.fechaCelebracion}}</label>
 								  </div><br>		
 								  Fecha de inicio: <br>
 							<div class="mdl-textfield mdl-js-textfield">
-									<input class="mdl-textfield__input" name="fechaInicio" type="text" id="fechaInicio" value="{{contrato.fechaInicio}}">
+									<input class="mdl-textfield__input" name="fechaInicio" type="date" id="fechaInicio" value="{{contrato.fechaInicio}}">
 									<label class="mdl-textfield__label" for="fechaInicio">{{contrato.fechaInicio}}</label>
 								  </div><br>
 							Fecha final: <br>
 							<div class="mdl-textfield mdl-js-textfield">
-									<input class="mdl-textfield__input" name="fechaFinal" type="text" id="fechaFinal" value="{{contrato.fechaFinal}}">
+									<input class="mdl-textfield__input" name="fechaFinal" type="date" id="fechaFinal" value="{{contrato.fechaFinal}}">
 									<label class="mdl-textfield__label" for="fechaFinal">{{contrato.fechaFinal}}</label>
 								  </div><br>
-					</div>
-					<div class="right-side2">
-							Hora de entrada: <br>
+								  Hora de entrada: <br>
 							<div class="mdl-textfield mdl-js-textfield">
-									<input class="mdl-textfield__input" name="horaEntrada" type="text" id="horaEntrada" value="{{contrato.horaEntrada}}">
+									<input class="mdl-textfield__input" name="horaEntrada" type="time" id="horaEntrada" value="{{contrato.horaEntrada}}">
 									<label class="mdl-textfield__label" for="horaEntrada">{{contrato.horaEntrada}}</label>
 								  </div><br>
 							Hora de salida: <br>
 							<div class="mdl-textfield mdl-js-textfield">
-									<input class="mdl-textfield__input" name="horaSalida" type="text" id="horaSalida" value="{{contrato.horaSalida}}">
+									<input class="mdl-textfield__input" name="horaSalida" type="time" id="horaSalida" value="{{contrato.horaSalida}}">
 									<label class="mdl-textfield__label" for="horaSalida">{{contrato.horaSalida}}</label>
 								  </div><br>
 								  
@@ -373,14 +373,20 @@
 									<input class="mdl-textfield__input" name="salario" type="text" id="salario" value="{{contrato.salario}}">
 									<label class="mdl-textfield__label" for="salario">{{contrato.salario}}</label>
 								  </div><br>
+					</div>
+					<div class="right-side2">
 							
 							
+							<div class="mdl-card__title">
+									<h2 class="mdl-card__title-text">Informacion de usuario</h2>
+								  </div>
+								  
 							
 							<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="active">
 									<input name="active" type="checkbox" id="active" class="mdl-checkbox__input" >
-									<span class="mdl-checkbox__label">Habilitar</span>
+									<span class="mdl-checkbox__label">Habilitar usuario</span>
 								  </label>
-					
+					<br><br>
 						Nombre de Usuario: <br>
 							
 							<div class="mdl-textfield mdl-js-textfield">
@@ -388,7 +394,7 @@
 									<label class="mdl-textfield__label" for="username">{{empleado.username}}</label>
 								  </div><br>
 								
-								  Asignar nueva contrasenia: <br>
+								  Asignar  contrasenia: <br>
 							<div class="mdl-textfield mdl-js-textfield">
 									<input class="mdl-textfield__input" name="password" type="text" id="password" value="{{empleado.password}}">
 									<label class="mdl-textfield__label" for="password">{{empleado.password}}</label>
