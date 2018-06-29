@@ -3,3 +3,54 @@
 {% block title %} USUARIOS {% endblock %}
 
 {% block name %} Usuarios {% endblock %}
+{% load static %}
+{% block contenido%}
+<!-- Square card -->
+<style>
+        .demo-card-square.mdl-card {
+          width: 320px;
+          height: 320px;
+          margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+        }
+        .demo-card-square > .mdl-card__title {
+          color: #fff;
+          
+          background:
+                 #46B6AC;
+                 margin-left: 10;
+        }.demo-card-square > .mdl-card__title {
+  color: #fff;
+  background:
+    url('{% static "images/employee.png" %}') bottom right 15% no-repeat #46B6AC;
+}
+.demo-card-square2 > .mdl-card__title {
+  color: #fff;
+  background:
+    url('{% static "images/client" %}') bottom right 15% no-repeat #46B6AC;
+}
+</style>
+        
+<div class="demo-card-square mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__title mdl-card--expand">
+      <h2 class="mdl-card__title-text">Gestion de empleados</h2>
+    </div>
+    <div class="mdl-card__supporting-text">Aqui podra gestionar todo lo relacionado con los empleados.</div>
+    <div class="mdl-card__actions mdl-card--border">
+        <a href="{% url 'usuario:ges_emp' %}" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Gestionar Empleados</a>
+    </div>
+</div>
+        
+<div class="demo-card-square mdl-card mdl-shadow--2dp">
+  <div class="mdl-card__title mdl-card--expand">
+    <h2 class="mdl-card__title-text">Gestion de clientes</h2>
+  </div>
+    <div class="mdl-card__supporting-text">Aqui podra gestionar todo lo relacionado con los clientes.<br></div>
+    <div class="mdl-card__actions mdl-card--border">
+      <a href="{% url 'usuario:gestion_cliente' %}" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Gestionar Clientes</a>
+    </div>
+</div>
+
+{% endblock%}

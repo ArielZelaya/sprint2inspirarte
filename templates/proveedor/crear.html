@@ -11,9 +11,9 @@
 	<form method="POST" action="">{% csrf_token %}
 		<h4>Datos Generales</h4>
 		<!-- Crea el formulario para agregar proveedor |Looping over the form’s fields-->
-		<div class="mdl-textfield ">
+		<div class="mdl-textfield mdl-js-textfield">
 			{% for field in form %}
-				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-valid">
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 			        {{ field.errors }}
 					<label class="mdl-textfield__label" for="{{ field.name }}">{{ field.label }}</label> 					
 					{{ field }}
@@ -29,7 +29,7 @@
 					<option>Servicios</option>
 				</select>
 				<br><br><br>
-			<input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" align="center" type='submit' value='Guardar'/>
+			<input class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" align="center" type='submit' value='Guardar'/>
 		</div>
 		</div>
 	</form>

@@ -1,3 +1,9 @@
+{% extends 'base/base.html'%}
+
+{% block title %} Empleados{% endblock %}
+
+{% block name %} Gestion de empleados {% endblock %}
+{% block contenido %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,9 +12,9 @@
 </head>
 <body>
 	<h1>CONTRATOS NO VIGENTES</h1>
-	<table>
+	<table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
 		<tr>
-			<th>Codigo</th>
+			<th class="mdl-data-table__cell--non-numeric">Codigo</th>
 			<th>Nombres</th>
 			<th>Puesto</th>
 			<th>Departamento</th>
@@ -41,3 +47,4 @@
 	<a href="{{request.META.HTTP_REFERER}}">Volver atras</a>
 </body>
 </html>
+{% endblock%}

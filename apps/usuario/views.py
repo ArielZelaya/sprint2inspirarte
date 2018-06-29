@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from datetime import time, date
+import datetime
 from .models import *
 from .forms import *
 from django.contrib.auth import authenticate, login, logout
@@ -60,6 +61,70 @@ def addDiasLaborales(dias, horaEntrada, horaSalida):
 	return cadenaDias
 
 
+#Funcion para generar el codigo de empleado segun el patron establecido
+def generarCodigo(first_name, last_name):
+	empleados = Empleado.objects.all()
+	n = len(empleados)
+	empleado = empleados[n-1]
+	codigo = ""
+	for i in range(len(last_name)):
+		if i == 0:
+			codigo = last_name[i]
+	for i in range(len(first_name)):
+		if i == 0:
+			codigo = codigo + first_name[i]
+	m = len(empleado.codigo)
+	codigo2 = ""
+	for i in range(m):
+		if i == m-4:
+			codigo2 = codigo2 + empleado.codigo[i]
+		if i == m-3:
+			codigo2 = codigo2 + empleado.codigo[i]
+		if i == m-2:
+			codigo2 = codigo2 + empleado.codigo[i]
+		if i == m-1:
+			codigo2 = codigo2 + empleado.codigo[i]
+	codigo3 = int(codigo2) + 1
+	codigo = codigo + str(codigo3)
+	return codigo
+
+
+#Funcion para calcular la duracion del contrato
+def calcularDuracion(a, b):
+	fi = datetime.datetime.strptime(a, '%Y-%m-%d').date()
+	ff = datetime.datetime.strptime(b, '%Y-%m-%d').date()
+	opDias = ff - fi
+	lsDias = str(opDias)
+	dias = ""
+	meses = ""
+	anios = ""
+	k = 0
+	j = 0
+	for i in range(len(lsDias)):
+		if lsDias[i] == " ":
+			break
+		else:
+			dias = dias + lsDias[i]
+	lsMeses = str(float(int(dias)/30))
+	for i in range(len(lsMeses)):
+		if j == 1:
+			break
+		if i == 4:
+			j = 1
+		else:
+			meses = meses + lsMeses[i]
+	lsAnios = str(float(int(dias)/365))
+	for i in range(len(lsAnios)):
+		if k == 1:
+			break
+		if i == 4:
+			k = 1
+		else:
+			anios = anios + lsAnios[i]
+	print("PRUEBA"+dias+" "+meses+" "+anios)
+	return dias+" dias, "+meses+" meses, "+anios+" anios"
+
+
 #REGISTRO DE EMPLEADOS
 def registrarEmpleado(request):
 	editar = False
@@ -75,7 +140,7 @@ def registrarEmpleado(request):
 		nit = request.POST.get('nit')
 		isss = request.POST.get('isss')
 		nup = request.POST.get('nup')
-		codigo = request.POST.get('codigo')
+		codigo = codigo = generarCodigo(first_name, last_name)
 		domicilio = request.POST.get('domicilio')
 		telefono = request.POST.get('telefono')
 		active = request.POST.get('active')
@@ -121,7 +186,7 @@ def registrarEmpleado(request):
 		contrato.fechaCelebracion = date.today()
 		contrato.fechaInicio = request.POST.get('fechaInicio')
 		contrato.fechaFinal = request.POST.get('fechaFinal')
-		contrato.duracion = 10
+		contrato.duracion = calcularDuracion(contrato.fechaInicio, contrato.fechaFinal)
 		contrato.horaEntrada = request.POST.get('horaEntrada')
 		contrato.horaSalida = request.POST.get('horaSalida')
 		#Identificacion de dias labores
@@ -220,9 +285,9 @@ def crearContrato(request, id_user):
 		contrato.empleado_id = id_user
 		contrato.tipo = request.POST.get('tipo')
 		contrato.fechaCelebracion = date.today()
-		contrato.duracion = 10
 		contrato.fechaInicio = request.POST.get('fechaInicio')
 		contrato.fechaFinal = request.POST.get('fechaFinal')
+		contrato.duracion = calcularDuracion(contrato.fechaInicio, contrato.fechaFinal)
 		contrato.horaEntrada = request.POST.get('horaEntrada')
 		contrato.horaSalida = request.POST.get('horaSalida')
 		#Identificacion de dias labores

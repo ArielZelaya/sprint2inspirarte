@@ -1,24 +1,55 @@
+{% extends 'base/base.html'%}
+
+{% block title %} Empleados{% endblock %}
+
+{% block name %} Gestion de empleados {% endblock %}
+{% block contenido %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Confirmar</title>
-</head>
+
+<style>
+	a{
+		float: right;
+		display: block;
+	}
+</style>
+	<div id ="mycard">
+
+		<div class="demo-card-wide mdl-card mdl-shadow--2dp">
+		  <div class="mdl-card__title">
+			<h2 class="mdl-card__title-text">CONFIRMAR</h2>
+		  </div>
+
+
+		  <div class="mdl-card__supporting-text">
+			
+			 <form action="#" method="POST">
+				{% csrf_token %}
+				{% if estado %}
+					<p> Realmente quiere habilitar como usuario al empleado {{empleado.username}}? </p>
+					<p> Tenga en consideración lo siguiente: </p>
+					<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+						Si, Habilitar
+					  </button>
+					
+				{% else %}
+					<p> Realmente quiere deshabilitar como usuario al empleado {{empleado.username}}? </p>
+					<p> Tenga en consideración lo siguiente: </p>
+					<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+						Si, Deshabilitar
+					  </button>
+				{% endif %}
+			
+				<a class="cancel" href="{{request.META.HTTP_REFERER}}">No, Cancelar</a>
+		 </form>
+		   </div>
+		   
+		   
+		   
+		   
+		 </div>
 <body>
-	<form action="" method="POST">
-		{% csrf_token %}
-		{% if estado %}
-			<p> Realmente quiere habilitar como usuario al empleado {{empleado.username}}? </p>
-			<p> Tenga en consideración lo siguiente: </p>
-			<button type="submit">Si, Habilitar</button>
-		{% else %}
-			<p> Realmente quiere deshabilitar como usuario al empleado {{empleado.username}}? </p>
-			<p> Tenga en consideración lo siguiente: </p>
-			<button type="submit">Si, Desabilitar</button>
-		{% endif %}
 	
-		<a href="{{request.META.HTTP_REFERER}}">No, Cancelar</a>
-		
-	</form>	
 </body>
 </html>
+{% endblock %}

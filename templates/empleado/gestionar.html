@@ -31,7 +31,7 @@
 				{% if c.empleado_id == e.id and c.vigente == True %}
 					<tr>
 						<td>{{e.codigo}}</td>
-						<td id="show-dialog" type="button" class="mdl-button">{{e.first_name}} {{e.last_name}}</td>
+						<td >{{e.first_name}} {{e.last_name}}</td>
 						<td>{{e.puesto}}</td>
 						<td>{{e.puesto.departamento}}</td>
 						<td><a href="">Detalles</a></td>
@@ -41,41 +41,16 @@
 							<td><a href="{% url 'usuario:act_emp' e.id %}">Habilitar</a></td>
 						{% endif %}
 						<td><a href="{% url 'usuario:edt_emp' e.id %}">Editar</a></td>
-					</tr>
-					<body>
-        
-							<dialog class="mdl-dialog">
-							  <h4 class="mdl-dialog__title">Allow data collection?</h4>
-							  <div class="mdl-dialog__content">
-								<p>
-								  Desea modificar los datos del usuario?
-								</p>
-							  </div>
-							  <div class="mdl-dialog__actions">
-								<button type="button" class="mdl-button">Agree</button>
-								<button type="button" class="mdl-button close">Disagree</button>
-							  </div>
-							</dialog>
-							<script>
-							  var dialog = document.querySelector('dialog');
-							  var showDialogButton = document.querySelector('#show-dialog');
-							  if (! dialog.showModal) {
-								dialogPolyfill.registerDialog(dialog);
-							  }
-							  showDialogButton.addEventListener('click', function() {
-								dialog.showModal();
-							  });
-							  dialog.querySelector('.close').addEventListener('click', function() {
-								dialog.close();
-							  });
-							</script>
-						  </body>
-						  
+					</tr>	  
 				{% endif %}	
 			{% endfor %}
 		{% endfor %}
 		</tbody>  
 	  </table>
+	  <a href="{% url 'usuario:reg_emp' %}">
+		<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+				Registrar empleado
+			  </button>
 </body>	
 
 </html>

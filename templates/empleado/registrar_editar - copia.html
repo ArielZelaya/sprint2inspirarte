@@ -1,0 +1,337 @@
+{% extends 'base/base.html'%}
+
+{% block title %} Empleados{% endblock %}
+{% block name %} Editar empleado {% endblock %}
+
+{% block contenido %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+{% if editar %}
+	<head>
+		<meta charset="UTF-8">
+		
+	</head>
+<body>
+	
+	<!--Inicio CARDS  -->
+	{% csrf_token %}
+	<div id ="mycard">
+
+			<div class="demo-card-wide mdl-card mdl-shadow--2dp">
+			  <div class="mdl-card__title">
+				<h2 class="mdl-card__title-text">Detalles empleado</h2>
+			  </div>
+			  
+			  
+			  <div class="mdl-card__supporting-text">
+			  Modifique los campos existentes con la nueva informacion del empleado
+			  </div>
+			  <main class = "mdl-layout__content">  </main>
+			  <div class = "mdl-grid">
+		<div class = "mdl-cell mdl-cell--6-col graybox">
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+						<input class="mdl-textfield__input" type="text" id="sample3">
+						<label class="mdl-textfield__label" for="sample3">{{empleado.first_name}}</label>
+					  </div>
+					  <div class="mdl-textfield mdl-js-textfield">
+							<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="sample2">
+							<label class="mdl-textfield__label" for="sample2">{{empleado.dui}}</label>
+							<span class="mdl-textfield__error">El dui debe ser un numero!</span>
+						  </div>
+						  <div class="mdl-textfield mdl-js-textfield">
+								<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="sample2">
+								<label class="mdl-textfield__label" for="sample2">{{empleado.nup}}</label>
+								<span class="mdl-textfield__error">El nup debe ser un numero!</span>
+							  </div>
+							  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+									<input class="mdl-textfield__input" type="text" id="sample3">
+									<label class="mdl-textfield__label" for="sample3">{{empleado.email}}</label>
+								  </div>
+								  <div class="mdl-textfield mdl-js-textfield">
+										<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="sample2">
+										<label class="mdl-textfield__label" for="sample2">{{empleado.telefono}}</label>
+										<span class="mdl-textfield__error">El telefono debe contener solo numeros!</span>
+										
+				 </div>
+							  
+
+		</div>
+		<!--Column 2 -->
+		<div class = "mdl-cell mdl-cell--6-col graybox">
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+				<input class="mdl-textfield__input" type="text" id="sample3">
+				<label class="mdl-textfield__label" for="sample3">{{empleado.last_name}}</label>
+			  </div>
+			  <div class="mdl-textfield mdl-js-textfield">
+					<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="sample2">
+					<label class="mdl-textfield__label" for="sample2">{{empleado.isss}}</label>
+					<span class="mdl-textfield__error">El numero de Isss debe ser un numero!</span>
+				  </div>
+				  <div class="mdl-textfield mdl-js-textfield">
+						<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="sample2">
+						<label class="mdl-textfield__label" for="sample2">{{empleado.nit}}</label>
+						<span class="mdl-textfield__error">El numero de nit debe ser un numero!</span>
+					  </div>
+					  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="text" id="sample3">
+							<label class="mdl-textfield__label" for="sample3">{{empleado.domicilio}}</label>
+						  </div>
+
+					  <!-- end column 2 -->
+			</div>
+
+
+			
+		
+	
+	</div>
+	<!--<form action="" method="post">
+		{% csrf_token %}
+
+		{% now "jS F Y H:i" %} <br><br>
+		
+		<h2>DATOS GENERALES</h2>
+		Nombres: <br>
+		<input name="first_name" required="" id="first_name" maxlength="30" type="text" value="{{empleado.first_name}}"> <br><br>
+
+		Apellidos: <br>
+		<input name="last_name" required="" id="last_name" maxlength="30" type="text" value="{{empleado.last_name}}"> <br><br>
+
+		Dui: <br>
+		<input name="dui" required="" id="dui" maxlength="30" type="text" value="{{empleado.dui}}"> <br><br>
+
+		Isss: <br>
+		<input name="isss" required="" id="isss" maxlength="30" type="text" value="{{empleado.isss}}"> <br><br>
+
+		Nup: <br>
+		<input name="nup" required="" id="nup" maxlength="30" type="text" value="{{empleado.nup}}"> <br><br>
+
+		Nit: <br>
+		<input name="nit" required="" id="nit" maxlength="30" type="text" value="{{empleado.nit}}"> <br><br>
+
+		Codigo (ESTE SE DEBERA QUITAR PORQUE SE TENDRA QUE GENERAR AUTOMANTICAMENTE): <br>
+		<input name="codigo" required="" id="codigo" maxlength="30" type="text" value="{{empleado.codigo}}"> <br><br>
+
+		Email: <br>
+		<input name="email" required="" id="email" maxlength="30" type="text" value="{{empleado.email}}"> <br><br>
+
+		Domicilio: <br>
+		<input name="domicilio" required="" id="domicilio" maxlength="500" type="text" value="{{empleado.domicilio}}"> <br><br>
+
+		Telefono: <br>
+		<input name="telefono" required="" id="telefono" maxlength="30" type="text" value="{{empleado.telefono}}"> <br><br>
+
+		Puesto: <br>
+		<select name="puesto" id="puesto" value="{{empleado.puesto}}">
+			{% for p in puestos %}
+			<option value="{{p.id}}">{{p.nombre}}</option>
+			{% endfor %}
+		</select> <br><br>
+		
+		<h2>DATOS LABORALES</h2>
+
+		Tipo: <br>
+		<input name="tipo" id="tipo" type="text" value="{{contrato.tipo}}" disabled> <br><br>
+
+		Fecha de Celebracion: <br>
+		<input name="fechaCelebracion" id="fechaCelebracion" type="text" value="{{contrato.fechaCelebracion}}" disabled> <br><br>
+
+		Duracion: <br>
+		<input name="duracion" id="duracion" type="text" value="{{contrato.duracion}}" disabled> <br><br>
+
+		Fecha de inicio: <br>
+		<input name="fechaInicio" id="fechaInicio" type="text" value="{{contrato.fechaInicio}}" disabled> <br><br>
+
+		Fecha final: <br>
+		<input name="fechaFinal" id="fechaFinal" type="text" value="{{contrato.fechaFinal}}" disabled> <br><br>
+
+		Hora de entrada: <br>
+		<input name="horaEntrada" id="horaEntrada" type="text" value="{{contrato.horaEntrada}}" disabled> <br><br>
+
+		Hora de salida: <br>
+		<input name="horaSalida" id="horaSalida" type="text" value="{{contrato.horaSalida}}" disabled> <br><br>
+
+		Dias Laborales: <br>
+		<input name="diasLaborales" id="diasLaborales" type="text" value="{{contrato.diasLaborales}}" disabled> <br><br>
+
+		Salario: <br>
+		<input name="salario" required="" id="salario" type="text" value="{{contrato.salario}}" disabled> <br><br>
+		
+		<a href="{% url 'usuario:can_cto' empleado.id %}">Cancelar Contrato</a><br><br>
+		<a href="{% url 'usuario:cre_cto' empleado.id %}">Crear un nuevo Contrato</a><p>(Esto invalidara el contrato actual)</p>
+
+		<h2>DATOS DE USUARIO</h2>
+		{% if empleado.is_active %}
+			Habilitar: <input name="active" id="active" type="checkbox" checked> <br><br>
+		{% else %}
+			Habilitar: <input name="active" id="active" type="checkbox"> <br><br>
+		{% endif %}
+
+		Nombre de Usuario: <br>
+		<input name="username" id="username" maxlength="30" type="text" value="{{empleado.username}}" disabled> <br><br>
+
+		Asignar nueva contrasenia: <br>
+		<input name="password" id="password" type="text"> <br><br>
+
+		<button type="submit">Guardar cambios</button>
+		<a href="{{request.META.HTTP_REFERER}}">Cancelar y volver</a>
+	</form>	
+-->
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% else %}
+	<head>
+		<meta charset="UTF-8">
+		<title>Registar</title>
+	</head>
+<body>
+	<h1>Registrar empleado</h1>
+	<form action="" method="post">
+		{% csrf_token %}
+
+		{% now "jS F Y H:i" %} <br><br>
+		
+		<h2>DATOS GENERALES</h2>
+		Nombres: <br>
+		<input name="first_name" required="" id="first_name" maxlength="30" type="text"> <br><br>
+
+		Apellidos: <br>
+		<input name="last_name" required="" id="last_name" maxlength="30" type="text"> <br><br>
+
+		Dui: <br>
+		<input name="dui" required="" id="dui" maxlength="30" type="text"> <br><br>
+
+		Isss: <br>
+		<input name="isss" required="" id="isss" maxlength="30" type="text"> <br><br>
+
+		Nup: <br>
+		<input name="nup" required="" id="nup" maxlength="30" type="text"> <br><br>
+
+		Nit: <br>
+		<input name="nit" required="" id="nit" maxlength="30" type="text"> <br><br>
+
+		Codigo (ESTE SE DEBERA QUITAR PORQUE SE TENDRA QUE GENERAR AUTOMANTICAMENTE): <br>
+		<input name="codigo" required="" id="codigo" maxlength="30" type="text"> <br><br>
+
+		Email: <br>
+		<input name="email" required="" id="email" maxlength="30" type="text"> <br><br>
+
+		Domicilio: <br>
+		<input name="domicilio" required="" id="domicilio" maxlength="500" type="text"> <br><br>
+
+		Telefono: <br>
+		<input name="telefono" required="" id="telefono" maxlength="30" type="text"> <br><br>
+
+		Puesto: <br>
+		<select name="puesto" id="puesto">
+			{% for p in puestos %}
+			<option value="{{p.id}}">{{p.nombre}}</option>
+			{% endfor %}
+		</select> <br><br>
+		
+		<h2>DATOS LABORALES</h2>
+
+		Tipo de contrato: <br>
+		<select name="tipo" id="tipo">
+			<option value="Completo">Completo</option>
+			<option value="Parcial">Parcial</option>
+			<option value="Temporal">Temporal</option>
+		</select> <br><br>
+
+		Fecha de Celebracion: <br>
+		<input type="text" value="{% now "jS F Y H:i" %}" disabled> <br><br>
+
+		Fecha de inicio: <br>
+		<input name="fechaInicio" required="" id="fechaInicio" type="date"> <br><br>
+
+		Fecha final: <br>
+		<input name="fechaFinal" required="" id="fechaFinal" type="date"> <br><br>
+
+		Hora de entrada: <br>
+		<input name="horaEntrada" required="" id="horaEntrada" type="time"> <br><br>
+
+		Hora de salida: <br>
+		<input name="horaSalida" required="" id="horaSalida" type="time"> <br><br>
+		
+		<p>NOTA: Si existe algun dia en el que el horaio laboral sea diferente al normal, definalo a continuacion porfavor, de lo contrario no igrese horas de entrada no salida</p>
+		<table class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp>
+			<tr><th>Accion/Dia</th>
+				<th>Lunes</th>
+				<th>Martes</th>
+				<th>Miercoles</th>
+				<th>Jueves</th>
+				<th>Viernes</th>
+				<th>Sabado</th>
+				<th>Domingo</th>
+			</tr>
+			<tr>
+				<td>Seleccione:</td>
+				<td><input name="lunes" id="lunes" maxlength="30" type="checkbox" value="lunes"></td>
+				<td><input name="martes" id="martes" maxlength="30" type="checkbox" value="martes"></td>
+				<td><input name="miercoles" id="miercoles" maxlength="30" type="checkbox" value="miercoles"></td>
+				<td><input name="jueves" id="jueves" maxlength="30" type="checkbox" value="jueves"></td>
+				<td><input name="viernes" id="viernes" maxlength="30" type="checkbox" value="viernes"></td>
+				<td><input name="sabado" id="sabado" maxlength="30" type="checkbox" value="sabado"></td>
+				<td><input name="domingo" id="domingo" maxlength="30" type="checkbox" value="domingo"></td>
+			</tr>
+			<tr>
+				<td>Hora de entrada</td>
+				<td><input name="helu" id="helu" type="time" ></td>
+				<td><input name="hema" id="hema" type="time" ></td>
+				<td><input name="hemi" id="hemi" type="time" ></td>
+				<td><input name="heju" id="heju" type="time" ></td>
+				<td><input name="hevi" id="hevi" type="time" ></td>
+				<td><input name="hesa" id="hesa" type="time" ></td>
+				<td><input name="hedo" id="hedo" type="time" ></td>
+			</tr>
+			<tr>
+				<td>Hora de salida</td>
+				<td><input name="hslu" id="hslu" type="time" ></td>
+				<td><input name="hsma" id="hsma" type="time" ></td>
+				<td><input name="hsmi" id="hsmi" type="time" ></td>
+				<td><input name="hsju" id="hsju" type="time" ></td>
+				<td><input name="hsvi" id="hsvi" type="time" ></td>
+				<td><input name="hssa" id="hssa" type="time" ></td>
+				<td><input name="hsdo" id="hsdo" type="time" ></td>
+			</tr>
+		</table><p>Sugerencia (del programador): que se pueda definir el horario solo si selecciono el dia y deplegar, o en un modal, un boton que diga hora atipico</p>
+
+		Salario: <br>
+		<input name="salario" required="" id="salario" type="number"> <br><br>
+
+		<h2>DATOS DE USUARIO</h2>
+		Habilitar: <input name="active" id="active" type="checkbox" value="True"> <br><br>
+
+		Nombre de Usuario: <br>
+		<input name="username" id="username" maxlength="30" type="text" disabled> <br><br>
+
+		Asignar contrasenia: <br>
+		<input name="password" id="password" type="text"> <br><br>
+
+		<button type="submit">Guardar</button>
+		<a href="{{request.META.HTTP_REFERER}}">Cancelar y volver</a>
+	</form>
+</body>
+{% endif %}
+
+</html>
+{% endblock %}
