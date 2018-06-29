@@ -1,5 +1,11 @@
-<h1> GESTION DE USUARIOS</h1>
-	<table>
+{% extends 'base/base.html'%}
+
+{% block title %} Empleados{% endblock %}
+
+{% block name %} Gestion de clientes {% endblock %}
+{% block contenido %}
+
+<table  class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
 		<tr>
 			<th>ID</th>
 			<th>Nombre</th>
@@ -24,4 +30,9 @@
 					</tr>
 		{% endfor %}
 	</table>
-	<a href="{% url 'usuario:crear_cliente' %}">Registrar Cliente</a>
+	<a href="{% url 'usuario:crear_cliente' %}">
+	<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+			Registrar cliente
+		  </button>
+	</a>
+{% endblock %}
