@@ -1,25 +1,6 @@
-<<<<<<< HEAD
 	<form action="" method="POST">
 		{% csrf_token %}
 			<p> Realmente quiere eliminar el contacto {{c.nombre}}? </p>
 			<button type="submit">Si, eliminar</button>
 		
 	</form>
-=======
-<!-- {# dsi2018\templates\proveedor\eliminarContacto.html #}
-{# ANALISTA PROGRAMADOS: Samuel	García						FECHA CREACION: 062018 #}
-{# MODIFICADO POR: Virginia Ramírez                         FECHA MODIFICACION: 062018 #} -->
-
-{% extends 'base/base.html'%}
-{% block title %} Eliminar Contacto {% endblock %}
-{% block name %} Eliminar Contacto {% endblock %}
-{% block contenido %}
-<form action="" method="POST">
-	{% csrf_token %}
-	<div class="mdl-dialog__content" align="center">
-		<h4> ¿Realmente desea eliminar el contacto {{c.nombre}}? </h4>
-		<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit">Si, eliminar</button>
-	</div>
-</form>
-{% endblock %}
->>>>>>> origin/virginia
