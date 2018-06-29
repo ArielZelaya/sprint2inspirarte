@@ -82,7 +82,7 @@
     </style>
   </head>
   <body>
-    <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+    <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
       <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
         <div class="mdl-layout__header-row">
           <span class="mdl-layout-title">{% block name %} BIENVENIDO AL SISTEMA ERP PARA INSPIRARTE {% endblock %}</span>
@@ -117,7 +117,7 @@
               <i class="material-icons" role="presentation">arrow_drop_down</i>
               <span class="visuallyhidden">Accounts</span>
             </button>
-            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
+            <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="accbtn">
               <li class="mdl-menu__item">hello@example.com</li>
               <li class="mdl-menu__item">info@example.com</li>
               <li class="mdl-menu__item"><i class="material-icons">add</i>Add another account...</li>
@@ -137,8 +137,22 @@
           <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">help_outline</i><span class="visuallyhidden">Help</span></a>
         </nav>
       </div>
+<<<<<<< HEAD
         
       
+=======
+  <main class="mdl-layout__content">
+    <div class="page-content"><!-- Your content goes here -->
+      {% block contenido %} 
+      {% endblock %}
+    </div>
+  </main>
+
+    <!-- <div class="mdl-grid">
+     
+    </div> -->
+      <!--
+>>>>>>> origin/virginia
       <main class="mdl-layout__content mdl-color--grey-100">
         <div class="mdl-grid demo-content">
             
@@ -241,8 +255,13 @@
         </div>
       </main>
     
+<<<<<<< HEAD
     </div>
       <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" style="position: fixed; left: -1000px; height: -1000px;">
+=======
+    </div>-->
+<!--       <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" style="position: fixed; left: -1000px; height: -1000px;">
+>>>>>>> origin/virginia
         <defs>
           <mask id="piemask" maskContentUnits="objectBoundingBox">
             <circle cx=0.5 cy=0.5 r=0.49 fill="white" />
@@ -254,8 +273,8 @@
           </g>
         </defs>
       </svg>
-      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 500 250" style="position: fixed; left: -1000px; height: -1000px;">
-        <defs>
+ -->      <!-- <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 500 250" style="position: fixed; left: -1000px; height: -1000px;"> -->
+        <!-- <defs>
           <g id="chart">
             <g id="Gridlines">
               <line fill="#888888" stroke="#888888" stroke-miterlimit="10" x1="0" y1="27.3" x2="468.3" y2="27.3" />
@@ -287,8 +306,8 @@
               296.7,128 380.7,184.3 436.7,125 	"/>
             </g>
           </g>
-        </defs>
-      </svg>
+        </defs> -->
+   <!--    </svg> -->
      
     <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
   </body>
