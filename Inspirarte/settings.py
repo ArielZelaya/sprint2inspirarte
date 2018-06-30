@@ -76,10 +76,13 @@ WSGI_APPLICATION = 'Inspirarte.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+   'default': {
+       'ENGINE': 'django.db.backends.postgresql_psycopg2',
+       'NAME': 'db_inspirate', #Nombre de la base
+       'USER': 'edwin', #Nombre del usuario
+       'PASSWORD': 'admin10-edwin', #Contrasenia del usuario que creo la base
+       'HOST': '127.0.0.7',
+   }
 }
 
 
