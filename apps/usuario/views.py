@@ -7,35 +7,49 @@ from .models import *
 from .forms import *
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def index(request):
      return render(request,'usuario/index.html')
 
 
+def wc(request):
+     return render(request,'usuario/bienvenido/index.html')
+
 #Consulta los empleados (con contrato vigente) y se define el entorno para la gestion de estos
+@login_required(login_url='/usuario/login')
 def gestionEmpleado(request):
-	empleados = Empleado.objects.all()
-	contratos = Contrato.objects.all()
-	return render(request, 'empleado/gestionar.html', {'empleados':empleados, 'contratos':contratos})
+	administrador=User.objects.get(id=request.user.id)
+	if administrador.is_superuser :
+		empleados = Empleado.objects.all()
+		contratos = Contrato.objects.all()
+		return render(request, 'empleado/gestionar.html', {'empleados':empleados, 'contratos':contratos})
+	else:
+		return render(request,'usuario/bienvenido/index.html')
 
 
 #Habilita al emepleado para que acceda al sistema
+@login_required(login_url='/usuario/login')
 def habilitarUsuario(request, id_user):
 	empleado = User.objects.get(id=id_user)
+	administrador=User.objects.get(id=request.user.id)
+	if administrador.is_superuser :
 	#estado: booleano para seleccionar mensaje hailitar/deshabilitar
-	if empleado.is_active:
-		estado = False
-	else:
-		estado = True
-	if request.method == "POST":
 		if empleado.is_active:
-			empleado.is_active = False
+			estado = False
 		else:
-			empleado.is_active = True
-		empleado.save()
-		return redirect('usuario:ges_emp')
-	return render(request, 'empleado/confirmarHabilitacion.html', {'empleado':empleado, 'estado':estado})
+			estado = True
+		if request.method == "POST":
+			if empleado.is_active:
+				empleado.is_active = False
+			else:
+				empleado.is_active = True
+			empleado.save()
+			return redirect('usuario:ges_emp')
+		return render(request, 'empleado/confirmarHabilitacion.html', {'empleado':empleado, 'estado':estado})
+	else:
+		return render(request,'usuario/bienvenido/index.html')
 
 
 #Funcion para ordenar los dias (y horarios atipicos si asi se requiere) en una cadena de caracteres
@@ -126,221 +140,246 @@ def calcularDuracion(a, b):
 
 
 #REGISTRO DE EMPLEADOS
+@login_required(login_url='/usuario/login')
 def registrarEmpleado(request):
-	editar = False
-	puestos = Puesto.objects.all()
-	if request.method == 'POST':
-		first_name = request.POST.get('first_name')
-		last_name = request.POST.get('last_name')
-		email = request.POST.get('email')
-		password = request.POST.get('password')
-		username = request.POST.get('codigo')
-		puesto_id = request.POST.get('puesto')
-		dui = request.POST.get('dui')
-		nit = request.POST.get('nit')
-		isss = request.POST.get('isss')
-		nup = request.POST.get('nup')
-		codigo = codigo = generarCodigo(first_name, last_name)
-		domicilio = request.POST.get('domicilio')
-		telefono = request.POST.get('telefono')
-		active = request.POST.get('active')
-		#Si se selecciono el checkbox habilitar, active = True
-		#Creacion de objeto Empleado
-		if active:
-			empleado = Empleado.objects.create_user(
-							username=username, 
-							email=email, 
-							first_name=first_name, 
-							last_name=last_name, 
-							password=password, 
-							is_active=True,
-							puesto_id=puesto_id,
-							dui=dui,
-							nit=nit,
-							isss=isss,
-							nup=nup,
-							codigo=codigo,
-							domicilio=domicilio,
-							telefono=telefono)
-		else:
-			empleado = Empleado.objects.create_user(
-							username=username, 
-							email=email, 
-							first_name=first_name, 
-							last_name=last_name, 
-							password=codigo, 
-							is_active=False,
-							puesto_id=puesto_id,
-							dui=dui,
-							nit=nit,
-							isss=isss,
-							nup=nup,
-							codigo=codigo,
-							domicilio=domicilio,
-							telefono=telefono)
-		empleado.save()
-		#Creacion de objeto Contrato
-		contrato = Contrato()
-		contrato.empleado_id = empleado.id
-		contrato.tipo = request.POST.get('tipo')
-		contrato.fechaCelebracion = date.today()
-		contrato.fechaInicio = request.POST.get('fechaInicio')
-		contrato.fechaFinal = request.POST.get('fechaFinal')
-		contrato.duracion = calcularDuracion(contrato.fechaInicio, contrato.fechaFinal)
-		contrato.horaEntrada = request.POST.get('horaEntrada')
-		contrato.horaSalida = request.POST.get('horaSalida')
-		#Identificacion de dias labores
-		dias = []
-		horaSalida = []
-		horaEntrada = []
-		contrato.diasLaborales = ""
-		dias.append(request.POST.get('lunes'))			#lunes
-		horaEntrada.append(request.POST.get('helu'))
-		horaSalida.append(request.POST.get('hslu'))
-		dias.append(request.POST.get('martes'))			#martes
-		horaEntrada.append(request.POST.get('hema'))
-		horaSalida.append(request.POST.get('hsma'))	
-		dias.append(request.POST.get('miercoles'))		#miercoles
-		horaEntrada.append(request.POST.get('hemi'))
-		horaSalida.append(request.POST.get('hsmi'))
-		dias.append(request.POST.get('jueves'))			#jueves
-		horaEntrada.append(request.POST.get('heju'))
-		horaSalida.append(request.POST.get('hsju'))
-		dias.append(request.POST.get('viernes'))		#viernes
-		horaEntrada.append(request.POST.get('hevi'))
-		horaSalida.append(request.POST.get('hsvi'))
-		dias.append(request.POST.get('sabado'))			#sabado
-		horaEntrada.append(request.POST.get('hesa'))
-		horaSalida.append(request.POST.get('hssa'))
-		dias.append(request.POST.get('domingo'))		#domingo
-		horaEntrada.append(request.POST.get('hedo'))
-		horaSalida.append(request.POST.get('hsdo'))
-		contrato.diasLaborales = addDiasLaborales(dias, horaEntrada, horaSalida) #Retorno de cadena
-		contrato.salario = request.POST.get('salario')
-		contrato.vigente = True
-		contrato.save()
-		return redirect('usuario:ges_emp')
-	return render(request, 'empleado/registrar_editar.html', {'editar':editar, 'puestos':puestos})
+	administrador=User.objects.get(id=request.user.id)
+	if administrador.is_superuser :
+		editar = False
+		puestos = Puesto.objects.all()
+		if request.method == 'POST':
+			first_name = request.POST.get('first_name')
+			last_name = request.POST.get('last_name')
+			email = request.POST.get('email')
+			password = request.POST.get('password')
+			username = request.POST.get('codigo')
+			puesto_id = request.POST.get('puesto')
+			dui = request.POST.get('dui')
+			nit = request.POST.get('nit')
+			isss = request.POST.get('isss')
+			nup = request.POST.get('nup')
+			codigo = codigo = generarCodigo(first_name, last_name)
+			domicilio = request.POST.get('domicilio')
+			telefono = request.POST.get('telefono')
+			active = request.POST.get('active')
+			#Si se selecciono el checkbox habilitar, active = True
+			#Creacion de objeto Empleado
+			if active:
+				empleado = Empleado.objects.create_user(
+								username=username, 
+								email=email, 
+								first_name=first_name, 
+								last_name=last_name, 
+								password=password, 
+								is_active=True,
+								puesto_id=puesto_id,
+								dui=dui,
+								nit=nit,
+								isss=isss,
+								nup=nup,
+								codigo=codigo,
+								domicilio=domicilio,
+								telefono=telefono)
+			else:
+				empleado = Empleado.objects.create_user(
+								username=username, 
+								email=email, 
+								first_name=first_name, 
+								last_name=last_name, 
+								password=codigo, 
+								is_active=False,
+								puesto_id=puesto_id,
+								dui=dui,
+								nit=nit,
+								isss=isss,
+								nup=nup,
+								codigo=codigo,
+								domicilio=domicilio,
+								telefono=telefono)
+			empleado.save()
+			#Creacion de objeto Contrato
+			contrato = Contrato()
+			contrato.empleado_id = empleado.id
+			contrato.tipo = request.POST.get('tipo')
+			contrato.fechaCelebracion = date.today()
+			contrato.fechaInicio = request.POST.get('fechaInicio')
+			contrato.fechaFinal = request.POST.get('fechaFinal')
+			contrato.duracion = calcularDuracion(contrato.fechaInicio, contrato.fechaFinal)
+			contrato.horaEntrada = request.POST.get('horaEntrada')
+			contrato.horaSalida = request.POST.get('horaSalida')
+			#Identificacion de dias labores
+			dias = []
+			horaSalida = []
+			horaEntrada = []
+			contrato.diasLaborales = ""
+			dias.append(request.POST.get('lunes'))			#lunes
+			horaEntrada.append(request.POST.get('helu'))
+			horaSalida.append(request.POST.get('hslu'))
+			dias.append(request.POST.get('martes'))			#martes
+			horaEntrada.append(request.POST.get('hema'))
+			horaSalida.append(request.POST.get('hsma'))	
+			dias.append(request.POST.get('miercoles'))		#miercoles
+			horaEntrada.append(request.POST.get('hemi'))
+			horaSalida.append(request.POST.get('hsmi'))
+			dias.append(request.POST.get('jueves'))			#jueves
+			horaEntrada.append(request.POST.get('heju'))
+			horaSalida.append(request.POST.get('hsju'))
+			dias.append(request.POST.get('viernes'))		#viernes
+			horaEntrada.append(request.POST.get('hevi'))
+			horaSalida.append(request.POST.get('hsvi'))
+			dias.append(request.POST.get('sabado'))			#sabado
+			horaEntrada.append(request.POST.get('hesa'))
+			horaSalida.append(request.POST.get('hssa'))
+			dias.append(request.POST.get('domingo'))		#domingo
+			horaEntrada.append(request.POST.get('hedo'))
+			horaSalida.append(request.POST.get('hsdo'))
+			contrato.diasLaborales = addDiasLaborales(dias, horaEntrada, horaSalida) #Retorno de cadena
+			contrato.salario = request.POST.get('salario')
+			contrato.vigente = True
+			contrato.save()
+			return redirect('usuario:ges_emp')
+		return render(request, 'empleado/registrar_editar.html', {'editar':editar, 'puestos':puestos})
+	else:
+		return render(request,'usuario/bienvenido/index.html')
 
 
 #EDITAR EMPLEADO
+@login_required(login_url='/usuario/login')
 def editarEmpleado(request, id_user):
-	editar = True
-	puestos = Puesto.objects.all()
-	empleado = Empleado.objects.get(id=id_user)
-	contrato = Contrato.objects.get(empleado_id=id_user, vigente=True)
-	if request.method == 'POST':
-		first_name = request.POST.get('first_name')
-		last_name = request.POST.get('last_name')
-		email = request.POST.get('email')
-		password = request.POST.get('password')
-		username = request.POST.get('codigo')
-		puesto_id = request.POST.get('puesto')
-		dui = request.POST.get('dui')
-		nit = request.POST.get('nit')
-		isss = request.POST.get('isss')
-		nup = request.POST.get('nup')
-		codigo = request.POST.get('codigo')
-		domicilio = request.POST.get('domicilio')
-		telefono = request.POST.get('telefono')
-		active = request.POST.get('active')
-		#Edicion del objeto a empleado
-		empleado.username=username
-		empleado.email=email
-		empleado.first_name=first_name
-		empleado.last_name=last_name
-		empleado.puesto_id=puesto_id
-		empleado.dui=dui
-		empleado.nit=nit
-		empleado.isss=isss
-		empleado.nup=nup
-		empleado.codigo=codigo
-		empleado.domicilio=domicilio
-		empleado.telefono=telefono
-		#ACTIVO: Si se ha activado el usuario
-		if active:	
-			empleado.password=password
-			empleado.is_active=True
-		#NO ACTIVO: Si no se ha dado activado el usuario
-		else:
-			empleado.password=codigo
-			empleado.is_active=False
-		empleado.save()
-		#No se podra editar un de objeto Contrato
-		return redirect('usuario:ges_emp')
-	return render(request, 'empleado/registrar_editar.html', {'editar':editar, 'puestos':puestos, 'empleado':empleado, 'contrato':contrato})
+	administrador=User.objects.get(id=request.user.id)
+	if administrador.is_superuser :
+		editar = True
+		puestos = Puesto.objects.all()
+		empleado = Empleado.objects.get(id=id_user)
+		contrato = Contrato.objects.get(empleado_id=id_user, vigente=True)
+		if request.method == 'POST':
+			first_name = request.POST.get('first_name')
+			last_name = request.POST.get('last_name')
+			email = request.POST.get('email')
+			password = request.POST.get('password')
+			username = request.POST.get('codigo')
+			puesto_id = request.POST.get('puesto')
+			dui = request.POST.get('dui')
+			nit = request.POST.get('nit')
+			isss = request.POST.get('isss')
+			nup = request.POST.get('nup')
+			codigo = request.POST.get('codigo')
+			domicilio = request.POST.get('domicilio')
+			telefono = request.POST.get('telefono')
+			active = request.POST.get('active')
+			#Edicion del objeto a empleado
+			empleado.username=username
+			empleado.email=email
+			empleado.first_name=first_name
+			empleado.last_name=last_name
+			empleado.puesto_id=puesto_id
+			empleado.dui=dui
+			empleado.nit=nit
+			empleado.isss=isss
+			empleado.nup=nup
+			empleado.codigo=codigo
+			empleado.domicilio=domicilio
+			empleado.telefono=telefono
+			#ACTIVO: Si se ha activado el usuario
+			if active:	
+				empleado.password=password
+				empleado.is_active=True
+			#NO ACTIVO: Si no se ha dado activado el usuario
+			else:
+				empleado.password=codigo
+				empleado.is_active=False
+			empleado.save()
+			#No se podra editar un de objeto Contrato
+			return redirect('usuario:ges_emp')
+		return render(request, 'empleado/registrar_editar.html', {'editar':editar, 'puestos':puestos, 'empleado':empleado, 'contrato':contrato})
+	else:
+		return render(request,'usuario/bienvenido/index.html')
 
 
 #CREACION CONTRATO
+@login_required(login_url='/usuario/login')
 def crearContrato(request, id_user):
-	empleado = Empleado.objects.get(id=id_user)
-	#Se busca el contrato actualmente vigente del empleado al que se le creara uno nuevo
-	contratoAnterior = Contrato.objects.get(empleado_id=id_user, vigente=True)
-	if request.method == 'POST':
-		#Cancelacion de contrato anterior
-		contratoAnterior.vigente = False
-		contratoAnterior.save()
-		#Creacion de nuevo contrato
-		contrato = Contrato()
-		contrato.empleado_id = id_user
-		contrato.tipo = request.POST.get('tipo')
-		contrato.fechaCelebracion = date.today()
-		contrato.fechaInicio = request.POST.get('fechaInicio')
-		contrato.fechaFinal = request.POST.get('fechaFinal')
-		contrato.duracion = calcularDuracion(contrato.fechaInicio, contrato.fechaFinal)
-		contrato.horaEntrada = request.POST.get('horaEntrada')
-		contrato.horaSalida = request.POST.get('horaSalida')
-		#Identificacion de dias labores
-		dias = []
-		horaSalida = []
-		horaEntrada = []
-		contrato.diasLaborales = ""
-		dias.append(request.POST.get('lunes'))			#lunes
-		horaEntrada.append(request.POST.get('helu'))
-		horaSalida.append(request.POST.get('hslu'))
-		dias.append(request.POST.get('martes'))			#martes
-		horaEntrada.append(request.POST.get('hema'))
-		horaSalida.append(request.POST.get('hsma'))	
-		dias.append(request.POST.get('miercoles'))		#miercoles
-		horaEntrada.append(request.POST.get('hemi'))
-		horaSalida.append(request.POST.get('hsmi'))
-		dias.append(request.POST.get('jueves'))			#jueves
-		horaEntrada.append(request.POST.get('heju'))
-		horaSalida.append(request.POST.get('hsju'))
-		dias.append(request.POST.get('viernes'))		#viernes
-		horaEntrada.append(request.POST.get('hevi'))
-		horaSalida.append(request.POST.get('hsvi'))
-		dias.append(request.POST.get('sabado'))			#sabado
-		horaEntrada.append(request.POST.get('hesa'))
-		horaSalida.append(request.POST.get('hssa'))
-		dias.append(request.POST.get('domingo'))		#domingo
-		horaEntrada.append(request.POST.get('hedo'))
-		horaSalida.append(request.POST.get('hsdo'))
-		contrato.diasLaborales = addDiasLaborales(dias, horaEntrada, horaSalida) #Retorno de dias laborales
-		contrato.salario = request.POST.get('salario')
-		contrato.vigente = True
-		contrato.save()
-		return redirect('usuario:ges_emp')
-	return render(request, 'empleado/crearContrato.html', {'empleado':empleado})
+	administrador=User.objects.get(id=request.user.id)
+	if administrador.is_superuser :
+		empleado = Empleado.objects.get(id=id_user)
+		#Se busca el contrato actualmente vigente del empleado al que se le creara uno nuevo
+		contratoAnterior = Contrato.objects.get(empleado_id=id_user, vigente=True)
+		if request.method == 'POST':
+			#Cancelacion de contrato anterior
+			contratoAnterior.vigente = False
+			contratoAnterior.save()
+			#Creacion de nuevo contrato
+			contrato = Contrato()
+			contrato.empleado_id = id_user
+			contrato.tipo = request.POST.get('tipo')
+			contrato.fechaCelebracion = date.today()
+			contrato.fechaInicio = request.POST.get('fechaInicio')
+			contrato.fechaFinal = request.POST.get('fechaFinal')
+			contrato.duracion = calcularDuracion(contrato.fechaInicio, contrato.fechaFinal)
+			contrato.horaEntrada = request.POST.get('horaEntrada')
+			contrato.horaSalida = request.POST.get('horaSalida')
+			#Identificacion de dias labores
+			dias = []
+			horaSalida = []
+			horaEntrada = []
+			contrato.diasLaborales = ""
+			dias.append(request.POST.get('lunes'))			#lunes
+			horaEntrada.append(request.POST.get('helu'))
+			horaSalida.append(request.POST.get('hslu'))
+			dias.append(request.POST.get('martes'))			#martes
+			horaEntrada.append(request.POST.get('hema'))
+			horaSalida.append(request.POST.get('hsma'))	
+			dias.append(request.POST.get('miercoles'))		#miercoles
+			horaEntrada.append(request.POST.get('hemi'))
+			horaSalida.append(request.POST.get('hsmi'))
+			dias.append(request.POST.get('jueves'))			#jueves
+			horaEntrada.append(request.POST.get('heju'))
+			horaSalida.append(request.POST.get('hsju'))
+			dias.append(request.POST.get('viernes'))		#viernes
+			horaEntrada.append(request.POST.get('hevi'))
+			horaSalida.append(request.POST.get('hsvi'))
+			dias.append(request.POST.get('sabado'))			#sabado
+			horaEntrada.append(request.POST.get('hesa'))
+			horaSalida.append(request.POST.get('hssa'))
+			dias.append(request.POST.get('domingo'))		#domingo
+			horaEntrada.append(request.POST.get('hedo'))
+			horaSalida.append(request.POST.get('hsdo'))
+			contrato.diasLaborales = addDiasLaborales(dias, horaEntrada, horaSalida) #Retorno de dias laborales
+			contrato.salario = request.POST.get('salario')
+			contrato.vigente = True
+			contrato.save()
+			return redirect('usuario:ges_emp')
+		return render(request, 'empleado/crearContrato.html', {'empleado':empleado})
+	else:
+		return render(request,'usuario/bienvenido/index.html')
 
 
 #CANCELACION DE CONTRATO
+@login_required(login_url='/usuario/login')
 def cancelarContrato(request, id_user):
-	contrato = Contrato.objects.get(empleado_id=id_user, vigente=True)
-	empleado = Empleado.objects.get(id=id_user)
-	if request.method == 'POST':
-		contrato.fechaFinal = date.today()
-		contrato.vigente = False
-		contrato.save()
-		return redirect('usuario:ges_emp')
-	return render(request, 'empleado/cancelarContrato.html', {'empleado':empleado})
+	administrador=User.objects.get(id=request.user.id)
+	if administrador.is_superuser :
+		contrato = Contrato.objects.get(empleado_id=id_user, vigente=True)
+		empleado = Empleado.objects.get(id=id_user)
+		if request.method == 'POST':
+			contrato.fechaFinal = date.today()
+			contrato.vigente = False
+			contrato.save()
+			return redirect('usuario:ges_emp')
+		return render(request, 'empleado/cancelarContrato.html', {'empleado':empleado})
+	else:
+		return render(request,'usuario/bienvenido/index.html')
 
 
 #Consulta de contratos no vigentes
+@login_required(login_url='/usuario/login')
 def noVigentes(request):
-	empleados = Empleado.objects.all()
-	contratos = Contrato.objects.all()
-	return render(request, 'empleado/contratosNoVigentes.html', {'empleados':empleados, 'contratos':contratos})
+	administrador=User.objects.get(id=request.user.id)
+	if administrador.is_superuser :
+		empleados = Empleado.objects.all()
+		contratos = Contrato.objects.all()
+		return render(request, 'empleado/contratosNoVigentes.html', {'empleados':empleados, 'contratos':contratos})
+	else:
+		return render(request,'usuario/bienvenido/index.html')
 
 
 #Parte de los usuarios
@@ -370,7 +409,6 @@ def cerrarSesion(request):
     logout(request)
     return redirect('usuario:idex')
 
-
 def crearCliente(request):
 	valor=""
 	if request.method=='POST':
@@ -387,7 +425,7 @@ def crearCliente(request):
 		#guardara
 	# else :
 
-
+@login_required(login_url='/usuario/login')
 def editarCliente(request,id_user):
 	valor=""
 	cliente=Cliente.objects.get(id=id_user)		
@@ -402,18 +440,27 @@ def editarCliente(request,id_user):
 		context={"form":form,'valor':valor}
 		return render(request,'usuario/crearCliente.html',context)
 
+@login_required(login_url='/usuario/login')
 def gestionCliente(request):
-	usuarios=Cliente.objects.all()
-	context={'usuarios':usuarios}
-	return render(request,'usuario/gestionar.html', context)
-
-
-def tipoCliente(request,id_user):
-	cliente=Cliente.objects.get(id=id_user)
-	if request.method=='POST':
-		tipoC=request.POST['t_cliente']
-		cliente.tipo=tipoC
-		cliente.save()
-		return redirect('usuario:gestion_cliente')
+	administrador=User.objects.get(id=request.user.id)
+	if administrador.is_superuser :
+		usuarios=Cliente.objects.all()
+		context={'usuarios':usuarios}
+		return render(request,'usuario/gestionar.html', context)
 	else:
-		return render(request, 'usuario/tipoCliente.html')
+		return render(request,'usuario/bienvenido/index.html')
+
+@login_required(login_url='/usuario/login')
+def tipoCliente(request,id_user):
+	administrador=User.objects.get(id=request.user.id)
+	if administrador.is_superuser :
+		cliente=Cliente.objects.get(id=id_user)
+		if request.method=='POST':
+			tipoC=request.POST['t_cliente']
+			cliente.tipo=tipoC
+			cliente.save()
+			return redirect('usuario:gestion_cliente')
+		else:
+			return render(request, 'usuario/tipoCliente.html')
+	else:
+		return render(request,'usuario/bienvenido/index.html')

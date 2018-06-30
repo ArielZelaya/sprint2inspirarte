@@ -22,6 +22,6 @@ urlpatterns = [
 	url(r'^proveedor/', include('apps.proveedor.urls')),
     url(r'^admin/', admin.site.urls),    
     #Index temporal
-    url(r'^', views.index)
+    url(r'^', views.index, name="index"),
     
 ]
