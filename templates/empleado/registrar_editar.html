@@ -88,7 +88,7 @@
 									<label class="mdl-textfield__label" for="nit">{{empleado.codigo}}</label>
 									<span class="mdl-textfield__error">CODIGO incorrecto!</span>
 								  </div>
-								  <br>Email:<br> 
+								<br>Email:<br> 
 							<div class="mdl-textfield mdl-js-textfield">
 									<input class="mdl-textfield__input" name="email" type="email" id="email" value="{{empleado.email}}">
 									<label class="mdl-textfield__label" for="email">{{empleado.email}}</label>
@@ -176,13 +176,13 @@
 							
 							
 							<div class="mdl-textfield mdl-js-textfield">
-									<input class="mdl-textfield__input" name="username" type="text" id="username" value="{{empleado.username}}">
+									<input class="mdl-textfield__input" name="username" type="text" id="username" value="{{empleado.username}}" disabled>
 									<label class="mdl-textfield__label" for="username">{{empleado.username}}</label>
 								  </div><br>
 							Asignar nueva contrasenia: <br>
 							<div class="mdl-textfield mdl-js-textfield">
-									<input class="mdl-textfield__input" name="password" type="text" id="password" value="{{empleado.password}}">
-									<label class="mdl-textfield__label" for="password">{{empleado.password}}</label>
+									<input class="mdl-textfield__input" name="password" type="text" id="password" value="">
+									<label class="mdl-textfield__label" for="password"></label>
 								  </div><br>
 							
 							<button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
@@ -300,11 +300,11 @@
 							
 								  Codigo: <br>
 							<div class="mdl-textfield mdl-js-textfield">
-									<input class="mdl-textfield__input" name="codigo" type="text" id="codigo" value="" pattern="-?[0-9]*(\.[0-9]+)?">
+									<input class="mdl-textfield__input" name="codigo" type="text" id="codigo" value="" pattern="-?[0-9]*(\.[0-9]+)?" disabled>
 									<label class="mdl-textfield__label" for="nit">{{empleado.codigo}}</label>
 									<span class="mdl-textfield__error">CODIGO incorrecto!</span>
 								  </div>
-							
+								
 								  Email: <br>
 							<div class="mdl-textfield mdl-js-textfield">
 									<input class="mdl-textfield__input" name="email" type="text" id="email" value="{{empleado.email}}">
@@ -390,7 +390,7 @@
 						Nombre de Usuario: <br>
 							
 							<div class="mdl-textfield mdl-js-textfield">
-									<input class="mdl-textfield__input" name="username" type="text" id="username" value="{{empleado.username}}"disabled>
+									<input class="mdl-textfield__input" name="username" type="text" id="username" value="" disabled>
 									<label class="mdl-textfield__label" for="username">{{empleado.username}}</label>
 								  </div><br>
 								

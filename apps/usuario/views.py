@@ -134,7 +134,7 @@ def registrarEmpleado(request):
 		last_name = request.POST.get('last_name')
 		email = request.POST.get('email')
 		password = request.POST.get('password')
-		username = request.POST.get('codigo')
+		username = codigo = codigo = generarCodigo(first_name, last_name)
 		puesto_id = request.POST.get('puesto')
 		dui = request.POST.get('dui')
 		nit = request.POST.get('nit')
@@ -234,13 +234,13 @@ def editarEmpleado(request, id_user):
 		last_name = request.POST.get('last_name')
 		email = request.POST.get('email')
 		password = request.POST.get('password')
-		username = request.POST.get('codigo')
+		username = empleado.username
 		puesto_id = request.POST.get('puesto')
 		dui = request.POST.get('dui')
 		nit = request.POST.get('nit')
 		isss = request.POST.get('isss')
 		nup = request.POST.get('nup')
-		codigo = request.POST.get('codigo')
+		codigo = empleado.codigo
 		domicilio = request.POST.get('domicilio')
 		telefono = request.POST.get('telefono')
 		active = request.POST.get('active')
@@ -368,7 +368,7 @@ def iniciarSesion(request):
 	
 def cerrarSesion(request):
     logout(request)
-    return redirect('usuario:idex')
+    return redirect('usuario:login')
 
 
 def crearCliente(request):
