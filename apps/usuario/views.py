@@ -124,7 +124,6 @@ def calcularDuracion(a, b):
 	print("PRUEBA"+dias+" "+meses+" "+anios)
 	return dias+" dias, "+meses+" meses, "+anios+" anios"
 
-
 #REGISTRO DE EMPLEADOS
 def registrarEmpleado(request):
 	editar = False
@@ -221,6 +220,52 @@ def registrarEmpleado(request):
 		contrato.save()
 		return redirect('usuario:ges_emp')
 	return render(request, 'empleado/registrar_editar.html', {'editar':editar, 'puestos':puestos})
+#DETALLES DE EMPLEADO
+def detallesEmpleado(request, id_user):
+	editar = True
+	puestos = Puesto.objects.all()
+	empleado = Empleado.objects.get(id=id_user)
+	contrato = Contrato.objects.get(empleado_id=id_user, vigente=True)
+	if request.method == 'POST':
+		first_name = request.POST.get('first_name')
+		last_name = request.POST.get('last_name')
+		email = request.POST.get('email')
+		password = request.POST.get('password')
+		username = empleado.username
+		puesto_id = request.POST.get('puesto')
+		dui = request.POST.get('dui')
+		nit = request.POST.get('nit')
+		isss = request.POST.get('isss')
+		nup = request.POST.get('nup')
+		codigo = empleado.codigo
+		domicilio = request.POST.get('domicilio')
+		telefono = request.POST.get('telefono')
+		active = request.POST.get('active')
+		#Edicion del objeto a empleado
+		empleado.username=username
+		empleado.email=email
+		empleado.first_name=first_name
+		empleado.last_name=last_name
+		empleado.puesto_id=puesto_id
+		empleado.dui=dui
+		empleado.nit=nit
+		empleado.isss=isss
+		empleado.nup=nup
+		empleado.codigo=codigo
+		empleado.domicilio=domicilio
+		empleado.telefono=telefono
+		#ACTIVO: Si se ha activado el usuario
+		if active:	
+			empleado.password=password
+			empleado.is_active=True
+		#NO ACTIVO: Si no se ha dado activado el usuario
+		else:
+			empleado.password=codigo
+			empleado.is_active=False
+		empleado.save()
+		#No se podra editar un de objeto Contrato
+		return redirect('usuario:ges_emp')
+	return render(request, 'empleado/details.html', {'editar':editar, 'puestos':puestos, 'empleado':empleado, 'contrato':contrato})
 
 
 #EDITAR EMPLEADO
@@ -401,6 +446,36 @@ def editarCliente(request,id_user):
 		form=clienteForm(instance=cliente)
 		context={"form":form,'valor':valor}
 		return render(request,'usuario/crearCliente.html',context)
+
+def editcliente(request, id_user):
+	
+	
+	cliente = Cliente.objects.get(id=id_user)
+	
+	if request.method == 'POST':
+		first_name = request.POST.get('first_name')
+		last_name = request.POST.get('last_name')
+		email = request.POST.get('email')
+		password = request.POST.get('password')
+		username = request.POST.get('username')
+		dui = request.POST.get('dui')
+		domicilio = request.POST.get('domicilio')
+		telefono = request.POST.get('telefono')
+		
+		#Edicion del objeto a empleado
+		cliente.username=username
+		cliente.email=email
+		cliente.first_name=first_name
+		cliente.last_name=last_name
+		cliente.dui=dui
+		cliente.domicilio=domicilio
+		cliente.telefono=telefono
+		cliente.email=email
+		cliente.save()
+		#No se podra editar un de objeto Contrato
+		return redirect('usuario:gestion_cliente')
+	return render(request, 'usuario/editarCliente.html', {'cliente':cliente})
+
 
 def gestionCliente(request):
 	usuarios=Cliente.objects.all()

@@ -5,6 +5,9 @@
 {% block name %} Registrar cliente {% endblock %}
 {% load static %}
 {% block contenido%}
+<!-- {# dsi2018\templates\base\base.html #}
+{# ANALISTA PROGRAMADOR: Edwin Molina						FECHA CREACION: 062018 #}
+{# MODIFICADO POR: Christian Zelaya                   FECHA MODIFICACION: 270618 #} -->
 
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -49,7 +52,7 @@
 				<div id="izquierda">
 						<!--<p><label for="id_first_name">Ingrese su nombre:</label> <input name="first_name" maxlength="30" id="id_first_name" type="text"></p>-->
 						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-								<input class="mdl-textfield__input"  name="first_name" type="text" id="id_first_name">
+								<input class="mdl-textfield__input"  name="first_name" type="text" id="id_first_name" value="{{cliente.first_name}}">
 								<label class="mdl-textfield__label" for="id_first_name">Nombre:</label>
 							</div>
 						<!--<p><label for="id_last_name">Ingrese su apellido:</label> <input name="last_name" maxlength="30" id="id_last_name" type="text"></p>-->

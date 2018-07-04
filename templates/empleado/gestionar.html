@@ -6,6 +6,9 @@
 {% block contenido %}
 <div class="mdl-grid">
 <!DOCTYPE html>
+<!-- {# dsi2018\templates\base\base.html #}
+{# ANALISTA PROGRAMADOR: Edwin Molina						FECHA CREACION: 062018 #}
+{# MODIFICADO POR: Christian Zelaya                   FECHA MODIFICACION: 270618 #} -->
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -34,7 +37,7 @@
 						<td >{{e.first_name}} {{e.last_name}}</td>
 						<td>{{e.puesto}}</td>
 						<td>{{e.puesto.departamento}}</td>
-						<td><a href="">Detalles</a></td>
+						<td><a href="{% url 'usuario:dtl_emp' e.id %}">Detalles</a></td>
 						{% if e.is_active %}
 							<td><a href="{% url 'usuario:act_emp' e.id %}">Deshabilitar</a></td>
 						{% else %}
