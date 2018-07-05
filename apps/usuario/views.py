@@ -75,32 +75,49 @@ def addDiasLaborales(dias, horaEntrada, horaSalida):
 	return cadenaDias
 
 
-#Funcion para generar el codigo de empleado segun el patron establecido
+#3 - ARREGLO inicio
+#Funciones para generar el codigo de empleado segun el patron establecido
+def generadorCombinacion(first_name, last_name):
+		codigo = ""
+		for i in range(len(last_name)):
+			if i == 0:
+				codigo = last_name[i]
+		for i in range(len(first_name)):
+			if i == 0:
+				codigo = codigo + first_name[i]
+		return codigo
 def generarCodigo(first_name, last_name):
 	empleados = Empleado.objects.all()
-	n = len(empleados)
-	empleado = empleados[n-1]
-	codigo = ""
-	for i in range(len(last_name)):
-		if i == 0:
-			codigo = last_name[i]
-	for i in range(len(first_name)):
-		if i == 0:
-			codigo = codigo + first_name[i]
-	m = len(empleado.codigo)
-	codigo2 = ""
-	for i in range(m):
-		if i == m-4:
-			codigo2 = codigo2 + empleado.codigo[i]
-		if i == m-3:
-			codigo2 = codigo2 + empleado.codigo[i]
-		if i == m-2:
-			codigo2 = codigo2 + empleado.codigo[i]
-		if i == m-1:
-			codigo2 = codigo2 + empleado.codigo[i]
-	codigo3 = int(codigo2) + 1
-	codigo = codigo + str(codigo3)
-	return codigo
+	codigo=""
+	if not empleados:
+		codigo = generadorCombinacion(first_name, last_name)
+		codigo = codigo + '1000'
+		return codigo
+	else:
+		n = len(empleados)
+		empleado = empleados[n-1]
+		codigo = generadorCombinacion(first_name, last_name)
+		codigo2 = ""
+		m = len(empleado.codigo)
+		print("PRUEBA:"+str(m))
+		for i in range(m):
+			if i == m-4:
+				codigo2 = codigo2 + empleado.codigo[i]
+				print(codigo2)
+			if i == m-3:
+				codigo2 = codigo2 + empleado.codigo[i]
+				print(codigo2)
+			if i == m-2:
+				codigo2 = codigo2 + empleado.codigo[i]
+				print(codigo2)
+			if i == m-1:
+				codigo2 = codigo2 + empleado.codigo[i]
+				print(codigo2)
+		codigo3 = int(codigo2) + 1
+		print(codigo3)
+		codigo = codigo + str(codigo3)
+		print(codigo)
+		return codigo
 
 
 #Funcion para calcular la duracion del contrato
@@ -151,13 +168,13 @@ def registrarEmpleado(request):
 			last_name = request.POST.get('last_name')
 			email = request.POST.get('email')
 			password = request.POST.get('password')
-			username = request.POST.get('codigo')
 			puesto_id = request.POST.get('puesto')
 			dui = request.POST.get('dui')
 			nit = request.POST.get('nit')
 			isss = request.POST.get('isss')
 			nup = request.POST.get('nup')
-			codigo = codigo = generarCodigo(first_name, last_name)
+			codigo = generarCodigo(first_name, last_name) #1 - ARREGLO
+			username = codigo #2 - ARREGLO
 			domicilio = request.POST.get('domicilio')
 			telefono = request.POST.get('telefono')
 			active = request.POST.get('active')

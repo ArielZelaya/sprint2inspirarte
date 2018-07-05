@@ -9,8 +9,8 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	
-
+{# TAR #}
+{% if empleados %}
 	<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
 		<thead>
 		  <tr>
@@ -23,10 +23,8 @@
 			<th>Editar</th>
 		  </tr>
 		</thead>
-		<tbody>
-			
+		<tbody>	
 			{% for e in empleados %}
-			
 			{% for c in contratos %}
 				{% if c.empleado_id == e.id and c.vigente == True %}
 					<tr>
@@ -46,13 +44,15 @@
 			{% endfor %}
 		{% endfor %}
 		</tbody>  
-	  </table>
-	  <a href="{% url 'usuario:reg_emp' %}">
-		<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-				Registrar empleado
-			  </button>
+	 </table>
+		<a href="{% url 'usuario:reg_emp' %}">
+		<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"> Registrar empleado</button>
+{% else %}
+	<h2>No hay empleados registrados</h2>
+	<a href="{% url 'usuario:reg_emp' %}">
+	<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"> Registrar empleado</button>
+{% endif %}
 </body>	
-
 </html>
 </div>
 {% endblock %}
