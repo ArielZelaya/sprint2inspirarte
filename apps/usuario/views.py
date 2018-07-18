@@ -6,6 +6,7 @@ import datetime
 from .models import *
 from .forms import *
 from django.contrib.auth import authenticate, login, logout
+from django.core.paginator import Paginator
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 # Create your views here.
@@ -22,8 +23,11 @@ def wc(request):
 def gestionEmpleado(request):
 	administrador=User.objects.get(id=request.user.id)
 	if administrador.is_superuser :
-		empleados = Empleado.objects.all()
+		empleado_list = Empleado.objects.all()
 		contratos = Contrato.objects.all()
+		paginator = Paginator(empleado_list, 5)
+		page = request.GET.get('page')
+		empleados = paginator.get_page(page)
 		return render(request, 'empleado/gestionar.html', {'empleados':empleados, 'contratos':contratos})
 	else:
 		return render(request,'usuario/bienvenido/index.html')
@@ -273,18 +277,15 @@ def editarEmpleado(request, id_user):
 			last_name = request.POST.get('last_name')
 			email = request.POST.get('email')
 			password = request.POST.get('password')
-			username = request.POST.get('codigo')
 			puesto_id = request.POST.get('puesto')
 			dui = request.POST.get('dui')
 			nit = request.POST.get('nit')
 			isss = request.POST.get('isss')
 			nup = request.POST.get('nup')
-			codigo = request.POST.get('codigo')
 			domicilio = request.POST.get('domicilio')
 			telefono = request.POST.get('telefono')
 			active = request.POST.get('active')
 			#Edicion del objeto a empleado
-			empleado.username=username
 			empleado.email=email
 			empleado.first_name=first_name
 			empleado.last_name=last_name
@@ -293,7 +294,6 @@ def editarEmpleado(request, id_user):
 			empleado.nit=nit
 			empleado.isss=isss
 			empleado.nup=nup
-			empleado.codigo=codigo
 			empleado.domicilio=domicilio
 			empleado.telefono=telefono
 			#ACTIVO: Si se ha activado el usuario
@@ -302,7 +302,7 @@ def editarEmpleado(request, id_user):
 				empleado.is_active=True
 			#NO ACTIVO: Si no se ha dado activado el usuario
 			else:
-				empleado.password=codigo
+				empleado.password=empleado.codigo
 				empleado.is_active=False
 			empleado.save()
 			#No se podra editar un de objeto Contrato

@@ -8,8 +8,9 @@ from . import views
 app_name = 'usuario'
 
 urlpatterns =[
+	#EMPLEADO
     url(r'^$',views.index,name='usuario'),
-    url(r'^gestionEmpleado$', gestionEmpleado, name="ges_emp"),
+    url(r'^gestionEmpleado', gestionEmpleado, name="ges_emp"),
 	url(r'^confirmarHabilitacion/(?P<id_user>\d+)/$', habilitarUsuario, name='act_emp'),
 	url(r'^registrarEmpleado$', registrarEmpleado, name="reg_emp"),
 	url(r'^editarEmpleado/(?P<id_user>\d+)/$', editarEmpleado, name='edt_emp'),

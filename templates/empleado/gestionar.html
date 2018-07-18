@@ -2,22 +2,45 @@
 
 {% block title %} Empleados{% endblock %}
 
-{% block name %} Gestion de empleados {% endblock %}
+{% block name %}GESTIÓN DE EMPLEADOS {% endblock %}
+
 {% block contenido %}
-<div class="mdl-grid">
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
 {# TAR #}
 {% if empleados %}
-	<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+<div style="display:block">
+
+<div style="float:left; margin-top:2%">
+		<a href="{% url 'usuario:reg_emp' %}">
+			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" style="color:white; background-color:#33CC00">Registrar empleado</button>
+		</a>
+		<a href="{% url 'usuario:nvi_cto' %}">
+			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" style="color:white; background-color:#3179af">Historial</button>
+		</a>
+</div>
+
+<div style="float:right; margin-bottom:1%;">
+	<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+	    <label class="mdl-button mdl-js-button mdl-button--icon" for="myInput">
+	      <i class="material-icons">search</i>
+	    </label>
+	    <div class="mdl-textfield__expandable-holder">
+	      <input class="mdl-textfield__input" type="text" id="myInput" onkeyup="myFunction()" placeholder="Nombre">
+	      <label class="mdl-textfield__label" for="myInput"></label>
+	    </div>
+  	</div>
+</div>
+
+<div style="float: none; clear: left; margin-top:6%;">
+	
+	<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" id="myTable">
 		<thead>
 		  <tr>
-			<th class="mdl-data-table__cell--non-numeric">Codigo</th>
-			<th>Nombres</th>
+		  	<th>ID</th>
+			<th >Codigo</th>
+			<th>Nombre completo</th>
 			<th>Puesto</th>
 			<th>Departamento</th>
+			<th>Contrato</th>
 			<th>Detalles</th>
 			<th>Habilitar</th>
 			<th>Editar</th>
@@ -28,31 +51,91 @@
 			{% for c in contratos %}
 				{% if c.empleado_id == e.id and c.vigente == True %}
 					<tr>
+						<td>{{e.id}}</td>
 						<td>{{e.codigo}}</td>
 						<td >{{e.first_name}} {{e.last_name}}</td>
 						<td>{{e.puesto}}</td>
 						<td>{{e.puesto.departamento}}</td>
-						<td><a href="">Detalles</a></td>
+						<td>{{c.tipo}}</td>
+						<td style="text-align:center;">
+							<button id="{{e.id}}" type="button" class="mdl-button" style="color:#e27908; text-align:center;">
+								<i class="material-icons">list</i>
+							</button>
+							<dialog id="{{e.codigo}}" class="mdl-dialog">
+							    <h4 class="mdl-dialog__title">Allow data collection?</h4>
+							    <div class="mdl-dialog__content">
+							      <p>
+							        Este es el usuario: {{e.codigo}}
+							      </p>
+							    </div>
+							    <div class="mdl-dialog__actions">
+							      <button type="button" class="mdl-button">Agree</button>
+							      <button type="button" class="mdl-button close">Disagree</button>
+							    </div>
+							 </dialog>
+						   <script>
+						   		var showDialogButton = document.querySelector("[id='{{e.id}}']");
+							    var dialog = document.querySelector("[id='{{e.codigo}}']");
+
+							    if (! dialog.showModal) {
+							      dialogPolyfill.registerDialog(dialog);
+							    }
+
+							    showDialogButton.addEventListener(
+							    	'click', 
+							    	function() {
+							      		dialog.showModal();
+							    	}
+							    	);
+
+							    dialog.querySelector('.close').addEventListener(
+							    	'click', 
+							    	function() {
+							      		dialog.close();
+							    	}
+							    	);
+						    </script>
+						</td>
 						{% if e.is_active %}
-							<td><a href="{% url 'usuario:act_emp' e.id %}">Deshabilitar</a></td>
+							<td style="text-align:center;">
+								<a href="{% url 'usuario:act_emp' e.id %}">
+									<i class="material-icons">check_box</i>
+								</a>
+							</td>
 						{% else %}
-							<td><a href="{% url 'usuario:act_emp' e.id %}">Habilitar</a></td>
+							<td style="text-align:center;">
+								<a href="{% url 'usuario:act_emp' e.id %}">
+									<i class="material-icons">check_box_outline_blank</i>
+								</a>
+							</td>
 						{% endif %}
-						<td><a href="{% url 'usuario:edt_emp' e.id %}">Editar</a></td>
+						<td style="text-align:center;">
+							<a href="{% url 'usuario:edt_emp' e.id %}">
+								<i class="material-icons">edit</i>
+							</a>
+						</td>
 					</tr>	  
 				{% endif %}	
 			{% endfor %}
 		{% endfor %}
-		</tbody>  
-	 </table>
-		<a href="{% url 'usuario:reg_emp' %}">
-		<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"> Registrar empleado</button>
+		</tbody>
+	</table>
+</div>
+	<div style="color:white; background-color:black; float: none; clear: left; text-align:center; margin-top:2%;">
+			   {% if empleados.has_previous %}
+			       <a class="waves-effect" href="?page=1">&laquo; primero</a>
+			       <a class="waves-effect" href="?page={{ empleados.previous_page_number }}">anterior</a>
+			   {% endif %}
+
+			       Pag. {{ empleados.number }} de {{ empleados.paginator.num_pages }}.
+
+			   {% if empleados.has_next %}
+			       <a href="?page={{ empleados.next_page_number }}">siguiente</a>
+			       <a href="?page={{ empleados.paginator.num_pages }}">ultimo &raquo;</a>
+			   {% endif %}
+	</div>
+</div>
 {% else %}
 	<h2>No hay empleados registrados</h2>
-	<a href="{% url 'usuario:reg_emp' %}">
-	<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"> Registrar empleado</button>
 {% endif %}
-</body>	
-</html>
-</div>
 {% endblock %}
