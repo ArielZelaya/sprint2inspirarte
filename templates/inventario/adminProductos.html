@@ -1,0 +1,118 @@
+{% extends 'base/base.html'%}
+
+{% block title %}Administracion de materia prima y servicios{% endblock %}
+
+{% block name %}Administracion de productos adquiridos{% endblock%}
+
+{% block contenido %}
+<div style="display:block">
+<div style="float:left; margin-top:2%">
+			<button type="button" class="mdl-button show-modal" style="color:white; background-color:#33CC00">Registrar producto</button>
+</div>
+
+<div style="float:right; margin-bottom:1%;margin-top:4%;">
+	<form method="POST" action="">
+		{% csrf_token %}
+		<label for="producto">Tipo de producto:</label>
+		<select  name="producto" id="producto">
+			{% if producto == 1 %}
+				<option value="1">Materia prima</option>
+				<option value="2">Servicios</option>
+			{% elif producto == 2 %}
+				<option value="2">Servicios</option>
+				<option value="1">Materia prima</option>
+			{% endif %}
+		</select>
+		<input type="submit" value="Consultar" name="tipo">
+	</form>
+</div>
+
+<div style="float: none; clear: left; margin-top:10%">
+	<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+		<thead>
+			<tr>
+				<th style="text-align:left">Nombre</th>
+				<th style="text-align:left">Descripcion</th>
+					{% if producto == 1 %}
+						<th style="text-align:left">Unidades</th>
+						<th style="text-align:left">Cantidad</th>
+					{% endif %}
+				<th style="text-align:left">Editar</th>
+				<th style="text-align:left">Proveedores</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for p in productos %}
+				<tr>
+					<td style="text-align:left">{{p.nombre}}</td>
+					<td style="text-align:left">{{p.descripcion}}</td>
+					{% if producto == 1 %}
+						<td style="text-align:left">{{p.unidades}}</td>
+						<td style="text-align:left">cantidad</td>
+					{% endif %}
+					<td style="text-align:center"><a href="">Editar</a></td>
+					<td style="text-align:center"><a href="">Ver proveedores</a></td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+	<div style="color:white; background-color:black; float: none; clear: left; text-align:center; margin-top:2%;">
+			   {% if productos.has_previous %}
+			       <a class="waves-effect" href="?page=1">&laquo; primero</a>
+			       <a class="waves-effect" href="?page={{ productos.previous_page_number }}">anterior</a>
+			   {% endif %}
+
+			       Pag. {{ productos.number }} de {{ productos.paginator.num_pages }}.
+
+			   {% if productos.has_next %}
+			       <a href="?page={{ productos.next_page_number }}">siguiente</a>
+			       <a href="?page={{ productos.paginator.num_pages }}">ultimo &raquo;</a>
+			   {% endif %}
+	</div>
+</div>
+
+  <dialog class="mdl-dialog">
+    <div class="mdl-dialog__content">
+      <form  method="POST" action="">
+      	{% csrf_token %}
+      	<p>
+      		<label for="tipoP">Tipo de producto:</label><br>
+      		<select  style="width:100%" name="tipoP" id="tipoP">
+				<option value="P">Materia prima</option>
+				<option value="S">Servicios</option>
+		</select>
+      	</p>
+      	<p>
+      		<label for="nombre">Nombre</label><br>
+      		<input style="width:100%" type="text" id="nombre" name="nombre">
+      	</p>
+      	<p>
+      		<label for="descripcion">Descripcion</label>
+      		<input style="width:100%" type="text" id="descripcion" name="descripcion">
+      	</p>
+      	<p>
+      		<label for="unidades">Unidades:</label>
+      		<input style="width:100%" type="text" id="unidades" name="unidades">
+      	</p>
+      		<input type="submit" class="mdl-button close" value="Guardar" name="guardar">
+      		<button type="button" class="mdl-button close">Disagree</button>
+      </form>
+    </div>  
+  </dialog>
+
+
+  <script>
+    var dialog = document.querySelector('dialog');
+    var showModalButton = document.querySelector('.show-modal');
+    if (! dialog.showModal) {
+      dialogPolyfill.registerDialog(dialog);
+    }
+    showModalButton.addEventListener('click', function() {
+      dialog.showModal();
+    });
+    dialog.querySelector('.close').addEventListener('click', function() {
+      dialog.close();
+    });
+  </script>
+{% endblock%}

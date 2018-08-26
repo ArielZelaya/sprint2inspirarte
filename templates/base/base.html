@@ -102,7 +102,37 @@
             }
           }
         }
+
+      window.addEventListener('load', function(){
+
+        var dialogMeter = document.querySelector('#dialogMeter');      
+        var showModalButtonMeter = document.querySelector('#modalMeter');
+        if (! dialogMeter.showModal) {
+          dialogPolyfill.registerDialog(dialogMeter);
+        }
+        showModalButtonMeter.addEventListener('click', function() {
+          dialogMeter.showModal();
+        });
+        dialogMeter.querySelector('#closeMeter').addEventListener('click', function() {
+          dialogMeter.close();
+        });
+
+       var dialogSacar = document.querySelector('#dialogSacar');      
+        var showModalButtonSacar = document.querySelector('#modalSacar');
+
+        if (! dialogSacar.showModal) {
+          dialogPolyfill.registerDialog(dialogSacar);
+        }
+        showModalButtonSacar.addEventListener('click', function() {
+          dialogSacar.showModal();
+        });
+        dialogSacar.querySelector('#closeSacar').addEventListener('click', function() {
+          dialogSacar.close();
+        });
+
+      });
     </script>
+
 
   </head>
   <body><!--  -->

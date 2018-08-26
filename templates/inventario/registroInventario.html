@@ -1,0 +1,149 @@
+{% extends 'base/base.html'%}
+
+{% block title %}Inventario{% endblock %}
+
+{% block name %}Registro de Inventario{% endblock%}
+
+{% block contenido %}
+<div style="display:block">
+	<div style="float:left; margin-top:2%">
+			<button id="modalMeter" type="button" class="mdl-button show-modal" style="color:white; background-color:#33CC00">Ingresar materia Prima</button>
+			<button id="modalSacar" type="button" class="mdl-button show-modal" style="color:white; background-color:#ff9100">Sacar materia Prima</button>
+	</div>
+
+<div style="float:right; margin-bottom:1%;margin-top:4%;">
+	<form method="POST" action="">
+		{% csrf_token %}
+		<label for="productoFiltro">Por materia prima:</label>
+			<select  name="productoFiltro" id="productoFiltro">
+				<option value="all">Todos</option>
+				{% for p in productos %}
+					<option value="{{p.id}}">{{p.nombre}}</option>
+				{% endfor %}
+			</select>
+		<input type="submit" value="Consultar" name="tipo">
+	</form>
+</div>
+
+<div style="float: none; clear: left; margin-top:10%">
+	<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+		<thead>
+			<tr>
+				<th style="text-align:left">Fecha</th>
+				<th style="text-align:left">Materia Prima</th>
+				<th style="text-align:left">Tipo</th>
+				<th style="text-align:left">Descripcion</th>
+				<th style="text-align:left">Precio Unitario</th>
+				<th style="text-align:left">Cantidad</th>
+				<th style="text-align:left">Total</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for r in registros %}
+				<tr>
+					<td style="text-align:left">{{r.fecha}}</td>
+					{% for p in productos %}
+						{% if r.producto_id == p.id %}
+							<td style="text-align:left">{{p.nombre}}</td>
+						{% endif %}
+					{% endfor %}
+					{% if r.tipo == 'E'%}
+						<td style="text-align:left">Entrada</td>
+					{% else %}
+						<td style="text-align:left">Salida</td>
+					{% endif %}
+					<td style="text-align:left">{{r.descripcion}}</td>
+					<td style="text-align:center">$ {{r.precio}}</td>
+					{% for p in productos %}
+						{% if r.producto_id == p.id %}
+							<td style="text-align:left">{{r.cantidad}} {{p.unidades}}/s</td>
+						{% endif %}
+					{% endfor %}
+					<td style="text-align:center">{{r.total}}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+	<div style="color:white; background-color:black; float: none; clear: left; text-align:center; margin-top:2%;">
+			   {% if registros.has_previous %}
+			       <a class="waves-effect" href="?page=1">&laquo; primero</a>
+			       <a class="waves-effect" href="?page={{ registros.previous_page_number }}">anterior</a>
+			   {% endif %}
+
+			       Pag. {{ registros.number }} de {{ registros.paginator.num_pages }}.
+
+			   {% if registros.has_next %}
+			       <a href="?page={{ registros.next_page_number }}">siguiente</a>
+			       <a href="?page={{ registros.paginator.num_pages }}">ultimo &raquo;</a>
+			   {% endif %}
+	</div>
+</div>
+</div>
+
+	  <dialog id="dialogMeter" class="mdl-dialog" style="width:30%">
+	    <div class="mdl-dialog__content">
+	    	<h3  style="margin-top:0%;text-align:center">Ingreso</h3>
+	      <form  method="POST" action="">
+	      	{% csrf_token %}
+	      	<p>
+	      		<label for="producto">Materia prima:</label><br>
+	      		<select  style="width:100%" name="producto" id="producto">
+	      			{% for p in productos %}
+						<option value="{{p.id}}">{{p.nombre}}</option>
+					{% endfor %}
+			</select>
+	      	</p>
+	      	<p>
+	      		<label for="proveedor">Proveedores:</label><br>
+	      		<select style="width:100%" name="proveedor" id="proveedor">
+	      			{% for p in proveedores %}
+						<option value="{{p.id}}">{{p.nombre}}</option>
+					{% endfor %}
+			</select>
+	      	</p>
+	      	<p>
+	      		<label for="descripcion">Descripcion</label><br>
+	      		<input style="width:100%" type="text" id="descripcion" name="descripcion">
+	      	</p>
+	      	<p>
+	      		<label for="precio">Precio</label><br>
+	      		<input style="width:100%" type="text" id="precio" name="precio">
+	      	</p>
+	      	<p>
+	      		<label for="cantidad">Cantidad:</label>
+	      		<input  style="width:100%" type="text" id="cantidad" name="cantidad">
+	      	</p>
+	      		<input type="submit" name="meter" style="color:white" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" value="Guardar">
+	      		<button type="button" id="closeMeter" style="background-color:#f6685e;color:white" class="mdl-button close">Cancelar</button>
+	      </form>
+	    </div>  
+	  </dialog>
+
+	  <dialog id="dialogSacar" class="mdl-dialog" style="width:30%">
+	    <div class="mdl-dialog__content">
+	    	<h3  style="margin-top:0%;text-align:center">Egreso</h3>
+	      <form  method="POST" action="">
+	      	{% csrf_token %}
+	      	<p>
+	      		<label for="productoSacar">Materia prima:</label><br>
+	      		<select  style="width:100%" name="productoSacar" id="productoSacar">
+	      			{% for p in productos %}
+						<option value="{{p.id}}">{{p.nombre}}</option>
+					{% endfor %}
+			</select>
+	      	</p>
+	      	<p>
+	      		<label for="descripcionSacar">Descripcion</label><br>
+	      		<input style="width:100%" type="text" id="descripcionSacar" name="descripcionSacar">
+	      	</p>
+	      	<p>
+	      		<label for="cantidadSacar">Cantidad:</label>
+	      		<input  style="width:100%" type="text" id="cantidadSacar" name="cantidadSacar">
+	      	</p>
+	      		<input type="submit" name="sacar" style="color:white" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" value="Guardar">
+	      		<button type="button" id="closeSacar" style="background-color:#f6685e;color:white" class="mdl-button close">Cancelar</button>
+	      </form>
+	    </div>  
+	  </dialog>
+{% endblock%}
