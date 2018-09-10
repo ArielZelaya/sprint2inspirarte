@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'apps.usuario',
     'apps.proveedor',
     'apps.inventario',
+    'apps.cotizacion',
 ]
 
 MIDDLEWARE = [
@@ -80,10 +81,10 @@ DATABASES = {
    'default': {
        'ENGINE': 'django.db.backends.postgresql_psycopg2',
        'NAME': 'db_inspirate', #Nombre de la base
-       'USER': 'edwin', #Nombre del usuario
-       'PASSWORD': 'admin10-edwin', #Contrasenia del usuario que creo la base
-       'HOST': '127.0.0.7',
-   }
+       'USER': 'dsi06', #Nombre del usuario
+       'PASSWORD': 'admin', #Contrasenia del usuario que creo la base
+       'HOST': '127.0.0.10',
+       }
 }
 
 
@@ -126,3 +127,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS=(os.path.join(BASE_DIR,'static'),)
+
+#Ruta para guardar las imagenes ya diseñadas
+MEDIA_URL = '/uploads/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
