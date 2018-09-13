@@ -18,6 +18,7 @@ class TamanioProducto(models.Model):
 
 class PrecioProducto(models.Model):
 	producto = models.ForeignKey(TipoProducto, on_delete=models.CASCADE)
+	nombre = models.CharField(max_length=50)
 	tamanio = models.ForeignKey(TamanioProducto, on_delete=models.CASCADE)
 	cantidad = models.IntegerField()
 	precio = models.DecimalField(max_digits = 5,decimal_places = 2)
