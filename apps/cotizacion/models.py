@@ -7,9 +7,25 @@ from apps.inventario.models import Producto
 class TipoProducto(models.Model):
 	nombre = models.CharField(max_length=30)
 	activo = models.BooleanField()
-	precio = models.FloatField(null=True)
 	def __str__(self):
 		return '%s' %(self.nombre)
+
+class TamanioProducto(models.Model):
+	tamaño = models.CharField(max_length=20)
+	descripcion = models.CharField(max_length=30)
+	def __str__(self):
+		return '%s' %(self.descripcion)
+
+class PrecioProducto(models.Model):
+	producto = models.ForeignKey(TipoProducto, on_delete=models.CASCADE)
+	nombre = models.CharField(max_length=50)
+	tamanio = models.ForeignKey(TamanioProducto, on_delete=models.CASCADE)
+	cantidad = models.IntegerField()
+	precio = models.DecimalField(max_digits = 5,decimal_places = 2)
+	tipoCliente = models.CharField(max_length=1)
+	def __str__(self):
+		return '%s' %(self.producto)
+
 
 class Cotizacion(models.Model):
 	cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
