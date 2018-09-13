@@ -21,6 +21,7 @@ urlpatterns = [
 	url(r'^usuario/', include('apps.usuario.urls')),
 	url(r'^proveedor/', include('apps.proveedor.urls')),
     url(r'^inventario/', include('apps.inventario.urls')),
+    url(r'^pedido/', include('apps.Pedido.urls')),
     url(r'^admin/', admin.site.urls),    
     #Index temporal
     url(r'^', views.index, name="index"),
