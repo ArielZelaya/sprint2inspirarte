@@ -83,7 +83,7 @@ DATABASES = {
        'ENGINE': 'django.db.backends.postgresql_psycopg2',
        'NAME': 'inspirarte', #Nombre de la base
        'USER': 'ariel', #Nombre del usuario
-       'PASSWORD': 'canela12', #Contrasenia del usuario que creo la base
+       'PASSWORD': 'xxx', #Contrasenia del usuario que creo la base
        'HOST': 'localhost',
        }
 }
@@ -129,6 +129,6 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS=(os.path.join(BASE_DIR,'static'),)
 
-#Ruta para guardar las imagenes ya diseÃ±adas
+#Ruta para guardar las imagenes ya diseñadas
 MEDIA_URL = '/uploads/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
