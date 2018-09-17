@@ -1,0 +1,48 @@
+<!-- {# dsi2018\templates\inventario\editarProducto.html #} 
+	 {# MODULO: inventario #} 
+	 {# OJETIVO: permite editar el producto seleccionado en la vista que le precede #} 
+	 {# ANALISTA PROGRAMADOR: Edwin Molina,	FECHA CREACION: 15/09/2018 #} 
+	 {# MODIFICADO POR: Edwin Molina,		FECHA MODIFICACION: 16/09/2018 #} -->
+
+{% extends 'base/base.html'%}
+
+{% block title %}Gestionar producto{% endblock %}
+
+{% block name %}Realizar cambios en: {{producto.nombre}}{% endblock%}
+
+{% block contenido %}
+<div style="margin-left:26%;margin-top:3%;padding-bottom:7%;padding-left:7%;padding-right:7%;padding-top:3%;background-color:#d5dbe0;border-radius:10px">
+	<h4 style="text-align:center">Realizar cambios</h4>
+	<hr style=" border: 0;
+    height: 2px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));">
+	<form method="POST">
+	{% csrf_token %}
+        <p>
+          <label for="tipoP">Tipo de producto:</label><br>
+          <select  style="width:100%" name="tipoP" id="tipoP" required="">
+          	{% if producto.tipo == 'P' %}
+	        	<option value="P" selected>Materia prima</option>
+	        {% else %}
+	        	<option value="S" selected>Servicios</option>
+	        {% endif %}
+    	  </select>
+        </p>
+        <p>
+          <label for="nombre">Nombre</label><br>
+          <input style="width:100%" maxlength="60" type="text" id="nombre" name="nombre" required="" value="{{producto.nombre}}">
+        </p>
+        <p>
+          <label for="descripcion">Descripcion</label>
+          <textarea style="font-size:95%;width:100%;resize: none;font-family:Arial;" maxlength="100" type="text" id="descripcion" name="descripcion" required="">{{producto.descripcion}}</textarea>
+        </p>
+        <p>
+          <label for="unidades">Unidades:</label>
+          <input style="width:100%" maxlength="20" type="text" id="unidades" name="unidades" required="" value="{{producto.unidades}}">
+        </p>
+        <input type="submit" name="guardarCambios" style="color:white" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" value="Guardar">
+        <input type="submit" id="eliminar" name="eliminar" style="background-color:#f6685e;color:white" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" value="Eliminar">
+        <a href="{{request.META.HTTP_REFERER}}" style="background-color:#605e5e;color:white" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Volver</a>
+</form>
+</div>
+{% endblock %}
