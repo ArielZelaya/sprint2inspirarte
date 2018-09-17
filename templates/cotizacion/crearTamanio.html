@@ -1,0 +1,30 @@
+
+<div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        {% if object %}
+        <form role="form" action="{% url 'cotizacion:modificar_tamanio' object.pk %}" method="post">
+        {% else %}
+        <form role="form" action="{% url 'cotizacion:crear_tamanio' %}" method="post">
+        {% endif %}
+        <div class="modal-header">
+                
+            </div>
+            <div class="modal-body">
+                                {% csrf_token %}
+                                <div class="panel panel-default">
+                                        <div class="panel-body">
+                                                {{ form.as_p }}
+                                        </div>
+                                </div>
+                        </div>
+                        <div class="modal-footer">
+                                <div class="col-lg-12 text-right">
+                                        <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" name="submit" value="Guardar">
+                                        <button type="button" class="btn btn-default" onclick="return cerrar_modal()">
+                                                Cancelar
+                                        </button>
+                                </div>
+                        </div>
+                </form>
+        </div>
+</div>

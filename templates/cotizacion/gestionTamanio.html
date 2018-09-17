@@ -1,0 +1,65 @@
+{% extends 'base/base.html'%}
+
+{% block title %} Gestion de tamaño {% endblock %}
+
+{% block name %} Gestion de tamaño de productos {% endblock %}
+{% block contenido %}
+
+<div class="container">
+	<div class="row">
+	<a onclick="return abrir_modal('{% url 'cotizacion:crear_tamanio' %}', 'Crear tamaño')" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" >
+   Registrar 
+</a>
+</div>
+<div class="row">
+<table  class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
+		<tr>
+			<th>No</th>
+			<th>Descripcion</th>
+			<th>Accion</th>
+		</tr>
+		{% for t in tamanio %}
+					<tr>
+						<td>{{t.id}}</td>
+						<td>{{t.descripcion}}</td>
+						<td><a onclick="return abrir_modal('{% url 'cotizacion:modificar_tamanio' t.pk %}', 'Modificar/{{ t.descripcion }}')" class="btn">Editar</a></td>
+						<td><a onclick="return abrir_modal('{% url 'cotizacion:eliminar_tamanio' t.pk %}', 'Emiminar/{{ t.descripcion}}')" class="btn">Eliminar</a></td>
+					</tr>
+		{% endfor %}
+	</table>
+</div>
+</div>
+<div id="popup" class="modal fade" role="dialog">
+
+</div>
+	<script>
+var modal;
+
+function abrir_modal(url, titulo)
+{
+    modal = $('#popup').dialog(
+    {
+        title: titulo,
+        modal: true,
+        width: 500,
+        resizable: false
+    }).dialog('open').load(url)
+}
+
+function cerrar_modal()
+{
+    modal.dialog("close");
+}
+
+$(document).ready(function()
+{
+    var table = $('#tabla').dataTable( {
+        "language": {
+                url: "/static/localizacion/es_ES.json"
+        }
+    } );
+});
+</script>
+
+
+{% endblock %}

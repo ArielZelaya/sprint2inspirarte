@@ -1,0 +1,19 @@
+
+<div class="modal-dialog modal-lg">
+	<div class="modal-content">
+		<form action=" {% url 'cotizacion:eliminar_producto' object.pk %}" method="post">
+             <div class="modal-body">
+	{% csrf_token %}
+	<div class="mdl-dialog__content" align="center">
+		<h4> ¿Realmente desea eliminar el producto? </h4>
+	</div>
+</div>
+		<div class="modal-footer">
+                                <div class="col-lg-12 text-right"> 
+		<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit">Si, eliminar</button>
+		 <button type="button" class="btn btn-default" onclick="return cerrar_modal()">Cancelar</button>
+	</div>
+</div>
+</div>
+</div>
+</form>

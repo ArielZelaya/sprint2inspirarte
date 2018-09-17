@@ -1,0 +1,73 @@
+{% extends 'base/base.html'%}
+
+{% block title %} Gestion de productos {% endblock %}
+
+{% block name %} Gestion de productos {% endblock %}
+{% block contenido %}
+<div class="container">
+<div class="row">
+<a onclick="return abrir_modal('{% url 'cotizacion:crear_producto' %}','Producto nuevo')" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" >
+   Registrar 
+</a>
+</div>
+	
+	<div class="row">
+<table  class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp" >
+		<tr>
+			<th>No</th>
+			<th>Nombre</th>
+			<th>Activo</th>
+			<th>Accion</th>
+		</tr>
+		{% for producto in productos %}
+					<tr>
+						<td>{{forloop.counter}}</td>
+						<td>{{producto.nombre}} </td>
+						{% if producto.activo%}
+							<td>ACTIVADO</td>
+						{% else %}
+							<td>DESACTIVADO</td>
+						{% endif %}
+						<td><a onclick="return abrir_modal('{% url 'cotizacion:modificar_producto' producto.pk %}', 'Modificar/{{ producto.nombre }}')" class="btn">Editar</a></td>
+						<td><a onclick="return abrir_modal('{% url 'cotizacion:eliminar_producto' producto.pk %}', 'Emiminar/{{ producto.nombre }}')" class="btn">Eliminar</a></td>
+					</tr>
+		{% endfor %}
+	</table>
+</div>
+<div id="popup" class="modal fade" role="dialog">
+
+</div>
+</div>
+	<script>
+var modal;
+
+function abrir_modal(url, titulo)
+{
+    modal = $('#popup').dialog(
+    {
+        title: titulo,
+        modal: true,
+        width: 500,
+        resizable: false
+    }).dialog('open').load(url)
+}
+
+function cerrar_modal()
+{
+    modal.dialog("close");
+}
+
+$(document).ready(function()
+{
+    var table = $('#tabla').dataTable( {
+        "language": {
+                url: "/static/localizacion/es_ES.json"
+        }
+    } );
+});
+</script>
+
+
+
+{% endblock %}
+
