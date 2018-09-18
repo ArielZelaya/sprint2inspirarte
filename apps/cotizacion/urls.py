@@ -27,4 +27,10 @@ urlpatterns =[
 	url(r'^modificarProducto/(?P<pk>.+)/$',modificarProducto.as_view(), name="modificar_producto"),
 	url(r'^eliminarProducto/(?P<pk>.+)/$', eliminarProducto.as_view(), name="eliminar_producto"),
 
+
+	#Gestion cotizacion
+	
+
+
+
 ]
