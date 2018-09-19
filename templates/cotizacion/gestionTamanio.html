@@ -22,8 +22,8 @@
 					<tr>
 						<td>{{t.id}}</td>
 						<td>{{t.descripcion}}</td>
-						<td><a onclick="return abrir_modal('{% url 'cotizacion:modificar_tamanio' t.pk %}', 'Modificar/{{ t.descripcion }}')" class="btn">Editar</a></td>
-						<td><a onclick="return abrir_modal('{% url 'cotizacion:eliminar_tamanio' t.pk %}', 'Emiminar/{{ t.descripcion}}')" class="btn">Eliminar</a></td>
+						<td><a href="#" onclick="return abrir_modal('{% url 'cotizacion:modificar_tamanio' t.pk %}', 'Modificar/{{ t.descripcion }}')" class="btn">Editar</a></td>
+						<td><a href="#" onclick="return abrir_modal('{% url 'cotizacion:eliminar_tamanio' t.pk %}', 'Emiminar/{{ t.descripcion}}')" class="btn">Eliminar</a></td>
 					</tr>
 		{% endfor %}
 	</table>

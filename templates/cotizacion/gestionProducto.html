@@ -28,8 +28,8 @@
 						{% else %}
 							<td>DESACTIVADO</td>
 						{% endif %}
-						<td><a onclick="return abrir_modal('{% url 'cotizacion:modificar_producto' producto.pk %}', 'Modificar/{{ producto.nombre }}')" class="btn">Editar</a></td>
-						<td><a onclick="return abrir_modal('{% url 'cotizacion:eliminar_producto' producto.pk %}', 'Emiminar/{{ producto.nombre }}')" class="btn">Eliminar</a></td>
+						<td><a href="#" onclick="return abrir_modal('{% url 'cotizacion:modificar_producto' producto.pk %}', 'Modificar/{{ producto.nombre }}')" class="btn">Editar</a></td>
+						<td><a href="#" onclick="return abrir_modal('{% url 'cotizacion:eliminar_producto' producto.pk %}', 'Emiminar/{{ producto.nombre }}')" class="btn">Eliminar</a></td>
 					</tr>
 		{% endfor %}
 	</table>

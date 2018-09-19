@@ -40,7 +40,7 @@ class eliminarProducto ( DeleteView ):
 
 
 
-
+#Gestion Tamanio
 
 def gestionTamanio(request):
 	administrador=User.objects.get(id=request.user.id)
@@ -75,7 +75,7 @@ class eliminarTamanio ( DeleteView ):
 
 
 
-
+#Gestion Precio
 
 def gestionPrecio(request):
 	administrador=User.objects.get(id=request.user.id)
@@ -113,3 +113,18 @@ class eliminarPrecio( DeleteView ):
 	template_name='cotizacion/eliminarPrecio.html'
 	success_url = reverse_lazy('cotizacion:gestion_Precio')
 
+
+#Gestion Cotizacion
+class ListadoCotizacion(ListView):
+    model = Cotizacion
+    template_name = 'cotizacion/gestioCotizacion.html'
+    context_object_name = 'cotizacion'
+
+def detallesCotizacion(request,id):
+	detalles=DetalleCotizacion.objects.filter(Cotizacion=id)
+	return render(request, 'cotizacion/detalles.html', {'detalles':detalles})
+
+class eliminarCotizacion(DeleteView):
+	model = Cotizacion
+	template_name='cotizacion/eliminarCotizacion.html'
+	success_url = reverse_lazy('cotizacion:listado_cotizacion')

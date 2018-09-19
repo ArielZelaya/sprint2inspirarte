@@ -45,9 +45,7 @@ class DetalleCotizacion(models.Model):
 	producto = models.ForeignKey(PrecioProducto, on_delete=models.CASCADE)
 	subtotal = models.FloatField(null=True)
 	disenio = models.BooleanField()
-	archivo = models.FileField(upload_to='uploads/{0}'.format("%Y-%m-%d/%H_%M_%S"), null=True)
 	def __str__(self):
 		return '%s' %(self.id)
-
 
 
