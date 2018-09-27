@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from datetime import time, date
 import datetime
@@ -10,13 +10,13 @@ from django.core.paginator import Paginator
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 # Create your views here.
-
+@login_required(login_url='/usuario/login')
 def index(request):
-     return render(request,'usuario/index.html')
-
-
-def wc(request):
-     return render(request,'usuario/bienvenido/index.html')
+	admin=User.objects.get(id=request.user.id)
+	if admin.is_superuser:
+		return render(request,'usuario/index.html')
+	else:
+		return render(request,'usuario/bienvenido/index.html')
 
 #Consulta los empleados (con contrato vigente) y se define el entorno para la gestion de estos
 @login_required(login_url='/usuario/login')
@@ -409,8 +409,11 @@ def iniciarSesion(request):
 		user.check_password(password)
 		# user = authenticate(username=username, password=password)
 		if user is not None:
-			login(request,user)
-			return redirect('usuario/')
+			login(request,user) 
+			if request.GET.get('next') is None:
+				return redirect('usuario:index')
+			else:
+				return HttpResponseRedirect(request.GET.get('next'))
 		else :
 			valor = "Ingrese usuario valido o contrasena correcta"
 			print(user)
@@ -424,7 +427,7 @@ def iniciarSesion(request):
 	
 def cerrarSesion(request):
     logout(request)
-    return redirect('usuario:idex')
+    return redirect('usuario:login')
 
 def crearCliente(request):
 	valor=""

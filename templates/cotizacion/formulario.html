@@ -1,0 +1,53 @@
+{% extends 'base/base.html'%}
+{% load static %}
+{% block title %} Cotización {% endblock%}
+{% block name %} Crear cotización {% endblock %}
+{% block contenido%}
+
+    <div class="mdl-cell mdl-cell--8-col formulario">
+        <h3>Producto</h3>
+        <form action="#">
+            <select onchange="obtenerSubtipos()">
+                <option>Selecciona un producto</option>
+                {% for t in productos %}
+                <option value="{{t.id}}">{{t.nombre}}</option>
+                {% endfor%}
+            </select>
+            <select id='tipoProducto' onchange="obtenerPrecio()">
+                <option>...</option>
+            </select>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" pattern="-?[0-9]*(\.[0-9]+)?" id="cantidad">
+                <label class="mdl-textfield__label" for="cantidad">Cantidad...</label>
+                <span class="mdl-textfield__error">Input is not a number!</span>
+            </div>
+            <br>
+            <div id="abc" style="display:none;">
+                <!-- Aqui va tu div para banner y vinil -->
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" pattern="-?[0-9]*(\.[0-9]+)?" id="precio">
+                <label class="mdl-textfield__label" for="precio">Precio</label>
+                <span class="mdl-textfield__error">Input is not a number!</span>
+            </div>
+            <button onclick="agregarEnDetalle(event)">Agregar producto</button>
+        </form>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col detalle">
+        <div class="mdl-card mdl-shadow--2dp">
+            <div class="mdl-card__title">
+                <h4 class="mdl-card__title-text">Detalle</h4>
+            </div>
+            <div class="mdl-card__supporting-text">
+                <ul id="lista-detalle" class="mdl-list"></ul>
+                <h5>TOTAL: <span id="total"></span></h5>
+            </div>
+            <div class="mdl-card__actions mdl-card--border" onclick="finalizar()">
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                Finalizar
+            </a>
+          </div>
+        </div>
+    </div>
+<script src="{% static 'js/cotizacion.js' %}"></script>
+{% endblock %}

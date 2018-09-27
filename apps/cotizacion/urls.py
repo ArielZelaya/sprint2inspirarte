@@ -18,7 +18,7 @@ urlpatterns =[
 	url(r'^gestionPrecio$', gestionPrecio, name="gestion_Precio"),
 	url(r'^crearPrecio/$', crearPrecio.as_view(), name="crear_precio"),
 	url(r'^modificarPrecio/(?P<pk>.+)/$',modificarPrecio.as_view(), name="modificar_precio"),
-	url(r'^eliminarProducto/(?P<pk>.+)/$', eliminarPrecio.as_view(), name="eliminar_precio"),
+	url(r'^eliminarPrecio/(?P<pk>.+)/$', eliminarPrecio.as_view(), name="eliminar_precio"),
 
 	
 	# Gestion producto
@@ -33,7 +33,9 @@ urlpatterns =[
 	url(r'^detalle/(?P<id>\d+)/$', detallesCotizacion, name="detalle_cotizacion"),
 	url(r'^eliminarCotizacion/(?P<pk>.+)/$', eliminarCotizacion.as_view(), name="eliminar_cotizacion"),
 
-
+	# Parte de ricardo
+	url(r'^formulario$', cotizacion_cliente, name='formulario'),
+    url(r'^subconjunto/(?P<produ>\w{0,50})/$', obtener_subconjunto, name='mia'),
 
 
 
