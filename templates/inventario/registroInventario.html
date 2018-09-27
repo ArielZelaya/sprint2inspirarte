@@ -1,3 +1,9 @@
+<!-- {# dsi2018\templates\inventario\registroInventario.html #} 
+	 {# MODULO: inventario #} 
+	 {# OJETIVO: permite visualizar los registros de entrada y salida que se han efectuado en el inventario, además de realizar las entradas y salidas #} 
+	 {# ANALISTA PROGRAMADOR: Edwin Molina,	FECHA CREACION: 21/08/2018 #} 
+	 {# MODIFICADO POR: Edwin Molina,		FECHA MODIFICACION: 16/09/2018 #} -->
+
 {% extends 'base/base.html'%}
 
 {% block title %}Inventario{% endblock %}
@@ -7,21 +13,23 @@
 {% block contenido %}
 <div style="display:block">
 	<div style="float:left; margin-top:2%">
-			<button id="modalMeter" type="button" class="mdl-button show-modal" style="color:white; background-color:#33CC00">Ingresar materia Prima</button>
-			<button id="modalSacar" type="button" class="mdl-button show-modal" style="color:white; background-color:#ff9100">Sacar materia Prima</button>
+			<button id="modalMeter" type="button" class="mdl-button show-modal mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" style="color:white; background-color:#33CC00">Ingresar materia Prima</button>
+			<button id="modalSacar" type="button" class="mdl-button show-modal mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" style="color:white; background-color:#ff9100">Sacar materia Prima</button>
 	</div>
 
-<div style="float:right; margin-bottom:1%;margin-top:4%;">
+<div style="float:right; margin-bottom:1%;margin-top:3%;">
 	<form method="POST" action="">
 		{% csrf_token %}
-		<label for="productoFiltro">Por materia prima:</label>
-			<select  name="productoFiltro" id="productoFiltro">
-				<option value="all">Todos</option>
-				{% for p in productos %}
-					<option value="{{p.id}}">{{p.nombre}}</option>
-				{% endfor %}
-			</select>
-		<input type="submit" value="Consultar" name="tipo">
+		{% if productos %}
+			<label for="productoFiltro">Por materia prima:</label>
+				<select  name="productoFiltro" id="productoFiltro">
+					<option value="all"> -- Todos --</option>
+					{% for p in productos %}
+						<option value="{{p.id}}">{{p.nombre}}</option>
+					{% endfor %}
+				</select>
+			<input type="submit" value="Consultar" name="tipo">
+		{% endif %}
 	</form>
 </div>
 
@@ -61,6 +69,10 @@
 					{% endfor %}
 					<td style="text-align:center">{{r.total}}</td>
 				</tr>
+			{% empty %}
+				<tr>
+					<td colspan="7" style="text-align:center">No hay entradas ni salidas registradas</td>
+				</tr>
 			{% endfor %}
 		</tbody>
 	</table>
@@ -79,71 +91,84 @@
 			   {% endif %}
 	</div>
 </div>
+<a href="{% url 'inventario:adm_pro' %}" style="background-color:#605e5e;color:white;margin-top:2%" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"> <i class="material-icons">
+arrow_back
+</i> Ir a Administracion de materia prima</a>
 </div>
+{% endblock%}  
 
-	  <dialog id="dialogMeter" class="mdl-dialog" style="width:30%">
+{% block modals %}
+	<dialog id="dialogMeter" class="mdl-dialog" style="width:30%;border-radius: 9px;">
 	    <div class="mdl-dialog__content">
 	    	<h3  style="margin-top:0%;text-align:center">Ingreso</h3>
 	      <form  method="POST" action="">
 	      	{% csrf_token %}
 	      	<p>
 	      		<label for="producto">Materia prima:</label><br>
-	      		<select  style="width:100%" name="producto" id="producto">
+	      		<select  style="width:100%" name="producto" id="producto" required="">
+	      			<option value=""> -- Seleccione una opción --</option>
 	      			{% for p in productos %}
 						<option value="{{p.id}}">{{p.nombre}}</option>
+					{% empty %}
+						<p>No hay productos registados</p>
 					{% endfor %}
 			</select>
 	      	</p>
 	      	<p>
 	      		<label for="proveedor">Proveedores:</label><br>
-	      		<select style="width:100%" name="proveedor" id="proveedor">
+	      		<select style="width:100%" name="proveedor" id="proveedor" required="">
+	      			<option value=""> -- Seleccione una opción --</option>
 	      			{% for p in proveedores %}
 						<option value="{{p.id}}">{{p.nombre}}</option>
+					{% empty %}
+						<p>No hay proveedores registados</p>
 					{% endfor %}
 			</select>
 	      	</p>
 	      	<p>
 	      		<label for="descripcion">Descripcion</label><br>
-	      		<input style="width:100%" type="text" id="descripcion" name="descripcion">
+	      		<textarea style="width:100%;resize: none;font-family:Arial;" maxlength="100" type="text" id="descripcion" name="descripcion" required=""></textarea>
 	      	</p>
 	      	<p>
-	      		<label for="precio">Precio</label><br>
-	      		<input style="width:100%" type="text" id="precio" name="precio">
+	      		<label for="precio">Precio ($):</label><br>
+	      		<input style="width:100%" step="0.001" min="0.001" max="99999" type="number" id="precio" name="precio" required="">
 	      	</p>
 	      	<p>
 	      		<label for="cantidad">Cantidad:</label>
-	      		<input  style="width:100%" type="text" id="cantidad" name="cantidad">
+	      		<input  style="width:100%" step="1" min="1" max="99999" type="number" id="cantidad" name="cantidad" required="">
 	      	</p>
 	      		<input type="submit" name="meter" style="color:white" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" value="Guardar">
-	      		<button type="button" id="closeMeter" style="background-color:#f6685e;color:white" class="mdl-button close">Cancelar</button>
+	      		<button type="button" id="closeMeter" style="background-color:#605e5e;color:white" class="mdl-button close mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Volverr</button>
 	      </form>
 	    </div>  
-	  </dialog>
-
-	  <dialog id="dialogSacar" class="mdl-dialog" style="width:30%">
+	</dialog>
+	<dialog id="dialogSacar" class="mdl-dialog" style="width:30%;border-radius: 9px;">
 	    <div class="mdl-dialog__content">
 	    	<h3  style="margin-top:0%;text-align:center">Egreso</h3>
 	      <form  method="POST" action="">
 	      	{% csrf_token %}
 	      	<p>
 	      		<label for="productoSacar">Materia prima:</label><br>
-	      		<select  style="width:100%" name="productoSacar" id="productoSacar">
+	      		<select  style="width:100%" name="productoSacar" id="productoSacar" required="">
+	      			<option value=""> -- Seleccione una opción --</option>
 	      			{% for p in productos %}
 						<option value="{{p.id}}">{{p.nombre}}</option>
+					{% empty %}
+						<p>No hay productos registados</p>
 					{% endfor %}
 			</select>
 	      	</p>
 	      	<p>
 	      		<label for="descripcionSacar">Descripcion</label><br>
-	      		<input style="width:100%" type="text" id="descripcionSacar" name="descripcionSacar">
+	      		<textarea style="width:100%;resize: none;font-family:Arial;" maxlength="200" type="text" id="descripcionSacar" name="descripcionSacar" required=""></textarea>
 	      	</p>
 	      	<p>
 	      		<label for="cantidadSacar">Cantidad:</label>
-	      		<input  style="width:100%" type="text" id="cantidadSacar" name="cantidadSacar">
+	      		<input  style="width:100%" step="1" min="1" max="99999" type="number" id="cantidadSacar" name="cantidadSacar" required="">
 	      	</p>
 	      		<input type="submit" name="sacar" style="color:white" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" value="Guardar">
-	      		<button type="button" id="closeSacar" style="background-color:#f6685e;color:white" class="mdl-button close">Cancelar</button>
+	      		<button type="button" id="closeSacar" style="background-color:#605e5e;color:white" class="mdl-button close mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Volver</button>
 	      </form>
 	    </div>  
-	  </dialog>
-{% endblock%}
+	 </dialog>
+{% endblock %}  

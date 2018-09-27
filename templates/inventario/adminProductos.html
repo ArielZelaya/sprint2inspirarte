@@ -1,3 +1,9 @@
+<!-- {# dsi2018\templates\inventario\adminProductos.html #} 
+	 {# MODULO: inventario #} 
+	 {# OJETIVO: permite administrar los productos adquiridos #} 
+	 {# ANALISTA PROGRAMADOR: Edwin Molina,	FECHA CREACION: 18/08/2018 #} 
+	 {# MODIFICADO POR: Edwin Molina,		FECHA MODIFICACION: 16/09/2018 #} -->
+
 {% extends 'base/base.html'%}
 
 {% block title %}Administracion de materia prima y servicios{% endblock %}
@@ -7,10 +13,11 @@
 {% block contenido %}
 <div style="display:block">
 <div style="float:left; margin-top:2%">
-			<button type="button" class="mdl-button show-modal" style="color:white; background-color:#33CC00">Registrar producto</button>
+			<button type="button" class="mdl-button show-modal mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" style="color:white; background-color:#33CC00">Registrar producto</button>
+			<a id="modalSacar" type="button" class="mdl-button show-modal mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" style="color:white; background-color:#285fb7" href="{% url 'inventario:reg_inv' %}">Registro de inventario</a>
 </div>
 
-<div style="float:right; margin-bottom:1%;margin-top:4%;">
+<div style="float:right; margin-bottom:1%;margin-top:3%;">
 	<form method="POST" action="">
 		{% csrf_token %}
 		<label for="producto">Tipo de producto:</label>
@@ -28,7 +35,7 @@
 </div>
 
 <div style="float: none; clear: left; margin-top:10%">
-	<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+	<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" >
 		<thead>
 			<tr>
 				<th style="text-align:left">Nombre</th>
@@ -37,7 +44,7 @@
 						<th style="text-align:left">Unidades</th>
 						<th style="text-align:left">Cantidad</th>
 					{% endif %}
-				<th style="text-align:left">Editar</th>
+				<th style="text-align:left">Cambios</th>
 				<th style="text-align:left">Proveedores</th>
 			</tr>
 		</thead>
@@ -48,15 +55,28 @@
 					<td style="text-align:left">{{p.descripcion}}</td>
 					{% if producto == 1 %}
 						<td style="text-align:left">{{p.unidades}}</td>
-						<td style="text-align:left">cantidad</td>
+							{% for c in cantidad %}
+								{% if c.idP == p.id %}
+									<td style="text-align:center">{{c.num}}</td>
+								{% endif %}
+							{% endfor %}
 					{% endif %}
-					<td style="text-align:center"><a href="">Editar</a></td>
-					<td style="text-align:center"><a href="">Ver proveedores</a></td>
+					<td style="text-align:center"><a href="{% url 'inventario:edt_pro' p.id %}"><i class="material-icons">
+settings
+</i></a></td>
+					<td style="text-align:center"><a href="{% url 'inventario:cop_prv' p.id %}"><i class="material-icons">
+contacts
+</i></a></td>
+				</tr>
+			{% empty %}
+				<tr>
+					<td colspan="6" style="text-align:center">No hay productos registrados</td>
 				</tr>
 			{% endfor %}
 		</tbody>
 	</table>
 </div>
+
 	<div style="color:white; background-color:black; float: none; clear: left; text-align:center; margin-top:2%;">
 			   {% if productos.has_previous %}
 			       <a class="waves-effect" href="?page=1">&laquo; primero</a>
@@ -70,37 +90,47 @@
 			       <a href="?page={{ productos.paginator.num_pages }}">ultimo &raquo;</a>
 			   {% endif %}
 	</div>
+	
 </div>
 
-  <dialog class="mdl-dialog">
+<div class="modal fade" id="modal-book">
+    <div class="modal-dialog">
+      <div class="modal-content"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block modals %}
+  <dialog class="mdl-dialog" data-backdrop="false" style="width:30%;border-radius: 9px;">
     <div class="mdl-dialog__content">
+      <h3  style="margin-top:0%;text-align:center">Producto</h3>
       <form  method="POST" action="">
-      	{% csrf_token %}
-      	<p>
-      		<label for="tipoP">Tipo de producto:</label><br>
-      		<select  style="width:100%" name="tipoP" id="tipoP">
-				<option value="P">Materia prima</option>
-				<option value="S">Servicios</option>
-		</select>
-      	</p>
-      	<p>
-      		<label for="nombre">Nombre</label><br>
-      		<input style="width:100%" type="text" id="nombre" name="nombre">
-      	</p>
-      	<p>
-      		<label for="descripcion">Descripcion</label>
-      		<input style="width:100%" type="text" id="descripcion" name="descripcion">
-      	</p>
-      	<p>
-      		<label for="unidades">Unidades:</label>
-      		<input style="width:100%" type="text" id="unidades" name="unidades">
-      	</p>
-      		<input type="submit" class="mdl-button close" value="Guardar" name="guardar">
-      		<button type="button" class="mdl-button close">Disagree</button>
+        {% csrf_token %}
+        <p>
+          <label for="tipoP">Tipo de producto:</label><br>
+          <select  style="width:100%" name="tipoP" id="tipoP" required="">
+          	<option value=""> -- Seleccione una opción --</option>
+	        <option value="P">Materia prima</option>
+	        <option value="S">Servicios</option>
+    	  </select>
+        </p>
+        <p>
+          <label for="nombre">Nombre</label><br>
+          <input style="width:100%" maxlength="60" type="text" id="nombre" name="nombre" required="">
+        </p>
+        <p>
+          <label for="descripcion">Descripcion</label>
+          <textarea style="width:100%;resize: none;font-family:Arial;" maxlength="100" type="text" id="descripcion" name="descripcion" required=""></textarea>
+        </p>
+        <p>
+          <label for="unidades">Unidades:</label>
+          <input style="width:100%" maxlength="20" type="text" id="unidades" name="unidades" required="">
+        </p>
+          <input type="submit" style="color:white" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" value="Guardar" name="guardar">
+          <button type="button" style="background-color:#605e5e;color:white" id="closeProducto" class="mdl-button close mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Volver</button>
       </form>
     </div>  
   </dialog>
-
 
   <script>
     var dialog = document.querySelector('dialog');
@@ -111,8 +141,8 @@
     showModalButton.addEventListener('click', function() {
       dialog.showModal();
     });
-    dialog.querySelector('.close').addEventListener('click', function() {
+    dialog.querySelector('#closeProducto').addEventListener('click', function() {
       dialog.close();
     });
   </script>
-{% endblock%}
+{% endblock %}
