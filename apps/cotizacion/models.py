@@ -37,7 +37,7 @@ class Cotizacion(models.Model):
 		verbose_name='Cotizacion'
 		verbose_name_plural='Cotizaciones'
 	def __str__(self):
-		return '%s' %(self.detalle)
+		return '%s' %(self.id)
 
 class DetalleCotizacion(models.Model):
 	Cotizacion = models.ForeignKey(Cotizacion, on_delete=models.CASCADE)

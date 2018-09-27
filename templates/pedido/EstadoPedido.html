@@ -1,0 +1,22 @@
+{% extends 'base/base.html'%}
+{% block title %} Crear Proveedor{% endblock %}
+{% block name %} Crear Proveedor {% endblock %}
+{% block contenido %}
+<form method="POST" action="">
+    {% csrf_token %}
+
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <select class="mdl-textfield__input" id="Estado" name="Estado">
+      <option></option>
+      <option value="Activo">Activo</option>
+      <option value="Impresion">Impresion</option>
+      <option value="Corte">Corte</option>
+      <option value="Detalles">Detalles</option>
+
+    </select>
+    <label class="mdl-textfield__label" for="Estado">Seleccione el estado</label>
+  </div>
+  <input href="{% url 'pedido:ges_pedi'%}" type="submit" value="Cambiar">
+
+</form>
+{% endblock %}

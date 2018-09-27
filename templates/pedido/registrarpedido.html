@@ -1,0 +1,143 @@
+{% extends 'base/base.html'%}
+
+{% block title %} Pedidos{% endblock %}
+
+{% block name %} Gestion de Pedidos {% endblock %}
+
+{% block contenido %}
+<style>
+		div#body{
+			margin: auto;
+			margin-top: 60px;
+			width: 1000px;
+			height: 300;
+
+
+
+		}
+		div#izquierda{
+			width: 300px;
+			height: 300px;
+			float: left;
+			margin-left: 30px;
+
+		}
+		div#centro{
+			width: 300px;
+			height: 300px;
+			margin-right: 10px;
+    margin-left: 10px;
+			float: left;
+
+		}
+		div#derecha{
+			width: 300px;
+			height: 300px;
+			float: left;
+
+		}
+		</style>
+<div class="demo-card-square mdl-card mdl-shadow--2dp" id="body">
+				<div class="mdl-card__supporting-text">
+						Ingrese los campos correspondientes del formulario para crear un nuevo pedido
+					</div>
+				<form method="POST" action="">{% csrf_token %}
+				<div id="izquierda">
+						<!--<p><label for="id_first_name">Ingrese su nombre:</label> <input name="first_name" maxlength="30" id="id_first_name" type="text"></p>-->
+						  <!-- Simple Select -->
+    <div class="mdl-textfield mdl-js-textfield getmdl-select">
+        <input type="text" value="" class="mdl-textfield__input" id="Cliente" readonly>
+        <input type="hidden" value="" name="Cliente">
+        <label for="Cliente" class="mdl-textfield__label">Cliente</label>
+        <ul for="Cliente" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+           {% for c in clientes%}
+            <li class="mdl-menu__item" data-val="{{c}}">{{c.username}}</li>
+            {% endfor %}
+
+        </ul>
+    </div>
+
+						<!--<p><label for="id_last_name">Ingrese su apellido:</label> <input name="last_name" maxlength="30" id="id_last_name" type="text"></p>-->
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<input class="mdl-textfield__input"  name="last_name" type="text" id="id_last_name">
+								<label class="mdl-textfield__label" for="id_last_name">Apellido:</label>
+							</div>
+						<!--<p><label for="id_email">Correo electronico:</label> <input name="email" maxlength="254" id="id_email" type="email"></p>-->
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<input class="mdl-textfield__input"  name="email" type="email" id="id_email">
+								<label class="mdl-textfield__label" for="id_email">Correo electronico:</label>
+							</div>
+				</div>
+				<div id="centro">
+						<!--<p><label for="id_username">Ingrese su nombre de usuario:</label> <input name="username" maxlength="150" required="" id="id_username" type="text"> <span class="helptext">Únicamente letras, dígitos y @/./+/-/_ </span></p>-->
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<input class="mdl-textfield__input" name="username" type="text" pattern="-?[0-9A-Za-z@.+-_]*(\.[0-9]+)?" id="id_username">
+								<label class="mdl-textfield__label" for="id_username">Nombre de usuario:</label>
+								<span class="mdl-textfield__error">Únicamente letras, dígitos y @/./+/-/_</span>
+							</div>
+						<!--<p><label for="id_password">Contraseña:</label> <input name="password" maxlength="128" required="" id="id_password" type="password"></p>-->
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<input class="mdl-textfield__input"  name="password" type="password" id="id_password">
+								<label class="mdl-textfield__label" for="id_password">Contraseña:</label>
+							</div>
+						<!--<p><label for="id_dui">Ingrese su dui:</label> <input name="dui" required="" id="id_dui" type="number"></p>-->
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<input class="mdl-textfield__input"  name="dui" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="id_dui">
+								<label class="mdl-textfield__label" for="id_dui">Dui:</label>
+								<span class="mdl-textfield__error">Dui incorrecto, solo se aceptan numeros!</span>
+							</div>
+				</div>
+				<div id="derecha">
+					<!--	<p><label for="id_telefono">Numero telefonico:</label> <input name="telefono" required="" id="id_telefono" type="number"></p>-->
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<input class="mdl-textfield__input"  name="telefono" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="id_telefono">
+								<label class="mdl-textfield__label" for="id_telefono">Numero telefonico:</label>
+								<span class="mdl-textfield__error">Telefono incorrecto, solo se aceptan numeros!</span>
+							</div>
+					<!--	<p><label for="id_direccion">Ingrese su direccion:</label> <input name="direccion" maxlength="500" required="" id="id_direccion" type="text"></p>-->
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<input class="mdl-textfield__input"  name="direccion" type="text" id="id_direccion">
+								<label class="mdl-textfield__label" for="id_direccion">Direccion:</label>
+							</div>
+							<br><br><br>
+							<button  type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+									Guardar
+								  </button>
+					</div>
+				</form>
+		</div>
+
+<!--<form method="POST" action="">
+    {% csrf_token %}
+
+    Valor Toal:<br>
+  <input type="text" name="Valor_total" value="">
+  <br>
+    Cantidad Productos:<br>
+  <input type="text" name="Cant_productos" value="">
+  <br>
+    Deposito:<br>
+  <input type="text" name="Deposito" value="">
+  <br>
+     Fecha:<br>
+  <input type="text" name="Fecha" value="">
+  <br>
+    Num Segui:<br>
+  <input type="text" name="Num_seguimiento" value="">
+  <br>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <select class="mdl-textfield__input" id="Estado" name="Estado">
+      <option></option>
+      <option value="Activo">Activo</option>
+      <option value="Impresion">Impresion</option>
+      <option value="Corte">Corte</option>
+      <option value="Detalles">Detalles</option>
+
+    </select>
+    <label class="mdl-textfield__label" for="Estado">Seleccione el estado</label>
+
+  <input type="submit" value="Submit">
+</form>
+-->
+
+{% endblock %}

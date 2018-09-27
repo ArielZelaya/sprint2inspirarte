@@ -10,5 +10,6 @@ urlpatterns =[
 
 	#ADMINISTRAR PRODUCTOS
 	url(r'^administrarProductos', adminProductos ,name="adm_pro"),
+	url(r'^sacarMateriaPrima/(?P<producto_id>\d+)/$', sacarMateriaPrima ,name="sac_pro"),
 	url(r'^registroInventario$', regInventario ,name="reg_inv"),
 ]

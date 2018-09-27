@@ -1,0 +1,42 @@
+{% extends 'base/base.html'%}
+
+{% block title %} Pedidos{% endblock %}
+
+{% block name %} Detalles del pedido  {% endblock %}
+
+{% block contenido %}
+
+<br>id pedido {{pedido.id}}</<br>
+
+<br>Nombre Cliente: {{pedido.Cliente}}<br>
+<br>Fecha Pedido: {{pedido.Fecha}}<br>
+<br> Descripcion linea: {{linea.Cotizacion.descripcion}}<br>
+<br><br>
+
+
+
+ <h1>ID usuario :{{usuario.id}}</h1>
+<li>{{pedido.Valor_total}}</li>
+      <br>{{pedido.Cant_productos}}</br>
+      <br>{{pedido.Deposito}}</br>
+      <br>{{pedido.Fecha}}</br>
+      <br>{{pedido.Num_seguimiento}}</br>
+      <br>{{pedido.Estado}}</br>
+      <br>{{cotizacion.}}</br>
+      <p> <b>Detalle de la cotizacion</b></p>
+        {% for lin in linea%}
+            {% if lin.Pedido.id == pedido.id%}
+                {% for det in detalleCoti %}
+                    {% if det.Cotizacion.id == lin.Cotizacion.id %}
+                    <br>{{det.tipo}}</br>
+                    <br>{{det.cantidad}}</br>
+                    <br>{{det.material}}</br>
+                    {% endif %}
+                {% endfor %}
+
+            {% endif%}
+        {% endfor %}
+
+
+
+{% endblock %}
