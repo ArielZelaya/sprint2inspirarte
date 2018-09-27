@@ -25,7 +25,7 @@ def gestionEmpleado(request):
 	if administrador.is_superuser :
 		empleado_list = Empleado.objects.all()
 		contratos = Contrato.objects.all()
-		paginator = Paginator(empleado_list, 5)
+		paginator = Paginator(empleado_list,5)
 		page = request.GET.get('page')
 		empleados = paginator.get_page(page)
 		return render(request, 'empleado/gestionar.html', {'empleados':empleados, 'contratos':contratos})

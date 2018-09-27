@@ -16,9 +16,13 @@ urlpatterns =[
 
 	#ADMINISTRAR PRODUCTOS
 	url(r'^administrarProductos', adminProductos ,name="adm_pro"),
+<<<<<<< HEAD
 	url(r'^editarProducto/(?P<id_producto>\d+)$', editarProducto, name='edt_pro'),
 	url(r'^proveedoresProducto/(?P<id_producto>\d+)$', consultarProveedores, name='cop_prv'),
 	url(r'^desvincularProveedor/(?P<id_producto>\d+)//(?P<id_proveedor>\d+)/$', desvincularProveedor, name="des_prv"),
 	#REGISTRO DE INVENTARIO
+=======
+	url(r'^sacarMateriaPrima/(?P<producto_id>\d+)/$', sacarMateriaPrima ,name="sac_pro"),
+>>>>>>> origin/Ariel2
 	url(r'^registroInventario$', regInventario ,name="reg_inv"),
 ]

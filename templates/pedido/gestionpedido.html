@@ -4,4 +4,35 @@
 
 {% block name %} Gestion de Pedidos {% endblock %}
 
-{% block contenido %}<h1> Contenido</h1> {% endblock %}
+{% block contenido %} 
+
+<table  class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
+    <tr>
+        <th>ID</th>
+        <th>CLIENTE</th>
+        <th>FECHA</th>
+        <th>VALOR</th>
+        <th>ESTADO</th>
+        <th>ELIMINAR</th>
+        <th>DETALLES</th>
+
+    </tr>
+            {% for  pedi in pedidos %}
+                <tr>
+                    <td>{{pedi.id}}</td>
+                    <td>{{pedi.Cliente}}</td>
+                    <td>{{pedi.Fecha}}</td>
+                    <td>{{pedi.Valor_total}}</td>
+                    <td><a href="{% url 'pedido:esta_pedi' pedi.id %}">Cambiar estado</td>
+                    <td><a href="{% url 'pedido:del_pedi' pedi.id %}">Eliminar</td>
+                    <td><a href="{% url 'pedido:deta_pedi' pedi.id %}">Detalles</a></td>
+                </tr>
+            {% endfor %}
+</table>
+<a href="{% url 'pedido:reg_pedi' %}">
+<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+        Registrar pedido
+      </button>
+</a>
+
+{% endblock %}
