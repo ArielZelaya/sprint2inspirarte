@@ -1,0 +1,73 @@
+{% extends 'base/base.html'%}
+
+{% block title %} Gestion de precio {% endblock %}
+
+{% block name %} Gestion de precio de productos {% endblock %}
+
+{% block contenido %}
+<dvi class="container">
+	<div class="row">
+	<a onclick="return abrir_modal('{% url 'cotizacion:crear_precio' %}', 'Crear tamaño')" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" style="color:white; background-color:#33CC00">
+   Registrar 
+</a>
+</div>
+{% for l in lis %}
+<div class="row">
+	<H3>{{ l.producto.nombre }}</H3><br>
+	<table  class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp" id="tabla" class="display" cellspacing="0" >
+			<tr>
+				<th>No</th>
+				<th>Nombre</th>
+				<th>Tamaño</th>
+				<th>Cantidad</th>
+				<th>Precio</th>
+				<th>Tipo Cliente</th>
+				<th>Accion</th>
+			</tr>
+			{% for p in l.precios %}
+						<tr>
+							<td>{{forloop.counter}}</td>
+							<td>{{p.nombre}} </td>
+							<td>{{p.tamanio}}</td>
+							<td>{{p.cantidad}}</td>
+							<td>{{p.precio}}</td>
+							<td>{{p.tipoCliente}}</td>
+							<td><a href="#"" onclick="return abrir_modal('{% url 'cotizacion:modificar_precio' p.pk %}', 'Modificar/{{ t.descripcion }}')" class="btn">Editar</a></td>
+							<td><a href="#" onclick="return abrir_modal('{% url 'cotizacion:eliminar_precio' p.pk %}', 'Emiminar/{{ t.descripcion}}')" class="btn">Eliminar</a></td>
+						</tr>
+			{% endfor %}
+		</table>
+</div>
+<div id="popup" class="modal fade" role="dialog"></div>
+</dvi>
+{% endfor %}
+	<script>
+var modal;
+
+function abrir_modal(url, titulo)
+{
+    modal = $('#popup').dialog(
+    {
+        title: titulo,
+        modal: true,
+        width: 500,
+        resizable: false
+    }).dialog('open').load(url)
+}
+
+function cerrar_modal()
+{
+    modal.dialog("close");
+}
+
+$(document).ready(function()
+{
+    var table = $('#tabla').dataTable( {
+        "language": {
+                url: "/static/localizacion/es_ES.json"
+        }
+    } );
+});
+</script>
+
+{% endblock %}

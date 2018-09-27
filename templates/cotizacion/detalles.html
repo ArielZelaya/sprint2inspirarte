@@ -1,0 +1,25 @@
+<div class="panel panel-default">
+	<div class="panel-body">
+		{% for d in detalles %}
+		<div class="row">
+			<div class="col-lg-4">
+				<label>Producto:</label>
+				{{ d.producto.nombre }}<br>
+				<label>Cantidad:</label>
+				{{ d.cantidad }}<br>
+				<label>Diseño:</label>
+				{% if d.disenio %}
+					REQUERIDO<br>
+				{% else %}
+					NO REQUERIDO<br>
+				{% endif %}
+				<label>Subtotal:</label>
+				{{d.subtotal}}<br>
+				------------------------------------------------------------------------------------------
+			</div>
+		</div>
+		{% endfor%}
+		<div align="center"> <button align="center" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="return cerrar_modal()">Cerrar</button></div>
+		
+	</div>
+</div>

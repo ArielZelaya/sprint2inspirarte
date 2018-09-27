@@ -1,0 +1,40 @@
+
+<div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <form role="form" action="" method="post">
+        <div class="modal-header">
+                
+            </div>
+            <div class="modal-body">
+                                {% csrf_token %}
+    
+    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                                {{ form.as_p }}
+                                        </div>
+                                </div>
+                                        <!-- <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            <input name="tamaño" maxlength="20" required="" id="id_tamaño" type="text" class="mdl-textfield__input">
+                                             <label for="id_tamaño" class="mdl-textfield__label">Tamaño:</label>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                             <input name="descripcion" maxlength="30" required="" id="id_descripcion" type="text"  class="mdl-textfield__input">
+                                             <label for="id_descripcion" class="mdl-textfield__label">Descripcion:</label>
+                                        </div> -->
+                                </div>
+                        </div>
+                        <div class="modal-footer">
+                                <div class="col-lg-12 text-right">
+                                       <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" name="submit" value="Guardar">
+                                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" style="background-color:#f6685e;color:white" onclick="return cerrar_modal()">
+                                                Cancelar
+                                        </button>
+                                </div>
+                        </div>
+                </form>
+        </div>
+</div>
+
+
+        
+ 

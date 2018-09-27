@@ -26,5 +26,5 @@ urlpatterns =[
 	url(r'^editarCliente/(?P<id_user>\d+)/$', editarCliente,name="editar_cliente"),
 	url(r'^gestionCliente$', gestionCliente, name="gestion_cliente"),
 	url(r'^tipoCliente/(?P<id_user>\d+)/$', tipoCliente,name="tipo_cliente"),
-	url(r'^wc$', wc, name='wlc'),	
+	# url(r'^wc$', wc, name='wlc'),	
 ]

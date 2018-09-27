@@ -1,0 +1,117 @@
+<!-- {# dsi2018\templates\inventario\proveedoresProducto.html #} 
+	 {# MODULO: inventario #} 
+	 {# OJETIVO: permite administrar los contactos de proveedores relacionados con el producto seleccionado en la vista que le precede #} 
+	 {# ANALISTA PROGRAMADOR: Edwin Molina,	FECHA CREACION: 15/09/2018 #} 
+	 {# MODIFICADO POR: Edwin Molina,		FECHA MODIFICACION: 16/09/2018 #} -->
+
+{% extends 'base/base.html'%}
+
+{% block title %}Contacto de proveedores{% endblock %}
+
+{% block name %}Contactos de proveedores: {{producto.nombre}}{% endblock%}
+
+{% block contenido %}
+<div style="display:block">
+<div style="float:left; margin-top:2%">
+			<a href="{% url 'proveedor:crear_proveedor' %}" type="button" class="mdl-button show-modal" style="color:white; background-color:#33CC00">Registrar proveedor</a>
+</div>
+
+<div style="float:right; margin-bottom:1%;margin-top:3%;">
+	<form method="POST" action="">
+		{% csrf_token %}
+		<label for="proveedor">Proveedor:</label>
+		<select  name="proveedor" id="proveedor" required="">
+			<option value=""> -- Seleccione -- </option>
+			{% for p in proveedores_producto %}
+				<option value="{{p.id}}">{{p.nombre}}</option>
+			{% endfor %}
+		</select>
+		<input type="submit" id="su-con" value="Vincular" name="vincular">
+		<div class="mdl-tooltip" for="su-con">
+		Asociar este proveedor al producto
+		</div>
+	</form>
+</div>
+
+<div style="float: none; clear: left; margin-top:10%">
+	<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" >
+		<thead>
+			<tr>
+				<th style="text-align:left">Nombre</th>
+				<th style="text-align:left">Telefono</th>
+				<th style="text-align:left">Dirección</th>
+				<th style="text-align:left">Email</th>
+				<th style="text-align:left">Otros contactos</th>
+				<th style="text-align:left">Desvincular</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for p in proveedores_contacts %}
+				<tr>
+					<td style="text-align:left">{{p.nombre}}</td>
+					<td style="text-align:left">{{p.telefono}}</td>
+					<td style="text-align:left">{{p.direccion}}</td>
+					<td style="text-align:left">{{p.email}}</td>
+					<td style="text-align:center">
+						<button type="button" id="{{p.id}}" class="btn_p mdl-button show-modal"><a href=""><i class="material-icons">contact_phone</i></a></button>
+						<dialog class="modal_p mdl-dialog" id="{{p.id}}" data-backdrop="false" style="width:30%;border-radius: 9px;">
+	    					<div class="mdl-dialog__content">
+						      <p>{{p.nombre}}</p>
+					      </form>
+					    </div>  
+					  </dialog>
+				</td>
+				<td style="text-align:center"><button type="button" id="{{p.id}}" class="btn_p mdl-button show-modal"><a href="{% url 'inventario:des_prv' producto.id p.id %}"><i class="material-icons">
+clear
+</i></a></button></td>
+				</tr>
+			{% empty %}
+				<tr>
+					<td colspan="6" style="text-align:center">No hay proveedores aciados a este producto</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+<div style="color:white; background-color:black; float: none; clear: left; text-align:center; margin-top:2%;">
+			   {% if proveedores_contacts.has_previous %}
+			       <a class="waves-effect" href="?page=1">&laquo; primero</a>
+			       <a class="waves-effect" href="?page={{ proveedores_contacts.previous_page_number }}">anterior</a>
+			   {% endif %}
+
+			       Pag. {{ proveedores_contacts.number }} de {{ proveedores_contacts.paginator.num_pages }}.
+
+			   {% if proveedores_contacts.has_next %}
+			       <a href="?page={{ proveedores_contacts.next_page_number }}">siguiente</a>
+			       <a href="?page={{ proveedores_contacts.paginator.num_pages }}">ultimo &raquo;</a>
+			   {% endif %}
+</div>
+
+<a href="{% url 'inventario:adm_pro' %}" style="background-color:#605e5e;color:white;margin-top:2%" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"><i class="material-icons">
+arrow_back
+</i> Volver</a>
+
+
+  <script>
+    var dialog = document.getElementsByClassName("modal_p");
+    var showModalButton = document.getElementsByClassName("btn_p");
+    var i=0;
+
+    alert(dialog[1].data-backdrop);
+
+    for (i = 0; i < dialog.length; i++) {
+    	if (! dialog[i].showModal) {
+      		dialogPolyfill.registerDialog(dialog[i]);
+    	}
+    	showModalButton[i].addEventListener("click", function() {
+
+    		this.classList.toggle("active");
+	    		console.log("Selecciono");
+	    		console.log(dialog[i]);
+	      	dialog[i].showModal();
+	  });
+    }
+    
+  </script>
+{% endblock %}
