@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'apps.inventario',
     'apps.Pedido',
     'apps.cotizacion',
+    'apps.venta',
 ]
 
 MIDDLEWARE = [
@@ -81,10 +82,10 @@ WSGI_APPLICATION = 'Inspirarte.wsgi.application'
 DATABASES = {
    'default': {
        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-       'NAME': 'inspirarte', #Nombre de la base
-       'USER': 'ariel', #Nombre del usuario
-       'PASSWORD': 'xxx', #Contrasenia del usuario que creo la base
-       'HOST': 'localhost',
+       'NAME': 'db_inspirate', #Nombre de la base
+       'USER': 'dsi06', #Nombre del usuario
+       'PASSWORD': 'admin', #Contrasenia del usuario que creo la base
+       'HOST': '127.0.0.10',
        }
 }
 

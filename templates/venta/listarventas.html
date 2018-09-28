@@ -1,0 +1,64 @@
+{% extends 'base/base.html'%}
+
+{% block title %} Ventas {% endblock %}
+
+{% block name %} Ventas {% endblock %}
+{% block contenido %}
+
+<div class="container">
+<div class="row">
+<table  class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
+		<tr>
+			<th>No</th>
+			<th>Fecha</th>
+			<th>Cliente</th>
+			<th>Cod. cotizacion</th>
+			<th>Total</th>
+			<th>Estado</th>
+		</tr>
+		{% for v in ventas %}
+					<tr>
+						<td>{{v.id}}</td>
+						<td>{{v.fecha}}</td>
+						<td>{{v.pedido.Cotizacion.cliente}}</td>
+						<td>{{v.pedido.Cotizacion.id}}</td>
+						<td>{{v.pedido.Cotizacion.total}}</td>
+						<td>{{v.pedido.Pedido.Estado}}</td>
+		{% endfor %}
+	</table>
+</div>
+</div>
+<div id="popup" class="modal fade" role="dialog">
+
+</div>
+	<script>
+var modal;
+
+function abrir_modal(url, titulo)
+{
+    modal = $('#popup').dialog(
+    {
+        title: titulo,
+        modal: true,
+        width: 500,
+        resizable: false
+    }).dialog('open').load(url)
+}
+
+function cerrar_modal()
+{
+    modal.dialog("close");
+}
+
+$(document).ready(function()
+{
+    var table = $('#tabla').dataTable( {
+        "language": {
+                url: "/static/localizacion/es_ES.json"
+        }
+    } );
+});
+</script>
+
+
+{% endblock %}

@@ -20,11 +20,10 @@ from . import views
 urlpatterns = [
 	url(r'^usuario/', include('apps.usuario.urls')),
 	url(r'^proveedor/', include('apps.proveedor.urls')),
-<<<<<<< HEAD
+
     url(r'^inventario/', include('apps.inventario.urls')),
     url(r'^pedido/', include('apps.Pedido.urls')),
-=======
->>>>>>> Samuel2
+
     url(r'^admin/', admin.site.urls),    
     #Index temporal
     # url(r'^', views.index, name="index"),
@@ -32,5 +31,6 @@ urlpatterns = [
     #Sprint 2
     url(r'^cotizacion/', include('apps.cotizacion.urls')),
     url(r'^inventario/', include('apps.inventario.urls')),
+    url(r'^venta/', include('apps.venta.urls')),
     
 ]
