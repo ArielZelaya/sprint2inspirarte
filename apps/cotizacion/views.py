@@ -79,6 +79,9 @@ class eliminarTamanio ( DeleteView ):
 
 #Gestion Precio
 
+def menu(request):
+	return render(request, 'cotizacion/menu.html')
+
 def gestionPrecio(request):
 	administrador=User.objects.get(id=request.user.id)
 	if administrador.is_superuser:

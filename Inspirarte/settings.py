@@ -82,10 +82,10 @@ WSGI_APPLICATION = 'Inspirarte.wsgi.application'
 DATABASES = {
    'default': {
        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-       'NAME': 'db_inspirate', #Nombre de la base
-       'USER': 'dsi06', #Nombre del usuario
-       'PASSWORD': 'admin', #Contrasenia del usuario que creo la base
-       'HOST': '127.0.0.10',
+       'NAME': 'xxx', #Nombre de la base
+       'USER': 'xxx', #Nombre del usuario
+       'PASSWORD': 'xxx', #Contrasenia del usuario que creo la base
+       'HOST': 'localhost',
        }
 }
 
@@ -130,6 +130,6 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS=(os.path.join(BASE_DIR,'static'),)
 
-#Ruta para guardar las imagenes ya diseñadas
+#Ruta para guardar las imagenes ya diseï¿½adas
 MEDIA_URL = '/uploads/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')

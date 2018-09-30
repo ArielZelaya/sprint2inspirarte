@@ -13,6 +13,8 @@ urlpatterns =[
 	url(r'^crearTamanio/$', crearTamanio.as_view(), name="crear_tamanio"),
 	url(r'^modificarTamanio/(?P<pk>.+)/$',modificarTamanio.as_view(), name="modificar_tamanio"),
 	url(r'^eliminarTamanio/(?P<pk>.+)/$', eliminarTamanio.as_view(), name="eliminar_tamanio"),
+	url(r'^menu', menu, name='menu'),
+
 
 	#Gestion precio
 	url(r'^gestionPrecio$', gestionPrecio, name="gestion_Precio"),

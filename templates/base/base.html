@@ -206,13 +206,13 @@
           </div>
         </header>
         <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
-            <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">apps</i>Menu principal</a>
+            <a class="mdl-navigation__link" href="{% url 'index' %}"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">apps</i>Menu principal</a>
           <a class="mdl-navigation__link" href="{% url 'usuario:gestion_cliente' %}"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">person</i>Usuarios</a>
-          <a class="mdl-navigation__link" href="{% url 'pedido:ges_pedi' %}"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">warning</i>Pedidos</a>
+          <a class="mdl-navigation__link" href="{% url 'pedido:ges_pedi' %}"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">archive</i>Pedidos</a>
           <a class="mdl-navigation__link" href="{% url 'proveedor:gestion_proveedor' %}"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">person</i>Proveedores</a>
-          <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">warning</i>Proximamente</a>
-          <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">warning</i>Proximamente</a>
-          <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">warning</i>Proximamente</a>
+          <a class="mdl-navigation__link" href="{% url 'proveedor:gestion_proveedor' %}"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">store</i>inventario</a>
+          <a class="mdl-navigation__link" href="{% url 'proveedor:gestion_proveedor' %}"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">file_copy</i>Cotizacion</a>
+          <a class="mdl-navigation__link" href="{% url 'proveedor:gestion_proveedor' %}"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">attach_money</i>Ventas</a>
           <a class="mdl-navigation__link" href="{% url 'usuario:logout' %}"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">close</i>cerrar sesion</a>
           
           <div class="mdl-layout-spacer"></div>
@@ -246,6 +246,44 @@
                     <div class="mdl-card__supporting-text">Aqui podra gestionar todo lo relacionado con los proveedores.</div>
                     <div class="mdl-card__actions mdl-card--border">
                         <a href="{% url 'proveedor:gestion_proveedor' %}" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Gestionar proveedores</a>
+                    </div>
+                </div>
+          <div class="demo-card-square mdl-card mdl-shadow--2dp">
+                    <div class="mdl-card__title mdl-card--expand">
+                      <h2 class="mdl-card__title-text">Inventario</h2>
+                    </div>
+                    <div class="mdl-card__supporting-text">Aqui podra gestionar todo lo relacionado con el inventario.</div>
+                    <div class="mdl-card__actions mdl-card--border">
+                        <a href="{% url 'inventario:adm_pro' %}" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Gestionar Inventario</a>
+                    </div>
+                </div>
+
+          <div class="demo-card-square mdl-card mdl-shadow--2dp">
+                    <div class="mdl-card__title mdl-card--expand">
+                      <h2 class="mdl-card__title-text">Gestion de cotizaciones</h2>
+                    </div>
+                    <div class="mdl-card__supporting-text">Aqui podra gestionar todo lo relacionado con las cotizaciones.</div>
+                    <div class="mdl-card__actions mdl-card--border">
+                        <a href="{% url 'cotizacion:menu' %}" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Gestionar Cotizaciones</a>
+                    </div>
+                </div>
+           <div class="demo-card-square mdl-card mdl-shadow--2dp">
+                    <div class="mdl-card__title mdl-card--expand">
+                      <h2 class="mdl-card__title-text">Gestion de pedidos</h2>
+                    </div>
+                    <div class="mdl-card__supporting-text">Aqui podra gestionar todo lo relacionado con los pedidos.</div>
+                    <div class="mdl-card__actions mdl-card--border">
+                        <a href="{% url 'pedido:ges_pedi' %}" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Gestionar pedidos</a>
+                    </div>
+                </div>
+
+          <div class="demo-card-square mdl-card mdl-shadow--2dp">
+                    <div class="mdl-card__title mdl-card--expand">
+                      <h2 class="mdl-card__title-text">Gestion de ventas</h2>
+                    </div>
+                    <div class="mdl-card__supporting-text">Aqui podra gestionar todo lo relacionado con las ventas.</div>
+                    <div class="mdl-card__actions mdl-card--border">
+                        <a href="{% url 'venta:listado_venta' %}" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Gestionar Ventas</a>
                     </div>
                 </div>
                 {% endblock %}

@@ -26,7 +26,7 @@ urlpatterns = [
 
     url(r'^admin/', admin.site.urls),    
     #Index temporal
-    # url(r'^', views.index, name="index"),
+    url(r'^index', views.index, name="index"),
 
     #Sprint 2
     url(r'^cotizacion/', include('apps.cotizacion.urls')),

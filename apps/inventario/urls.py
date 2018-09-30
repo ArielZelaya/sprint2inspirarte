@@ -10,7 +10,7 @@ from __future__ import absolute_import
 from django.conf.urls import url, include
 from .views import *
 
-app_name = 'inventarios'
+app_name = 'inventario'
 
 urlpatterns =[
 
