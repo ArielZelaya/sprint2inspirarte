@@ -1,7 +1,7 @@
 
 <div class="modal-dialog modal-lg">
 	<div class="modal-content">
-		<form action=" {% url 'cotizacion:eliminar_tamanio' object.pk %}" method="post">
+		<form action=" {% url 'cotizacion:eliminar_precio' object.pk %}" method="post">
              <div class="modal-body">
 	{% csrf_token %}
 	<div class="mdl-dialog__content" align="center">

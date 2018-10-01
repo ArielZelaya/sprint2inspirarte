@@ -21,7 +21,6 @@
 				<th>Descripcion</th>
 				<th>Fecha</th>
 				<th>Total</th>
-				<th></th>
 				<th>Accion</th>
 			</tr>
 			{% for c in cotizacion %}
@@ -32,7 +31,6 @@
 							<td>{{c.fecha}}</td>
 							<td>{{c.total}}{{c.id}}</td>
 							<td><a href="#" onclick="return abrir_modal('{% url 'cotizacion:detalle_cotizacion' c.id %}', 'Detalle cotizacion No.{{c.id}}')" class="btn">Detalle</a></td>
-							<td><a href="#" onclick="return abrir_modal('{% url 'cotizacion:eliminar_cotizacion' c.id %}', 'Emiminar')" class="btn">Eliminar</a></td>
 						</tr>
 			{% endfor %}
 		</table>

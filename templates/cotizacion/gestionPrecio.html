@@ -32,8 +32,8 @@
 							<td>{{p.cantidad}}</td>
 							<td>{{p.precio}}</td>
 							<td>{{p.tipoCliente}}</td>
-							<td><a href="#"" onclick="return abrir_modal('{% url 'cotizacion:modificar_precio' p.pk %}', 'Modificar/{{ t.descripcion }}')" class="btn">Editar</a></td>
-							<td><a href="#" onclick="return abrir_modal('{% url 'cotizacion:eliminar_precio' p.pk %}', 'Emiminar/{{ t.descripcion}}')" class="btn">Eliminar</a></td>
+							<td><a href="#"" onclick="return abrir_modal('{% url 'cotizacion:modificar_precio' p.pk %}', 'Modificar/{{ p.nombre }}')" class="btn">Editar</a></td>
+							<td><a href="#" onclick="return abrir_modal('{% url 'cotizacion:eliminar_precio' p.pk %}', 'Emiminar/{{ p.nombre}}')" class="btn">Eliminar</a></td>
 						</tr>
 			{% endfor %}
 		</table>

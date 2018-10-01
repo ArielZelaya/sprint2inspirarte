@@ -189,10 +189,12 @@ def filtroPorMateria(request, registros_list_reversed, producto):
 #FIN DE FUNCION (filtroPorMateria)
 
 #INICIO DE FUNCION (regInventario): controlador para ingresar y sacar materia del inventario
-@login_required(login_url='/usuario/login')
+#@login_required(login_url='/usuario/login')
 def regInventario(request):
 	#INICIO DE BLOQUE 1 DE SEGURIDAD
-	if seguridad_reg_inv(request):
+	admin=User.objects.get(id=request.user.id)
+	print(admin)
+	if (seguridad_reg_inv(request) | admin.is_superuser):
 	#FIN DE BLOQUE 1 DE SEGURIDAD
 		global promedio_precio, total_egreso, reg_producto
 		registros_list = RegistroDeInventario.objects.all()

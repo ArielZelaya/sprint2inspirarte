@@ -22,13 +22,15 @@ class PrecioProductoForm(forms.ModelForm):
 		'tamanio',
 		'cantidad',
 		'precio',
+		'tipoCliente',
 		}
 		labels={
 		'nombre':'Nombre referente',
 		'producto':'Seleccione Producto',
 		'tamanio':'Seleccione Tamaño',
 		'cantidad':'Cantidad',
-		'precio':'Precio'
+		'precio':'Precio',
+		'tipoCliente':'Tipo de cliente:'
 		}
 
 class TamanioProductoForm(forms.ModelForm):

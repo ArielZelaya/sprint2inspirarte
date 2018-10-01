@@ -105,18 +105,18 @@ def gestionPrecio(request):
 class crearPrecio(CreateView):
     template_name = 'cotizacion/crearPrecio.html'
     form_class = PrecioProductoForm
-    success_url = reverse_lazy('cotizacion:gestion_Precio')
+    success_url = reverse_lazy('cotizacion:gestion_precio')
 
 class modificarPrecio(UpdateView):
     model = PrecioProducto
     template_name = 'cotizacion/crearPrecio.html'
     form_class = PrecioProductoForm
-    success_url = reverse_lazy('cotizacion:gestion_Precio')
+    success_url = reverse_lazy('cotizacion:gestion_precio')
 
 class eliminarPrecio( DeleteView ):
 	model = PrecioProducto
 	template_name='cotizacion/eliminarPrecio.html'
-	success_url = reverse_lazy('cotizacion:gestion_Precio')
+	success_url = reverse_lazy('cotizacion:gestion_precio')
 
 
 #Gestion Cotizacion

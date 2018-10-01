@@ -17,7 +17,7 @@ urlpatterns =[
 
 
 	#Gestion precio
-	url(r'^gestionPrecio$', gestionPrecio, name="gestion_Precio"),
+	url(r'^gestionPrecio$', gestionPrecio, name="gestion_precio"),
 	url(r'^crearPrecio/$', crearPrecio.as_view(), name="crear_precio"),
 	url(r'^modificarPrecio/(?P<pk>.+)/$',modificarPrecio.as_view(), name="modificar_precio"),
 	url(r'^eliminarPrecio/(?P<pk>.+)/$', eliminarPrecio.as_view(), name="eliminar_precio"),

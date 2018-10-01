@@ -26,6 +26,7 @@
                     <td><a href="{% url 'pedido:esta_pedi' pedi.id %}">Cambiar estado</td>
                     <td><a href="{% url 'pedido:del_pedi' pedi.id %}">Eliminar</td>
                     <td><a href="{% url 'pedido:deta_pedi' pedi.id %}">Detalles</a></td>
+                    <td><a href="{% url 'venta:crear_venta' pedi.id %}">Registrar Venta</a></td>
                 </tr>
             {% endfor %}
 </table>

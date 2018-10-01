@@ -411,7 +411,7 @@ def iniciarSesion(request):
 		if user is not None:
 			login(request,user) 
 			if request.GET.get('next') is None:
-				return redirect('usuario:index')
+				return redirect('index')
 			else:
 				return HttpResponseRedirect(request.GET.get('next'))
 		else :
