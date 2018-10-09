@@ -32,6 +32,7 @@ urlpatterns =[
 
 	#Gestion cotizacion
 	url(r'^gestionCotizacion/$', ListadoCotizacion.as_view(), name="listado_cotizacion"),
+	url(r'^gestionCotizacion2/$', ListadoCotizacion2.as_view(), name="listado_cotizacion2"),
 	url(r'^detalle/(?P<id>\d+)/$', detallesCotizacion, name="detalle_cotizacion"),
 	url(r'^eliminarCotizacion/(?P<pk>.+)/$', eliminarCotizacion.as_view(), name="eliminar_cotizacion"),
 

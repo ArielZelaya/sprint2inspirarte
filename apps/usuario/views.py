@@ -10,6 +10,7 @@ from django.core.paginator import Paginator
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 # Create your views here.
+#
 @login_required(login_url='/usuario/login')
 def index(request):
 	admin=User.objects.get(id=request.user.id)

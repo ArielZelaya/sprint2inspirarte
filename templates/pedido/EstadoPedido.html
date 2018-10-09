@@ -1,7 +1,10 @@
 {% extends 'base/base.html'%}
-{% block title %} Crear Proveedor{% endblock %}
-{% block name %} Crear Proveedor {% endblock %}
+{% block title %} Pedidos{% endblock %}
+{% block name %} Estado del pedido  {% endblock %}
 {% block contenido %}
+<!-- {# dsi2018\templates\base\base.html #}
+{# ANALISTA PROGRAMADOR: Christian Zelaya  						FECHA CREACION: 082018 #}
+{# MODIFICADO POR: Christian Zelaya                   FECHA MODIFICACION: x #} -->
 <form method="POST" action="">
     {% csrf_token %}
 
@@ -12,6 +15,7 @@
       <option value="Impresion">Impresion</option>
       <option value="Corte">Corte</option>
       <option value="Detalles">Detalles</option>
+        <option value="Finalizado">Finalizado</option>
 
     </select>
     <label class="mdl-textfield__label" for="Estado">Seleccione el estado</label>

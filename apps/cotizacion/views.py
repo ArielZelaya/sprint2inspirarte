@@ -125,6 +125,11 @@ class ListadoCotizacion(ListView):
     template_name = 'cotizacion/gestioCotizacion.html'
     context_object_name = 'cotizacion'
 
+class ListadoCotizacion2(ListView):
+    model = Cotizacion
+    template_name = 'cotizacion/gestioCotizacion2.html'
+    context_object_name = 'cotizacion'
+
 def detallesCotizacion(request,id):
 	detalles=DetalleCotizacion.objects.filter(Cotizacion=id)
 	return render(request, 'cotizacion/detalles.html', {'detalles':detalles})
@@ -148,6 +153,7 @@ def cotizacionCliente(request):
 
 def cotizacion_cliente(request):
     productos = TipoProducto.objects.all()
+
     return render(request, 'cotizacion/formulario.html', {'productos': productos})
 
 

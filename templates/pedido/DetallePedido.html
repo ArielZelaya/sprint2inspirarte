@@ -2,41 +2,129 @@
 
 {% block title %} Pedidos{% endblock %}
 
-{% block name %} Detalles del pedido  {% endblock %}
+{% block name %} Detalles del pedido  N.{{pedido.id}} {% endblock %}
 
 {% block contenido %}
-
-<br>id pedido {{pedido.id}}</<br>
-
-<br>Nombre Cliente: {{pedido.Cliente}}<br>
-<br>Fecha Pedido: {{pedido.Fecha}}<br>
-<br> Descripcion linea: {{linea.Cotizacion.descripcion}}<br>
-<br><br>
-
-
-
- <h1>ID usuario :{{usuario.id}}</h1>
-<li>{{pedido.Valor_total}}</li>
-      <br>{{pedido.Cant_productos}}</br>
-      <br>{{pedido.Deposito}}</br>
-      <br>{{pedido.Fecha}}</br>
-      <br>{{pedido.Num_seguimiento}}</br>
-      <br>{{pedido.Estado}}</br>
-      <br>{{cotizacion.}}</br>
-      <p> <b>Detalle de la cotizacion</b></p>
-        {% for lin in linea%}
-            {% if lin.Pedido.id == pedido.id%}
-                {% for det in detalleCoti %}
-                    {% if det.Cotizacion.id == lin.Cotizacion.id %}
-                    <br>{{det.tipo}}</br>
-                    <br>{{det.cantidad}}</br>
-                    <br>{{det.material}}</br>
-                    {% endif %}
-                {% endfor %}
-
-            {% endif%}
-        {% endfor %}
+<!-- {# dsi2018\templates\base\base.html #}
+{# ANALISTA PROGRAMADOR: Christian Zelaya  						FECHA CREACION: 082018 #}
+{# MODIFICADO POR: Christian Zelaya                   FECHA MODIFICACION: x #} -->
+<style>
+		div#body{
+			margin: auto;
+			margin-top: 60px;
+			width: 1000px;
+			height: 300;
 
 
+
+		}
+		div#izquierda{
+			width: 300px;
+			height: 100px;
+			float: left;
+			margin-left: 30px;
+
+		}
+		div#centro{
+			width: 300px;
+			height: 100px;
+			margin-right: 10px;
+    margin-left: 10px;
+			float: left;
+
+		}
+		div#derecha{
+			width: 300px;
+			height: 100px;
+			float: left;
+
+		}
+		</style>
+<div class="demo-card-square mdl-card mdl-shadow--2dp" id="body">
+				<div class="mdl-card__supporting-text">
+						Detalles del pedido
+					</div>
+				<form method="POST" action="">{% csrf_token %}
+				<div id="izquierda">
+						<!--<p><label for="id_first_name">Ingrese su nombre:</label> <input name="first_name" maxlength="30" id="id_first_name" type="text"></p>-->
+						  <!-- Simple Select -->
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<input class="mdl-textfield__input" value="{{pedido.Cliente}}" name="cliente" type="text" id="cliente" readonly>
+								<label class="mdl-textfield__label" for="cliente">Cliente:</label>
+							</div>
+
+						<!--<p><label for="id_last_name">Ingrese su apellido:</label> <input name="last_name" maxlength="30" id="id_last_name" type="text"></p>-->
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<input class="mdl-textfield__input" value="{{pedido.Fecha}}" name="last_name" type="text" id="id_last_name" readonly>
+								<label class="mdl-textfield__label" for="id_last_name">Fecha pedido:</label>
+							</div>
+						<!--<p><label for="id_email">Correo electronico:</label> <input name="email" maxlength="254" id="id_email" type="email"></p>-->
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<input class="mdl-textfield__input" value="{{pedido.Cant_productos}}" name="descripcion" type="descripcion" id="descripcion">
+								<label class="mdl-textfield__label" for="descripcion">Cantidad de productos:</label>
+							</div>
+				</div>
+				<div id="centro">
+						<!--<p><label for="id_username">Ingrese su nombre de usuario:</label> <input name="username" maxlength="150" required="" id="id_username" type="text"> <span class="helptext">Únicamente letras, dígitos y @/./+/-/_ </span></p>-->
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<input class="mdl-textfield__input" value="{{pedido.Deposito}}" name="descripcion" type="descripcion" id="descripcion">
+								<label class="mdl-textfield__label" for="descripcion">Deposito</label>
+							</div>
+						<!--<p><label for="id_password">Contraseña:</label> <input name="password" maxlength="128" required="" id="id_password" type="password"></p>-->
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<input class="mdl-textfield__input"  value="{{pedido.Valor_total}}" name="Deposito" type="text" id="Deposito">
+								<label class="mdl-textfield__label" for="Deposito">Valor total:</label>
+							</div>
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<input class="mdl-textfield__input"  value="{{pedido.id}}" name="Deposito" type="text" id="Deposito">
+								<label class="mdl-textfield__label" for="Deposito">Numero de rastreo:</label>
+							</div>
+					{% for d in detalles%}
+						{{d}}
+					{% endfor %}
+
+				</div>
+				<div id="derecha">
+
+							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<input class="mdl-textfield__input"  value="{{pedido.Estado}}" name="Deposito" type="text" id="Deposito">
+								<label class="mdl-textfield__label" for="Deposito">Estado:</label>
+							</div>
+					</div>
+				</form>
+		</div>
+
+<!--<form method="POST" action="">
+    {% csrf_token %}
+
+    Valor Toal:<br>
+  <input type="text" name="Valor_total" value="">
+  <br>
+    Cantidad Productos:<br>
+  <input type="text" name="Cant_productos" value="">
+  <br>
+    Deposito:<br>
+  <input type="text" name="Deposito" value="">
+  <br>
+     Fecha:<br>
+  <input type="text" name="Fecha" value="">
+  <br>
+    Num Segui:<br>
+  <input type="text" name="Num_seguimiento" value="">
+  <br>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <select class="mdl-textfield__input" id="Estado" name="Estado">
+      <option></option>
+      <option value="Activo">Activo</option>
+      <option value="Impresion">Impresion</option>
+      <option value="Corte">Corte</option>
+      <option value="Detalles">Detalles</option>
+
+    </select>
+    <label class="mdl-textfield__label" for="Estado">Seleccione el estado</label>
+
+  <input type="submit" value="Submit">
+</form>
+-->
 
 {% endblock %}

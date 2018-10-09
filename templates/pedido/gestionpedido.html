@@ -5,7 +5,11 @@
 {% block name %} Gestion de Pedidos {% endblock %}
 
 {% block contenido %} 
+<!-- {# dsi2018\templates\base\base.html #}
+{# ANALISTA PROGRAMADOR: Christian Zelaya  						FECHA CREACION: 082018 #}
+{# MODIFICADO POR: Christian Zelaya                   FECHA MODIFICACION: x #} -->
 
+    {% if x == 1 %}
 <table  class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
     <tr>
         <th>ID</th>
@@ -28,12 +32,37 @@
                     <td><a href="{% url 'pedido:deta_pedi' pedi.id %}">Detalles</a></td>
                     <td><a href="{% url 'venta:crear_venta' pedi.id %}">Registrar Venta</a></td>
                 </tr>
+
+
             {% endfor %}
-</table>
-<a href="{% url 'pedido:reg_pedi' %}">
+     <a href="{% url 'cotizacion:listado_cotizacion2' %}">
 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
         Registrar pedido
       </button>
 </a>
+    {% else%}
+    <table  class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
+    <tr>
+        <th>ID</th>
+        <th>CLIENTE</th>
+        <th>FECHA</th>
+        <th>VALOR</th>
+        <th>DETALLES</th>
+
+    </tr>
+            {% for pedi in pedidos %}
+                {% if pedi.Cliente.id == usuario.id%}
+                 <tr>
+                    <td>{{pedi.id}}</td>
+                    <td>{{pedi.Cliente}}</td>
+                    <td>{{pedi.Fecha}}</td>
+                    <td>{{pedi.Valor_total}}</td>
+                    <td><a href="{% url 'pedido:deta_pedi' pedi.id %}">Detalles</a></td>
+                </tr>
+                {% endif%}
+            {% endfor%}
+    {% endif%}
+</table>
+
 
 {% endblock %}

@@ -1,11 +1,14 @@
 {% extends 'base/base.html'%}
-{% block title %} Crear Proveedor{% endblock %}
-{% block name %} Crear Proveedor {% endblock %}
+{% block title %} Pedidos{% endblock %}
+{% block name %} Eliminar el pedido {% endblock %}
 {% block contenido %}
+<!-- {# dsi2018\templates\base\base.html #}
+{# ANALISTA PROGRAMADOR: Christian Zelaya  						FECHA CREACION: 082018 #}
+{# MODIFICADO POR: Christian Zelaya                   FECHA MODIFICACION: x #} -->
 <form method="POST" action="">
     {% csrf_token %}
 
-
+ <p>Esta seguro que desea eliminar el pedido?</p>
   <input href="{% url 'pedido:ges_pedi'%}" type="submit" value="Eliminar">
 
 </form>

@@ -82,9 +82,9 @@ WSGI_APPLICATION = 'Inspirarte.wsgi.application'
 DATABASES = {
    'default': {
        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-       'NAME': 'db_inspirate', #Nombre de la base
-       'USER': 'dsi06', #Nombre del usuario
-       'PASSWORD': 'admin', #Contrasenia del usuario que creo la base
+       'NAME': 'inspirarte', #Nombre de la base
+       'USER': 'ariel', #Nombre del usuario
+       'PASSWORD': 'canela12', #Contrasenia del usuario que creo la base
        'HOST': 'localhost',
        }
 }

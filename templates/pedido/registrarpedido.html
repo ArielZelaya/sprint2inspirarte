@@ -2,9 +2,12 @@
 
 {% block title %} Pedidos{% endblock %}
 
-{% block name %} Gestion de Pedidos {% endblock %}
+{% block name %} Registrar pedido {% endblock %}
 
 {% block contenido %}
+<!-- {# dsi2018\templates\base\base.html #}
+{# ANALISTA PROGRAMADOR: Christian Zelaya  						FECHA CREACION: 082018 #}
+{# MODIFICADO POR: Christian Zelaya                   FECHA MODIFICACION: x #} -->
 <style>
 		div#body{
 			margin: auto;
@@ -17,14 +20,14 @@
 		}
 		div#izquierda{
 			width: 300px;
-			height: 300px;
+			height: 100px;
 			float: left;
 			margin-left: 30px;
 
 		}
 		div#centro{
 			width: 300px;
-			height: 300px;
+			height: 100px;
 			margin-right: 10px;
     margin-left: 10px;
 			float: left;
@@ -32,7 +35,7 @@
 		}
 		div#derecha{
 			width: 300px;
-			height: 300px;
+			height: 100px;
 			float: left;
 
 		}
@@ -45,60 +48,42 @@
 				<div id="izquierda">
 						<!--<p><label for="id_first_name">Ingrese su nombre:</label> <input name="first_name" maxlength="30" id="id_first_name" type="text"></p>-->
 						  <!-- Simple Select -->
-    <div class="mdl-textfield mdl-js-textfield getmdl-select">
-        <input type="text" value="" class="mdl-textfield__input" id="Cliente" readonly>
-        <input type="hidden" value="" name="Cliente">
-        <label for="Cliente" class="mdl-textfield__label">Cliente</label>
-        <ul for="Cliente" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
-           {% for c in clientes%}
-            <li class="mdl-menu__item" data-val="{{c}}">{{c.username}}</li>
-            {% endfor %}
-
-        </ul>
-    </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<input class="mdl-textfield__input" value="{{cotizacion.cliente}}" name="cliente" type="text" id="cliente" readonly>
+								<label class="mdl-textfield__label" for="cliente">Cliente:</label>
+							</div>
 
 						<!--<p><label for="id_last_name">Ingrese su apellido:</label> <input name="last_name" maxlength="30" id="id_last_name" type="text"></p>-->
 						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-								<input class="mdl-textfield__input"  name="last_name" type="text" id="id_last_name">
-								<label class="mdl-textfield__label" for="id_last_name">Apellido:</label>
+								<input class="mdl-textfield__input" value="{{cotizacion.fecha}}" name="last_name" type="text" id="id_last_name" readonly>
+								<label class="mdl-textfield__label" for="id_last_name">Fecha cotizacion:</label>
 							</div>
 						<!--<p><label for="id_email">Correo electronico:</label> <input name="email" maxlength="254" id="id_email" type="email"></p>-->
 						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-								<input class="mdl-textfield__input"  name="email" type="email" id="id_email">
-								<label class="mdl-textfield__label" for="id_email">Correo electronico:</label>
+								<input class="mdl-textfield__input" value="{{cotizacion.descripcion}}" name="descripcion" type="descripcion" id="descripcion">
+								<label class="mdl-textfield__label" for="descripcion">Descripcion:</label>
 							</div>
 				</div>
 				<div id="centro">
 						<!--<p><label for="id_username">Ingrese su nombre de usuario:</label> <input name="username" maxlength="150" required="" id="id_username" type="text"> <span class="helptext">Únicamente letras, dígitos y @/./+/-/_ </span></p>-->
 						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-								<input class="mdl-textfield__input" name="username" type="text" pattern="-?[0-9A-Za-z@.+-_]*(\.[0-9]+)?" id="id_username">
-								<label class="mdl-textfield__label" for="id_username">Nombre de usuario:</label>
-								<span class="mdl-textfield__error">Únicamente letras, dígitos y @/./+/-/_</span>
+								<input class="mdl-textfield__input" value=" ${{cotizacion.total}}" name="Total" type="text" id="Total">
+								<label class="mdl-textfield__label" for="Total">Total:</label>
 							</div>
 						<!--<p><label for="id_password">Contraseña:</label> <input name="password" maxlength="128" required="" id="id_password" type="password"></p>-->
 						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-								<input class="mdl-textfield__input"  name="password" type="password" id="id_password">
-								<label class="mdl-textfield__label" for="id_password">Contraseña:</label>
+								<input class="mdl-textfield__input"  value="" name="Deposito" type="text" id="Deposito">
+								<label class="mdl-textfield__label" for="Deposito">Deposito:</label>
 							</div>
-						<!--<p><label for="id_dui">Ingrese su dui:</label> <input name="dui" required="" id="id_dui" type="number"></p>-->
 						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-								<input class="mdl-textfield__input"  name="dui" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="id_dui">
-								<label class="mdl-textfield__label" for="id_dui">Dui:</label>
-								<span class="mdl-textfield__error">Dui incorrecto, solo se aceptan numeros!</span>
+							Fecha:<br>
+							<input name="Fecha" id="Fecha" type="date">
 							</div>
+
+
 				</div>
 				<div id="derecha">
-					<!--	<p><label for="id_telefono">Numero telefonico:</label> <input name="telefono" required="" id="id_telefono" type="number"></p>-->
-						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-								<input class="mdl-textfield__input"  name="telefono" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="id_telefono">
-								<label class="mdl-textfield__label" for="id_telefono">Numero telefonico:</label>
-								<span class="mdl-textfield__error">Telefono incorrecto, solo se aceptan numeros!</span>
-							</div>
-					<!--	<p><label for="id_direccion">Ingrese su direccion:</label> <input name="direccion" maxlength="500" required="" id="id_direccion" type="text"></p>-->
-						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-								<input class="mdl-textfield__input"  name="direccion" type="text" id="id_direccion">
-								<label class="mdl-textfield__label" for="id_direccion">Direccion:</label>
-							</div>
+
 							<br><br><br>
 							<button  type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
 									Guardar

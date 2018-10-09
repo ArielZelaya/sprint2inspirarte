@@ -1,0 +1,40 @@
+{% extends 'base/base.html'%}
+
+{% block title %} Pedidos {% endblock %}
+
+{% block name %} Cotizaciones realizadas {% endblock %}
+
+{% block contenido %}
+<dvi class="container">
+	<div class="row">
+	<a href="{% url 'cotizacion:formulario' %}" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" style="color:white; background-color:#33CC00">
+   Nueva cotizacion
+</a>
+</div>
+
+<div class="row">
+
+	<table  class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp" id="tabla" class="display" cellspacing="0" >
+			<tr>
+				<th>No</th>
+				<th>Nombre de cliente</th>
+				<th>Descripcion</th>
+				<th>Fecha</th>
+				<th>Total</th>
+				<th>Accion</th>
+			</tr>
+			{% for c in cotizacion %}
+						<tr>
+							<td>{{forloop.counter}}</td>
+							<td>{{c.cliente}} </td>
+							<td>{{c.descripcion}}</td>
+							<td>{{c.fecha}}</td>
+							<td>{{c.total}}{{c.id}}</td>
+							<td><a href="{% url 'pedido:reg_pedi' c.id %}">Registrar Pedido</a></td>
+						</tr>
+			{% endfor %}
+		</table>
+</div>
+<div id="popup" class="modal fade" role="dialog"></div>
+
+{% endblock %}
