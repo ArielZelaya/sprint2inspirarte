@@ -1,5 +1,4 @@
-
-<!-- {# dsi2018\templates\proveedor\gestion.html #}
+<!--{# dsi2018\templates\proveedor\gestion.html #}
 {# ANALISTA PROGRAMADOS: Samuel	García						FECHA CREACION: 062018 #}
 {# MODIFICADO POR: Virginia Ramírez                         FECHA MODIFICACION: 062018 #} -->
 
@@ -9,7 +8,9 @@
 {% block contenido %}
 <div align="center">
 	<!-- <h4> GESTION DE PROVEEDORES</h4> -->
-	<br>
+
+		<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="location.href='{% url 'proveedor:crear_proveedor' %}'" >Crear Proveedor</button>
+		<br><br>
 		<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
 			<thead>
 				<tr>
@@ -19,7 +20,10 @@
 					<th>Correo electronico</th>
 					<th>Telefono</th>
 					<th>Tipo</th>
-					<th colspan="2">Accion</th>
+					<th>Agregar Contac.</th>
+					<th>Contactos</th>
+					<th>Editar</th>
+					<th>Eliminar</th>
 				</tr>
 			</thead>
 			{% for p in proveedores %}
@@ -34,14 +38,16 @@
 				{% else %}
 					<td>S</td>
 				{% endif %}
-				<td><a href="{% url 'proveedor:crear_contacto' p.id %}">Agregar Contacto</a></td>
+
+				<td><a href="{% url 'proveedor:crear_contacto' p.id %}">Agregar Contac.</a></td>
+				<td><a href="{% url 'proveedor:det_proveedor' p.id %}">Contactos</a></td>
 				<td><a href="{% url 'proveedor:edit_proveedor' p.id %}">Editar</a></td>
 				<td><a href="{% url 'proveedor:elim_proveedor' p.id %}">Eliminar</a></td>
 			</tr>
-				{% for c in contactos %}
-					{% if c.proveedor_id == p.id %}					
+		<!--	{% for c in contactos %}
+					{% if c.proveedor_id == p.id %}
 						<tr>
-							<td></td>							
+							<td></td>
 							<td>{{c.nombre}}</td>
 							<td></td>
 							<td></td>
@@ -52,12 +58,9 @@
 							<td><a href="{% url 'proveedor:elim_contacto' c.id %}">Eliminar</a></td>
 						</tr>
 					{% endif %}
-				{% endfor %}
+				{% endfor %}-->
 			{% endfor %}
 		</table>
-		<br>
-		<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="location.href='{% url 'proveedor:crear_proveedor' %}'" >Crear Proveedor</button>
-		<br><br>
 
 </div>	
 {% endblock %}

@@ -1,0 +1,179 @@
+{% extends 'base/base.html'%}
+
+{% block title %}Contactos{% endblock %}
+
+{% block name %}Contactos de proveedores {% endblock %}
+
+{% block contenido %}
+
+
+<div class="mdl-cell mdl-cell--12-col formulario">
+<h6>
+    Nombre Proveedor: {{proveedor.nombre}}
+    <br>
+    Dirección: {{proveedor.direccion}}
+</h6>
+
+
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+            onclick="location.href='{% url 'proveedor:gestion_proveedor' %}'" >Ir atras</button>
+    <br>
+
+
+    {% if contactos %}
+    <h3>Contactos</h3>
+        {% for c in contactos%}
+          <li class="mdl-list__item mdl-list__item--two-line">
+            <span class="mdl-list__item-primary-content">
+              <i class="material-icons mdl-list__item-avatar">person</i>
+              <span>{{c.nombre}}</span>
+              <span class="mdl-list__item-sub-title">{{c.telefono}}</span>
+            </span>
+          </li>
+        {% endfor%}
+    {% else %}
+    <h3>No hay contactos para {{proveedor.nombre}}</h3>
+    {% endif%}
+</div>
+
+
+
+
+
+
+
+
+
+
+<!--
+<div style="display:block">
+
+<div style="float:left; margin-top:2%">
+		<a href="{% url 'usuario:reg_emp' %}">
+			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" style="color:white; background-color:#33CC00">Registrar empleado</button>
+		</a>
+		<a href="{% url 'usuario:nvi_cto' %}">
+			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" style="color:white; background-color:#3179af">Historial</button>
+		</a>
+</div>
+
+<div style="float:right; margin-bottom:1%;">
+	<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+	    <label class="mdl-button mdl-js-button mdl-button--icon" for="myInput">
+	      <i class="material-icons">search</i>
+	    </label>
+	    <div class="mdl-textfield__expandable-holder">
+	      <input class="mdl-textfield__input" type="text" id="myInput" onkeyup="myFunction()" placeholder="Nombre">
+	      <label class="mdl-textfield__label" for="myInput"></label>
+	    </div>
+  	</div>
+</div>
+
+<div style="float: none; clear: left; margin-top:6%;">
+
+	<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" id="myTable">
+		<thead>
+		  <tr>
+		  	<th>ID</th>
+			<th >Codigo</th>
+			<th>Nombre completo</th>
+			<th>Puesto</th>
+			<th>Departamento</th>
+			<th>Contrato</th>
+			<th>Detalles</th>
+			<th>Habilitar</th>
+			<th>Editar</th>
+		  </tr>
+		</thead>
+		<tbody>
+			{% for e in empleados %}
+			{% for c in contratos %}
+				{% if c.empleado_id == e.id and c.vigente == True %}
+					<tr>
+						<td>{{e.id}}</td>
+						<td>{{e.codigo}}</td>
+						<td >{{e.first_name}} {{e.last_name}}</td>
+						<td>{{e.puesto}}</td>
+						<td>{{e.puesto.departamento}}</td>
+						<td>{{c.tipo}}</td>
+						<td style="text-align:center;">
+							<button id="{{e.id}}" type="button" class="mdl-button" style="color:#e27908; text-align:center;">
+								<i class="material-icons">list</i>
+							</button>
+							<dialog id="{{e.codigo}}" class="mdl-dialog">
+							    <h4 class="mdl-dialog__title">Allow data collection?</h4>
+							    <div class="mdl-dialog__content">
+							      <p>
+							        Este es el usuario: {{e.codigo}}
+							      </p>
+							    </div>
+							    <div class="mdl-dialog__actions">
+							      <button type="button" class="mdl-button">Agree</button>
+							      <button type="button" class="mdl-button close">Disagree</button>
+							    </div>
+							 </dialog>
+						   <script>
+						   		var showDialogButton = document.querySelector("[id='{{e.id}}']");
+							    var dialog = document.querySelector("[id='{{e.codigo}}']");
+
+							    if (! dialog.showModal) {
+							      dialogPolyfill.registerDialog(dialog);
+							    }
+
+							    showDialogButton.addEventListener(
+							    	'click',
+							    	function() {
+							      		dialog.showModal();
+							    	}
+							    	);
+
+							    dialog.querySelector('.close').addEventListener(
+							    	'click',
+							    	function() {
+							      		dialog.close();
+							    	}
+							    	);
+						    </script>
+						</td>
+						{% if e.is_active %}
+							<td style="text-align:center;">
+								<a href="{% url 'usuario:act_emp' e.id %}">
+									<i class="material-icons">check_box</i>
+								</a>
+							</td>
+						{% else %}
+							<td style="text-align:center;">
+								<a href="{% url 'usuario:act_emp' e.id %}">
+									<i class="material-icons">check_box_outline_blank</i>
+								</a>
+							</td>
+						{% endif %}
+						<td style="text-align:center;">
+							<a href="{% url 'usuario:edt_emp' e.id %}">
+								<i class="material-icons">edit</i>
+							</a>
+						</td>
+					</tr>
+				{% endif %}
+			{% endfor %}
+		{% endfor %}
+		</tbody>
+	</table>
+</div>
+	<div style="color:white; background-color:black; float: none; clear: left; text-align:center; margin-top:2%;">
+			   {% if empleados.has_previous %}
+			       <a class="waves-effect" href="?page=1">&laquo; primero</a>
+			       <a class="waves-effect" href="?page={{ empleados.previous_page_number }}">anterior</a>
+			   {% endif %}
+
+			       Pag. {{ empleados.number }} de {{ empleados.paginator.num_pages }}.
+
+			   {% if empleados.has_next %}
+			       <a href="?page={{ empleados.next_page_number }}">siguiente</a>
+			       <a href="?page={{ empleados.paginator.num_pages }}">ultimo &raquo;</a>
+			   {% endif %}
+	</div>
+</div>
+-->
+{% endblock %}
+
