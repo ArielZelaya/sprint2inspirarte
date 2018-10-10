@@ -7,9 +7,9 @@
 {# MODIFICADO POR: Christian Zelaya                   FECHA MODIFICACION: x #} -->
 <form method="POST" action="">
     {% csrf_token %}
-
+ <h4>El pedido actualmente se encuentra en en fase de:<br>{{pedido.Estado}}</h4>
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <select class="mdl-textfield__input" id="Estado" name="Estado">
+    <select class="mdl-textfield__input" id="Estado" name="Estado" value="">
       <option></option>
       <option value="Activo">Activo</option>
       <option value="Impresion">Impresion</option>
@@ -18,7 +18,7 @@
         <option value="Finalizado">Finalizado</option>
 
     </select>
-    <label class="mdl-textfield__label" for="Estado">Seleccione el estado</label>
+    <label class="mdl-textfield__label" for="Estado">Seleccione el nuevo estado</label>
   </div>
   <input href="{% url 'pedido:ges_pedi'%}" type="submit" value="Cambiar">
 

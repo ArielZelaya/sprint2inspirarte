@@ -79,20 +79,26 @@ def eliminarPedido(request,id_pedido):
 #CambiarEstado nos permite mover el estado en la produccion del pedido
 @login_required(login_url='/usuario/login')
 def CambiarEstado(request,id_pedido):
+    pedido = Pedido.objects.get(id=id_pedido)
     if request.method=="POST":
         if request.method == 'POST':
-            pedido = Pedido.objects.get(id=id_pedido)
             pedido.Estado = request.POST.get('Estado')
             pedido.save()
             return redirect('pedido:ges_pedi')
-    return render(request, 'pedido/EstadoPedido.html')
+    return render(request, 'pedido/EstadoPedido.html',{'pedido':pedido})
 
 #Rastreo nos permite poder ver un pedido sin la necesidad de entrar al sistema
 @login_required(login_url='/usuario/login')
 def Rastreo(request):
     if request.method=="POST":
         id = request.POST.get('id')
-        pedido=Pedido.objects.get(id=id)
+
+        try:
+            pedido = Pedido.objects.get(id=id)
+        except :
+            pedido = None
+            m="No hay pedidos con ese numero de rastreo"
+            return render(request,'pedido/ERROR.html')
         return redirect('pedido:deta_pedi',pedido)
     return render(request, 'pedido/menu.html')
 
