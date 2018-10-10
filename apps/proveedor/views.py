@@ -23,7 +23,8 @@ def crearProveedor(request):
 					objeto.tipo='M'
 				# objeto.tipo=t_proveedor
 				objeto.save()
-				return redirect('usuario:index')
+				return redirect('proveedor:gestion_proveedor')
+				#return redirect('usuario:index')
 				# return render(request, 'usuario/index.html')
 			else:
 				valor="Error al guardar"
@@ -155,5 +156,17 @@ def editarContacto(request,id_contacto):
 			form=contactoForm(instance=c)
 			context={"form":form,'valor':valor}
 			return render(request,'proveedor/contacto.html',context)
+	else:
+		return render(request,'usuario/bienvenido/index.html')
+
+
+#Mostrar los contactos de los poveedores en Detalles del Proveedor
+@login_required(login_url='/usuario/login')
+def detallesProveedor(request,id_proveedor):
+	administrador=User.objects.get(id=request.user.id)
+	if administrador.is_superuser :
+		proveedor = Proveedor.objects.get(id=id_proveedor)
+		contactos = ContactoProveedor.objects.filter(proveedor=proveedor)
+		return render(request, 'proveedor/detalles.html',{'proveedor':proveedor,'contactos': contactos})
 	else:
 		return render(request,'usuario/bienvenido/index.html')

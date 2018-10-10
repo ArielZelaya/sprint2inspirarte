@@ -17,4 +17,6 @@ urlpatterns =[
 	url(r'^eliminarContacto/(?P<id_contacto>\d+)/$', eliminarContacto, name="elim_contacto"),
 	url(r'^editarProveedor/(?P<id_proveedor>\d+)/$', editarProveedor, name="edit_proveedor"),
 	url(r'^editarContacto/(?P<id_contacto>\d+)/$', editarContacto, name="edit_contacto"),
+
+	url(r'^detalles/(?P<id_proveedor>\d+)/$', detallesProveedor, name="det_proveedor"),
 ]
