@@ -80,13 +80,10 @@ WSGI_APPLICATION = 'Inspirarte.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
-   'default': {
-       'ENGINE': 'django.db.backends.postgresql_psycopg2',
-       'NAME': 'inspirarte', #Nombre de la base
-       'USER': 'ariel', #Nombre del usuario
-       'PASSWORD': 'canela12', #Contrasenia del usuario que creo la base
-       'HOST': 'localhost',
-       }
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'mydatabase',
+    }
 }
 
 
